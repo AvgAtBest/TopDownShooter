@@ -13,12 +13,14 @@ public class Generate_Map : MonoBehaviour
     private int mapSeed = 123456789;
     private bool isMapGenerated;
     int maxRoomsToGen = 25;
+    public Transform player_spawn_point;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         Random.InitState(mapSeed);
         CreateRooms();
+        SpawnPlayer();
     }
 
     // Update is called once per frame
@@ -32,5 +34,11 @@ public class Generate_Map : MonoBehaviour
         Instantiate(spawnRoom, dungeonSpawnLocation, Quaternion.identity);
         this.roomsToSpawn = new List<GameObject>();
         this.corridorsToSpawn = new List<GameObject>();
+    }
+    void SpawnPlayer()
+    {
+        player_spawn_point = GameObject.Find("Player_Spawn_Point").GetComponentInChildren<Transform>();
+        GameObject player = GameObject.Find("Player");
+        player.transform.position = player_spawn_point.position;
     }
 }
