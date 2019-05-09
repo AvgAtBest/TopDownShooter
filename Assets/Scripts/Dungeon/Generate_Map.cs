@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class Generate_Map : MonoBehaviour
 {
+    #region
     public List<GameObject> corridorsToSpawn;
     public List<GameObject> roomsToSpawn;
     public GameObject spawnRoom;
     public GameObject exitRoom;
     Vector3 dungeonSpawnLocation = Vector3.zero;
-
+    public Transform exitNodes;
     private int mapSeed = 123456789;
     private bool isMapGenerated;
     int maxRoomsToGen = 25;
-    public Transform player_spawn_point;
+    private Transform player_spawn_point;
+    #endregion
+    public int sizeX, sizeZ;
 
-    
+    List<Vector2> takenPosition = new List<Vector2>();
     void Start()
     {
+        
         Random.InitState(mapSeed);
         CreateRooms();
+        
         SpawnPlayer();
     }
 
@@ -40,5 +45,9 @@ public class Generate_Map : MonoBehaviour
         player_spawn_point = GameObject.Find("Player_Spawn_Point").GetComponentInChildren<Transform>();
         GameObject player = GameObject.Find("Player");
         player.transform.position = player_spawn_point.position;
+    }
+    void GenerateNextRooms()
+    {
+
     }
 }

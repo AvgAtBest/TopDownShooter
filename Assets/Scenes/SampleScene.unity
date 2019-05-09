@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -143,9 +143,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corridorsToSpawn: []
   roomsToSpawn: []
-  spawnRoom: {fileID: 6435919269552438289, guid: ac3aca3e6dc2b744f9b05cc12e301413,
+  spawnRoom: {fileID: 581660463751396477, guid: ad6249f547c504b4d99906528c36add6,
     type: 3}
-  exitRoom: {fileID: 0}
+  exitRoom: {fileID: 3665921544370348449, guid: 8a8acbd83afc4ed41950fec9d6fc8af4,
+    type: 3}
+  exitNodes: {fileID: 0}
+  sizeX: 0
+  sizeZ: 0
 --- !u!4 &3523744
 Transform:
   m_ObjectHideFlags: 0
@@ -344,7 +348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &751549803
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -435,7 +439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &817652509
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -526,7 +530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1065174512
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -617,7 +621,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1862195474
 BoxCollider:
   m_ObjectHideFlags: 0
