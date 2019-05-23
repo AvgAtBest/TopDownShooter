@@ -11,7 +11,7 @@ public class PlayerDive : MonoBehaviour
     public Vector3 dive;
     public float force = 2.0f;
     public bool isGrounded;
-    Rigidbody rb;
+    public Rigidbody rb;
 
     void Start()
     {

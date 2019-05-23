@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-
-    // Start is called before the first frame update
-    void Start()
+    public float damage = 20f;
+    public float speed = 10f;
+    public float maxAmmo = 20f;
+    public float ammo = 20f;
+    public float range = 10f;
+    public Transform shootPoint;
+ 
+    public void Start()
     {
-
+        ammo = maxAmmo;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Reload()
+    {
+        ammo = maxAmmo;
+    }
+
+    public void Shoot()
     {
         
     }
