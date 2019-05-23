@@ -12,6 +12,7 @@ namespace EL.Dungeon {
         public List<Room> bosses = new List<Room>();
         public List<Door> doors = new List<Door>();
         public List<Room> roomTemplates = new List<Room>();
-        
+        [Header("David Editions")]
+        public List<Room> finalRooms = new List<Room>();
     }
 }
