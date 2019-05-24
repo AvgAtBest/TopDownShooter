@@ -494,7 +494,7 @@ PrefabInstance:
     - target: {fileID: 6785183179947147414, guid: 67aff1e398e90ef439aac8143d593ab8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6785183179947147400, guid: 67aff1e398e90ef439aac8143d593ab8,
         type: 3}
@@ -556,6 +556,26 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1582693625}
+    - target: {fileID: 6785183179947147413, guid: 67aff1e398e90ef439aac8143d593ab8,
+        type: 3}
+      propertyPath: m_Speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785183179947147413, guid: 67aff1e398e90ef439aac8143d593ab8,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785183179947147413, guid: 67aff1e398e90ef439aac8143d593ab8,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785183179947147413, guid: 67aff1e398e90ef439aac8143d593ab8,
+        type: 3}
+      propertyPath: m_AutoBraking
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67aff1e398e90ef439aac8143d593ab8, type: 3}
 --- !u!1 &1879633613
@@ -570,6 +590,7 @@ GameObject:
   - component: {fileID: 1879633617}
   - component: {fileID: 1879633616}
   - component: {fileID: 1879633615}
+  - component: {fileID: 1879633618}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -650,25 +671,13 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879633613}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1913047979 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2435864802916099681, guid: 21cc8eeb4e45a3e4fb53d17c35dff679,
-    type: 3}
-  m_PrefabInstance: {fileID: 1582693624}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &1913047981 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 2435864802916099688, guid: 21cc8eeb4e45a3e4fb53d17c35dff679,
-    type: 3}
-  m_PrefabInstance: {fileID: 1582693624}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1913047987
+--- !u!114 &1879633618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913047979}
+  m_GameObject: {fileID: 1879633613}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd6104a30e4cd75448ed58edd83dfa4c, type: 3}
@@ -678,8 +687,16 @@ MonoBehaviour:
   speed: 10
   maxAmmo: 20
   ammo: 20
+  rateOfFire: 1
   range: 10
+  lineDelay: 0.5
   shootPoint: {fileID: 430335589}
+--- !u!54 &1913047981 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 2435864802916099688, guid: 21cc8eeb4e45a3e4fb53d17c35dff679,
+    type: 3}
+  m_PrefabInstance: {fileID: 1582693624}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2120975155
 GameObject:
   m_ObjectHideFlags: 0
