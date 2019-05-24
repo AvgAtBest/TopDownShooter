@@ -15,8 +15,7 @@ MonoBehaviour:
   name: Default
   spawns:
   - {fileID: 1705584254026091410, guid: e8acf623843906346af352f9c952d504, type: 3}
-  bosses:
-  - {fileID: 1705584254026091410, guid: e8acf623843906346af352f9c952d504, type: 3}
+  bosses: []
   doors:
   - {fileID: 11476880, guid: 2e19caa3de7304112952c9d091d67bc7, type: 3}
   roomTemplates:

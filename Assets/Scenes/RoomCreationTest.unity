@@ -155,9 +155,10 @@ MonoBehaviour:
   openSet: []
   doorVoxelsTest: []
   startRoom: {fileID: 0}
-  endRoom: {fileID: 0}
+  endRoom: {fileID: 6216858457300623731, guid: ace6798ba30e3844795356d1acdae509, type: 3}
   generateWithTimer: 0
   hasEndRoomSpawned: 0
+  amountEndRoomsSpawned: 0
   timer: 0
   delayTime: 0.1
 --- !u!4 &1442480481
