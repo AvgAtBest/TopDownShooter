@@ -142,19 +142,6 @@ public class Shooting : MonoBehaviour
 
         }
 
-        IEnumerator ShowLine(Vector3 start, Vector3 end, float lineDelay)
-        {
-            // Update and Show the line
-            lineRenderer.SetPosition(0, start);
-            lineRenderer.SetPosition(1, end);
-            lineRenderer.enabled = true;
-
-            // Wait a few seconds
-            yield return new WaitForSeconds(lineDelay);
-
-            // Hide the line
-            lineRenderer.enabled = false;
-        }
 
     }
 }
