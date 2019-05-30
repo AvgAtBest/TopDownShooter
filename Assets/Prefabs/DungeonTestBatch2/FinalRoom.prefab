@@ -285,7 +285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6216858457300623731}
   m_LocalRotation: {x: 0, y: 0.0000011046701, z: 0, w: -1}
-  m_LocalPosition: {x: 25.000023, y: 5, z: -45.00009}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6216858457684871411}
@@ -319,7 +319,7 @@ MonoBehaviour:
   - {fileID: 6216858457814867910}
   gameObjectContainer: {fileID: 6216858457684871420}
   bounds:
-    m_Center: {x: 35, y: 5, z: -35.00007}
+    m_Center: {x: 10, y: 5, z: 10}
     m_Extent: {x: 15.000022, y: 5, z: 15.000022}
   voxelScale: 10
 --- !u!114 &6216858457300623730
