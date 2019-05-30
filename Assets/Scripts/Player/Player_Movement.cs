@@ -6,38 +6,36 @@ public class Player_Movement : MonoBehaviour
 {
     public float speed = 10f;
 
-    private CharacterController charC;
+    private Rigidbody rigid;
     private Vector3 motion;
     private Camera cam;
+    public bool isTopDown;
     void Start()
     {
-        charC = GetComponent<CharacterController>();
+        rigid = GetComponent<Rigidbody>();
         cam = FindObjectOfType<Camera>();
+        rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
     void Update()
     {
-        float inputH = Input.GetAxis("Horizontal");
-        float inputZ = Input.GetAxis("Vertical");
-        Move(inputH, inputZ);
-        charC.Move(motion * Time.deltaTime);
+        float inputH = Input.GetAxis("Horizontal") * speed;
+        float inputZ = Input.GetAxis("Vertical") * speed;
 
-        Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        float rayLength = 100f;
-        if(groundPlane.Raycast(cameraRay, out rayLength))
-        {
-            Vector3 hitPoint = cameraRay.GetPoint(rayLength);
-            transform.LookAt(new Vector3(hitPoint.x, transform.position.y, hitPoint.z));
-        }
+        Vector3 moveDir = new Vector3(inputH, 0f, inputZ);
+        Vector3 camEuler = Camera.main.transform.eulerAngles;
+        moveDir = Quaternion.AngleAxis(camEuler.y, Vector3.up) * moveDir;
+        Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
 
-
+        rigid.velocity = force;
+        Quaternion playerRot = Quaternion.AngleAxis(camEuler.y, Vector3.up);
+        transform.rotation = playerRot;
     }
-    void Move(float inputH, float inputZ)
-    {
-        Vector3 direction = new Vector3(inputH, 0f, inputZ);
+    //void Move(float inputH, float inputZ)
+    //{
+    //    Vector3 direction = new Vector3(inputH, 0f, inputZ);
 
-        motion.x = direction.x * speed;
-        motion.z = direction.z * speed;
+    //    motion.x = direction.x * speed;
+    //    motion.z = direction.z * speed;
 
-    }
+    //}
 }

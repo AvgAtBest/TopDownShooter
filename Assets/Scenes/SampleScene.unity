@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -144,7 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  trackingCamera: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
   smoothing: 0.2
+  velocity: {x: 0, y: 0, z: 0}
+  turnSpeed: 2
 --- !u!81 &139370840
 AudioListener:
   m_ObjectHideFlags: 0
@@ -202,13 +206,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 139370838}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &165999009
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,10 +873,10 @@ GameObject:
   - component: {fileID: 2147198617}
   - component: {fileID: 2147198616}
   - component: {fileID: 2147198615}
-  - component: {fileID: 2147198614}
   - component: {fileID: 2147198619}
+  - component: {fileID: 2147198622}
   - component: {fileID: 2147198620}
-  - component: {fileID: 2147198621}
+  - component: {fileID: 2147198614}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -880,24 +884,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!143 &2147198614
-CharacterController:
+--- !u!114 &2147198614
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2147198613}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0227ca3490afc648a592582396d6a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dive: {x: 0, y: 0, z: 0}
+  force: 2
+  isGrounded: 0
+  rb: {fileID: 0}
 --- !u!136 &2147198615
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -985,6 +987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  isTopDown: 0
 --- !u!54 &2147198620
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1001,7 +1004,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2147198621
+--- !u!114 &2147198622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1010,12 +1013,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2147198613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0227ca3490afc648a592582396d6a3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 011ae1b1cc8ec5746bec41524c4cb49a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dive: {x: 0, y: 0, z: 0}
-  force: 5
-  isGrounded: 0
+  muzzleSpawn: {fileID: 165999010}
+  bulletTest: {fileID: 0}
 --- !u!1001 &6785183180213957019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1027,6 +1029,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785183179947147414, guid: 67aff1e398e90ef439aac8143d593ab8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6785183179947147400, guid: 67aff1e398e90ef439aac8143d593ab8,
         type: 3}
