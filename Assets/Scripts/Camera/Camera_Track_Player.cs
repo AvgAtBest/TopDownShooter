@@ -19,6 +19,7 @@ public class Camera_Track_Player : MonoBehaviour
 		
 		trackingCamera = this.GetComponent<Camera>();
 		
+
 	}
 
 	// Update is called once per frame
