@@ -33,8 +33,8 @@ public class Player_Interaction : MonoBehaviour
     {
         Debug.Log("Shooting");
         
-        GameObject clone = Instantiate(bulletTest, muzzleSpawn.position, muzzleSpawn.rotation);
-        clone.AddComponent<Rigidbody>();
+        //GameObject clone = Instantiate(bulletTest, muzzleSpawn.position, muzzleSpawn.rotation);
+        //clone.AddComponent<Rigidbody>();
 
     }
 }
