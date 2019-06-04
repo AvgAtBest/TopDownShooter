@@ -7,6 +7,8 @@ public class Player_Interaction : MonoBehaviour
     private Camera cam;
     public Transform muzzleSpawn;
     public GameObject bulletTest;
+
+    
     void Start()
     {
         muzzleSpawn = GameObject.Find("Muzzle").GetComponentInChildren<Transform>();
