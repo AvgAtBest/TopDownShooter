@@ -7,6 +7,8 @@ public class Player_Interaction : MonoBehaviour
     private Camera cam;
     public Transform muzzleSpawn;
     public GameObject bulletTest;
+
+    
     void Start()
     {
         muzzleSpawn = GameObject.Find("Muzzle").GetComponentInChildren<Transform>();
@@ -33,8 +35,8 @@ public class Player_Interaction : MonoBehaviour
     {
         Debug.Log("Shooting");
         
-        GameObject clone = Instantiate(bulletTest, muzzleSpawn.position, muzzleSpawn.rotation);
-        clone.AddComponent<Rigidbody>();
+        //GameObject clone = Instantiate(bulletTest, muzzleSpawn.position, muzzleSpawn.rotation);
+        //clone.AddComponent<Rigidbody>();
 
     }
 }
