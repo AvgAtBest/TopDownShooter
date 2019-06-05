@@ -48,11 +48,4 @@ public class Camera_Track_Player : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
-    {
-        Vector3 averagePos = target.position;
-        averagePos.y = transform.position.y;
-        transform.position = Vector3.SmoothDamp(transform.position, averagePos, ref velocity, smoothing);
-    }
-
 }
