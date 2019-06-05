@@ -212,6 +212,9 @@ MonoBehaviour:
   offset: {x: 0, y: 5, z: 0}
   smoothing: 0.2
   velocity: {x: 0, y: 0, z: 0}
+  turnSpeed: 2
+  startPos: {x: 0, y: 0, z: 0}
+  xRot: 90
 --- !u!1 &1216100361
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,12 +359,17 @@ PrefabInstance:
     - target: {fileID: 2435864802916099688, guid: 21cc8eeb4e45a3e4fb53d17c35dff679,
         type: 3}
       propertyPath: m_Constraints
-      value: 112
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 2435864802916099689, guid: 21cc8eeb4e45a3e4fb53d17c35dff679,
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2435864802916099695, guid: 21cc8eeb4e45a3e4fb53d17c35dff679,
+        type: 3}
+      propertyPath: offset
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21cc8eeb4e45a3e4fb53d17c35dff679, type: 3}
