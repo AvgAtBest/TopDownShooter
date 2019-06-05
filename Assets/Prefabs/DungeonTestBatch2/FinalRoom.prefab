@@ -320,7 +320,7 @@ MonoBehaviour:
   gameObjectContainer: {fileID: 6216858457684871420}
   bounds:
     m_Center: {x: 10, y: 5, z: 10}
-    m_Extent: {x: 15.000023, y: 5, z: 15.000023}
+    m_Extent: {x: 15, y: 5, z: 15}
   voxelScale: 10
 --- !u!114 &6216858457300623730
 MonoBehaviour:
@@ -394,7 +394,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a268580c1cd50b14092cf52c75b6efd8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
