@@ -126,12 +126,19 @@ public class DungeonGenerator : MonoBehaviour
 			possibleRooms.Add(data.sets[dungeonSet].roomTemplates[i]);
 		}
 		possibleRooms.Shuffle(random.random);
-		//List<Room> endElevatorRoom = new List<Room>();
-		//for (int i = 0; i < data.sets[dungeonSet].finalRooms.Count; i++)
-		//{
-		//    endElevatorRoom.Add(data.sets[dungeonSet].finalRooms[i]);
-		//}
-		GameObject newRoom;
+        //List<Room> endElevatorRoom = new List<Room>();
+        //for (int i = 0; i < data.sets[dungeonSet].finalRooms.Count; i++)
+        //{
+        //    endElevatorRoom.Add(data.sets[dungeonSet].finalRooms[i]);
+        //}
+        #region David editions 5th June
+        List<Room> finalRoom = new List<Room>();
+        for (int f = 0; f < data.sets[dungeonSet].finalRooms.Count; f++)
+        {
+            finalRoom.Add(data.sets[dungeonSet].finalRooms[f]);
+        }
+        #endregion
+        GameObject newRoom;
 		GeneratorDoor door;
 		bool roomIsGood = false;
 
@@ -150,15 +157,19 @@ public class DungeonGenerator : MonoBehaviour
 			int doors = 0;
 			bool tryAgain = false;
 			GameObject roomToTry;
-			// endRoomToTry;
-			int r = random.range(0, possibleRooms.Count - 1);
+            #region Test for alignment 5th June
+            // endRoomToTry;
+            int r = random.range(0, possibleRooms.Count - 1);
+            int p = random.range(0, finalRoom.Count - 1);
 			////Debug.Log("r: " + r);
 			////Debug.Log(possibleRooms.Count);
 			roomToTry = possibleRooms[r].gameObject;
+            roomToTry = finalRoom[p].gameObject;
 			//endRoomToTry = endRoom;
 			doors = roomToTry.GetComponent<Room>().doors.Count;
-
-			if (doors == 1 && possibleRooms.Count > 1)
+            #endregion
+            #region Check for alignment
+            if (doors == 1 && possibleRooms.Count > 1 && finalRoom.Count == 1)
 			{
 				//Debug.Log("we're adding a room with one door when we have other's we could try first..");
 				float chance = 1f - Mathf.Sqrt(((float)roomsCount / (float)targetRooms)); //the closer we are to target the less of a chance of changing rooms
@@ -166,22 +177,29 @@ public class DungeonGenerator : MonoBehaviour
 				//Debug.Log("Chance: " + chance + " | Random value: " + randomValue);
 				if (randomValue < chance)
 				{
-					r = random.range(0, possibleRooms.Count - 1);
-					roomToTry = possibleRooms[r].gameObject;
-					//Debug.Log("trying a new room");
-					//Debug.Log("New room has doors: " + roomToTry.GetComponent<Room>().doors.Count);
+                    #region Test for alignment 5th June
+                    r = random.range(0, possibleRooms.Count - 1);
+                    //p = random.range(0, finalRoom.Count - 1);
+                    roomToTry = possibleRooms[r].gameObject;
+                    #endregion
+                    //Debug.Log("trying a new room");
+                    //Debug.Log("New room has doors: " + roomToTry.GetComponent<Room>().doors.Count);
 
-					doors = roomToTry.GetComponent<Room>().doors.Count;
-					if (doors == 1 && possibleRooms.Count > 1)
+                    doors = roomToTry.GetComponent<Room>().doors.Count;
+					if (doors == 1 && possibleRooms.Count > 1 && finalRoom.Count == 1)
 					{
 						float chance2 = 1f - Mathf.Sqrt(((float)roomsCount / (float)targetRooms)); //the closer we are to target the less of a chance of changing rooms
 						float randomValue2 = random.value();
 						if (randomValue2 < chance2)
 						{
-							r = random.range(0, possibleRooms.Count - 1);
-							roomToTry = possibleRooms[r].gameObject;
-						}
-						else
+                            #region Test for alignment 5th June
+                            r = random.range(0, possibleRooms.Count - 1);
+                            //p = random.range(0, finalRoom.Count - 1);
+                            roomToTry = possibleRooms[r].gameObject;
+                            #endregion
+
+                        }
+                        else
 						{
 							Debug.Log("Oh well again..");
 							//int finalRoom = random.range(0, data.sets[dungeonSet].finalRooms.Count - 1);
@@ -197,7 +215,8 @@ public class DungeonGenerator : MonoBehaviour
 					Debug.Log("Oh well!");
 				}
 			}
-			possibleRooms.RemoveAt(r);
+            #endregion
+            possibleRooms.RemoveAt(r);
 
 			newRoom = (GameObject)Instantiate(roomToTry);
 
@@ -208,10 +227,12 @@ public class DungeonGenerator : MonoBehaviour
 			{
 
 				possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
+                finalRoom = GetAllRoomsWithOneDoor(finalRoom); // ADDED 5TH JUNE
 				Debug.Log("ADDING END ROOMS TARGET REACHED!");
 
 				if (amountEndRoomsSpawned < 1)
 				{
+                    door = ConnectRooms(lastRoom, endRoom.GetComponent<Room>()); //ADDED 5TH JUNE
 					FinalSpawn(newRoom, lastRoom, door);
 					amountEndRoomsSpawned++;
 				}
@@ -226,7 +247,7 @@ public class DungeonGenerator : MonoBehaviour
 				if (globalVoxels.ContainsKey(RoundVec3ToInt(v.voxels[i].gameObject.transform.position)))
 				{
 					//overlap found! bad!
-					//Debug.Log("THERE IS AN OVERLAP!!");
+					Debug.Log("THERE IS AN OVERLAP!!");
 					overlap = true;
 					continue;
 				}
@@ -379,6 +400,7 @@ public class DungeonGenerator : MonoBehaviour
 			else
 			{
 				GameObject.DestroyImmediate(newRoom);
+
 				//Debug.Log("Try a different room!!!!--------");
 				//destroy the room we just tried to place
 			}
@@ -415,9 +437,11 @@ public class DungeonGenerator : MonoBehaviour
 		//if (lastRoom.hasOpenDoors()) openSet.Remove(lastRoom.GetComponent<Room>());
 		//
 		//if (newRoom.GetComponent<Room>().hasOpenDoors()) openSet.Add(newRoom.GetComponent<Room>());
-		if (newRoom.GetComponent<Room>().hasOpenDoors())
+		if (newRoom.GetComponent<Room>().hasOpenDoors() && !hasEndRoomSpawned)
 		{
-			openSet.Add(newRoom.GetComponent<Room>());
+            hasEndRoomSpawned = true;
+            AddGlobalVoxels(newRoom.GetComponent<Volume>().voxels);
+            openSet.Remove(lastRoom.GetComponent<Room>());
 
 			newRoom = (GameObject)Instantiate(endRoom);
 			GeneratorDoor otherDoor = newRoom.GetComponent<Room>().GetFirstOpenDoor();
