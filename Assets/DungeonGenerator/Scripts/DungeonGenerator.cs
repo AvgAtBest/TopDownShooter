@@ -32,10 +32,12 @@ public class DungeonGenerator : MonoBehaviour
 	public GameObject startRoom;
 	public GameObject endRoom;
 	public static int roomsCalledStart = 0;
-
+	
 	public bool generateWithTimer = true;
-	public bool hasEndRoomSpawned;
+	public bool hasFinalRoomSpawned;
 	public int amountEndRoomsSpawned = 0;
+	//public GameObject player;
+	public Transform spawnLocation;
 	#region Start
 	void Start()
 	{
@@ -62,7 +64,7 @@ public class DungeonGenerator : MonoBehaviour
 		//Debug.Log("Using set: " + data.sets[dungeonSet].name);
 
 		StartGeneration();
-
+		SpawnPlayer();
 
 	}
 	#endregion
@@ -80,6 +82,7 @@ public class DungeonGenerator : MonoBehaviour
 		GameObject room = (GameObject)Instantiate(data.sets[dungeonSet].spawns[spawn].gameObject);
 
 		startRoom = room;
+
 		rooms.Add(room.GetComponent<Room>());
 		room.transform.parent = this.gameObject.transform;
 		openSet.Add(room.GetComponent<EL.Dungeon.Room>());
@@ -117,6 +120,18 @@ public class DungeonGenerator : MonoBehaviour
 
 	}
 	#endregion
+	void SpawnPlayer()
+	{
+
+		
+			spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
+			GameObject player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject);
+		  player.name = "Player";
+			player.transform.position = spawnLocation.transform.position;
+		  Debug.Log("Spawn" + player.name + player.transform.localPosition);
+		
+
+	}
 	#region Generate the next rooms
 	private void GenerateNextRoom()
 	{
@@ -215,9 +230,9 @@ public class DungeonGenerator : MonoBehaviour
 			Debug.Log("Room to try has spawned" + roomToTry.ToString());
 			newRoom.transform.parent = this.gameObject.transform;
 			door = ConnectRooms(lastRoom, newRoom.GetComponent<Room>());
-			if (roomsCount >= targetRooms)
+			if (roomsCount == targetRooms)
 			{
-				if(hasEndRoomSpawned == false)
+				if(hasFinalRoomSpawned == false)
 				{
 					if (amountEndRoomsSpawned < 1)
 					{
@@ -712,7 +727,7 @@ public class DungeonGenerator : MonoBehaviour
 			Debug.Log(lastRoom.gameObject.name + lastRoom.gameObject.transform.position + "Has been destroyed");
 			if (newRoom.GetComponent<Room>().hasOpenDoors()) openSet.Add(newRoom.GetComponent<Room>());
 			roomsCount++;
-			hasEndRoomSpawned = true;
+			hasFinalRoomSpawned = true;
 
 			//Debug.Log("Openset: " + openSet.Count);
 		}

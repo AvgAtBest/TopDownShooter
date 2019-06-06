@@ -20,7 +20,7 @@ public class Camera_Track_Player : MonoBehaviour
         //offset = transform.position - target.position;
 
 
-        trackingCamera = this.GetComponent<Camera>();
+        trackingCamera = Camera.main.GetComponent<Camera>();
         TopDownCamView();
     }
 
