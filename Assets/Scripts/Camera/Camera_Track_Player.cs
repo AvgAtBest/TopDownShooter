@@ -38,7 +38,7 @@ public class Camera_Track_Player : MonoBehaviour
     }
     private void TopDownCamView()
     {
-        startPos = new Vector3(0, 15, 0);
+        startPos = new Vector3(0, 20f, 0);
         trackingCamera.transform.position = startPos;
         trackingCamera.transform.eulerAngles = new Vector3(xRot, 0, 0);
     }

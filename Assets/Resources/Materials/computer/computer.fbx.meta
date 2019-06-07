@@ -1,33 +1,20 @@
 fileFormatVersion: 2
-guid: 989b6dd2d9c4cca4a829f4bb65b18f2e
+guid: d59d78309033ad64399e488f821e4f23
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: cubicle 1
-    100002: //RootNode
-    100004: glass
-    400000: cubicle 1
-    400002: //RootNode
-    400004: glass
-    2100000: lambert2SG1
-    2100002: initialShadingGroup1
-    2300000: cubicle 1
-    2300002: glass
-    3300000: cubicle 1
-    3300002: glass
-    4300000: glass
-    4300002: cubicle
+    100000: //RootNode
+    400000: //RootNode
+    2100000: legs
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: computer
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: initialShadingGroup1
-    second: {fileID: 2100000, guid: c0cc2461f4af8324c8b18852ed14c609, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert2SG1
-    second: {fileID: 2100000, guid: 0bfd90b18a2d75b4585d551fa94da8cc, type: 2}
+      name: legs
+    second: {fileID: 2100000, guid: 64f2422e95ed2a44a88707c42f3ea5e2, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -78,7 +65,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 0
   tangentSpace:

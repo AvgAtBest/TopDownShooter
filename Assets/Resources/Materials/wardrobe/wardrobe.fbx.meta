@@ -1,33 +1,38 @@
 fileFormatVersion: 2
-guid: 989b6dd2d9c4cca4a829f4bb65b18f2e
+guid: 686f3d10a4debe14794c1c82ef09b7e1
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: cubicle 1
-    100002: //RootNode
-    100004: glass
-    400000: cubicle 1
-    400002: //RootNode
-    400004: glass
-    2100000: lambert2SG1
-    2100002: initialShadingGroup1
-    2300000: cubicle 1
-    2300002: glass
-    3300000: cubicle 1
-    3300002: glass
-    4300000: glass
-    4300002: cubicle
+    100000: left_door
+    100002: right_door
+    100004: //RootNode
+    100006: wardrobe 1
+    400000: left_door
+    400002: right_door
+    400004: //RootNode
+    400006: wardrobe 1
+    2100000: lambert1
+    2100002: legs
+    2300000: left_door
+    2300002: right_door
+    2300004: wardrobe 1
+    3300000: left_door
+    3300002: right_door
+    3300004: wardrobe 1
+    4300000: wardrobe
+    4300002: left_door
+    4300004: right_door
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: initialShadingGroup1
-    second: {fileID: 2100000, guid: c0cc2461f4af8324c8b18852ed14c609, type: 2}
+      name: lambert1
+    second: {fileID: 2100000, guid: c65823f2186067b49997cd008420f6b4, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert2SG1
-    second: {fileID: 2100000, guid: 0bfd90b18a2d75b4585d551fa94da8cc, type: 2}
+      name: legs
+    second: {fileID: 2100000, guid: 7fa94ecc16bdf8c4c9863539cc078495, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -78,7 +83,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 0
   tangentSpace:

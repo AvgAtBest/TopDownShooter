@@ -1,33 +1,53 @@
 fileFormatVersion: 2
-guid: 989b6dd2d9c4cca4a829f4bb65b18f2e
+guid: acadd87247a153b4db14f920c5fef289
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: cubicle 1
-    100002: //RootNode
-    100004: glass
-    400000: cubicle 1
-    400002: //RootNode
-    400004: glass
-    2100000: lambert2SG1
-    2100002: initialShadingGroup1
-    2300000: cubicle 1
-    2300002: glass
-    3300000: cubicle 1
-    3300002: glass
-    4300000: glass
-    4300002: cubicle
+    100000: //RootNode
+    100002: draw_01
+    100004: draw_02
+    100006: draw_03
+    100008: draw_04
+    100010: draw_05
+    100012: draw_chest
+    400000: //RootNode
+    400002: draw_01
+    400004: draw_02
+    400006: draw_03
+    400008: draw_04
+    400010: draw_05
+    400012: draw_chest
+    2100000: lambert1
+    2100002: table1
+    2300000: draw_01
+    2300002: draw_02
+    2300004: draw_03
+    2300006: draw_04
+    2300008: draw_05
+    2300010: draw_chest
+    3300000: draw_01
+    3300002: draw_02
+    3300004: draw_03
+    3300006: draw_04
+    3300008: draw_05
+    3300010: draw_chest
+    4300000: draw_chest
+    4300002: draw_01
+    4300004: draw_02
+    4300006: draw_03
+    4300008: draw_04
+    4300010: draw_05
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: initialShadingGroup1
-    second: {fileID: 2100000, guid: c0cc2461f4af8324c8b18852ed14c609, type: 2}
+      name: lambert1
+    second: {fileID: 2100000, guid: ba68832464a992c4da5b6b11cfd05c14, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert2SG1
-    second: {fileID: 2100000, guid: 0bfd90b18a2d75b4585d551fa94da8cc, type: 2}
+      name: table1
+    second: {fileID: 2100000, guid: b34e7f3b99cccea438075cfd6ce7644e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -78,7 +98,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
