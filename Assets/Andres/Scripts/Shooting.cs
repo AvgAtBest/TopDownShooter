@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooting : MonoBehaviour
+public class Shooting : MonoBehaviour // Andres
 {
     public float bulletSpeed = 1100;
     public GameObject bullet;

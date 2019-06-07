@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Loot : MonoBehaviour
+public class Loot : MonoBehaviour //Andres
 {
     [System.Serializable]
     public class DropAmmo
@@ -13,16 +13,30 @@ public class Loot : MonoBehaviour
     }
 
     public List<DropAmmo> LootTable = new List<DropAmmo>();
+    public int dropChance;
 
-    // Start is called before the first frame update
-    void Start()
+    public void CalculateLoot(Transform enemy)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+        int itemWeight = 0;
+
+        for (int i = 0; i < LootTable.Count; i++)
+        {
+            itemWeight += LootTable[i].dropRarity;
+        }
+
+        int randomValue = Random.Range(0, itemWeight);//80
+
+        for (int i = 0; i < LootTable.Count; i++)
+        {
+            if (randomValue <= LootTable[i].dropRarity)
+            {
+                Instantiate(LootTable[i].item, enemy.position, Quaternion.identity);
+                return;
+            }
+            randomValue -= LootTable[i].dropRarity;
+        }
+
     }
 }
