@@ -147,7 +147,7 @@ MonoBehaviour:
   randomizeSeedOnStart: 1
   randomizeRoomSize: 0
   generationComplete: 0
-  targetRooms: 50
+  targetRooms: 30
   roomsCount: 0
   rooms: []
   doors: []

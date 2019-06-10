@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using EL.Dungeon;
 using System.Linq;
+using UnityEngine.SceneManagement;
 #if Unity_Editor
 using UnityEditor;
 #endif
@@ -33,7 +34,7 @@ public class DungeonGenerator : MonoBehaviour
 	public GameObject startRoom;
 	public GameObject endRoom;
 	public static int roomsCalledStart = 0;
-	bool playerFirstInitialSpawn = false;
+	public bool playerFirstInitialSpawn = false;
 	public bool generateWithTimer = true;
 	public bool hasFinalRoomSpawned;
 	public int amountEndRoomsSpawned = 0;
@@ -41,6 +42,8 @@ public class DungeonGenerator : MonoBehaviour
 	//public GameObject player;
 	public Transform spawnLocation;
 	GameObject player;
+
+
 	#region Start
 	void Start()
 	{
@@ -122,6 +125,7 @@ public class DungeonGenerator : MonoBehaviour
 
 		generationComplete = true;
 		Debug.Log("DungeonGenerator::Generation completed : " + DDebugTimer.Lap() + "ms");
+		DontDestroyOnLoad(player);
 
 	}
 	#endregion
@@ -139,6 +143,7 @@ public class DungeonGenerator : MonoBehaviour
 		}
 		else
 		{
+			
 			player.transform.position = spawnLocation.transform.position;
 		}
 		//	//spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
@@ -187,7 +192,7 @@ public class DungeonGenerator : MonoBehaviour
 			}
 			doorVoxelsTest.Clear();
 			//Testing, working with greater than
-			if (roomsCount > targetRooms)
+			if (roomsCount >= targetRooms)
 			{
 				//POSSIBLE ROOMS SHOULD GO UNDER HERE, AND ONLY POSSIBLE ROOMS.
 
@@ -270,11 +275,12 @@ public class DungeonGenerator : MonoBehaviour
 			//			FinalSpawn(newRoom, lastRoom, door);
 			//		}
 			//	}
+
 			//Testing, should be ==
 			if (roomsCount == targetRooms)
 			{
 				FinalSpawn(newRoom, lastRoom, door);
-				Debug.Log("Trying to spawn the final room at" + newRoom.transform.position);
+				
 
 
 			}
@@ -907,6 +913,9 @@ public class DungeonGenerator : MonoBehaviour
 		{
 			Application.LoadLevel(Application.loadedLevel);
 		}
+
 	}
+
 	#endregion
+
 }
