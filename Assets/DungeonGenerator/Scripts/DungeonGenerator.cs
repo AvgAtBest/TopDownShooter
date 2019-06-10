@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using EL.Dungeon;
+using System.Linq;
 #if Unity_Editor
 using UnityEditor;
 #endif
@@ -17,7 +18,7 @@ public class DungeonGenerator : MonoBehaviour
 	public DRandom random;
 
 	public bool generationComplete = false;
-	public int targetRooms = 10;
+	public int targetRooms = 50;
 	public int roomsCount;
 	private List<string> parts = new List<string>();
 	public List<Room> rooms = new List<Room>();
@@ -36,6 +37,7 @@ public class DungeonGenerator : MonoBehaviour
 	public bool generateWithTimer = true;
 	public bool hasFinalRoomSpawned;
 	public int amountEndRoomsSpawned = 0;
+	public bool hasAllTheEndRoomsSpawned;
 	//public GameObject player;
 	public Transform spawnLocation;
 	GameObject player;
@@ -110,7 +112,6 @@ public class DungeonGenerator : MonoBehaviour
 					doors.Add(d);
 					rooms[i].doors[j].door = d;
 					rooms[i].doors[j].sharedDoor.door = d;
-					//
 					d.gameObject.transform.position = rooms[i].doors[j].transform.position;
 					d.gameObject.transform.rotation = rooms[i].doors[j].transform.rotation;
 					d.gameObject.transform.parent = this.gameObject.transform;
@@ -185,6 +186,15 @@ public class DungeonGenerator : MonoBehaviour
 				GameObject.DestroyImmediate(doorVoxelsTest[i]);
 			}
 			doorVoxelsTest.Clear();
+			//Testing, working with greater than
+			if (roomsCount > targetRooms)
+			{
+				//POSSIBLE ROOMS SHOULD GO UNDER HERE, AND ONLY POSSIBLE ROOMS.
+
+				possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
+				//amountEndRoomsSpawned++;
+			}
+			
 
 
 			//If we picked a room with with one door, try again UNLESS we've have no other rooms to try
@@ -238,6 +248,8 @@ public class DungeonGenerator : MonoBehaviour
 				else
 				{
 					Debug.Log("Oh well!");
+					Debug.Log("WHAT DO WE DO NOW BOSS???");
+					
 				}
 			}
 			possibleRooms.RemoveAt(r);
@@ -246,23 +258,34 @@ public class DungeonGenerator : MonoBehaviour
 			Debug.Log("Room to try has spawned" + roomToTry.gameObject.name + roomToTry.transform.position);
 			newRoom.transform.parent = this.gameObject.transform;
 			door = ConnectRooms(lastRoom, newRoom.GetComponent<Room>());
+			//FINAL ROOM AND END ROOM SPAWNING, BUT STILL CHECKING. LEAVE HERE FOR TESTING
+			//if (roomsCount == targetRooms)
+			//{
+			//	if(hasFinalRoomSpawned == false)
+			//	{
+			//		if (amountEndRoomsSpawned < 1)
+			//		{
+			//			possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
+			//			amountEndRoomsSpawned++;
+			//			FinalSpawn(newRoom, lastRoom, door);
+			//		}
+			//	}
+			//Testing, should be ==
 			if (roomsCount == targetRooms)
 			{
-				if(hasFinalRoomSpawned == false)
-				{
-					if (amountEndRoomsSpawned < 1)
-					{
-						possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
-						amountEndRoomsSpawned++;
-						FinalSpawn(newRoom, lastRoom, door);
-					}
-				}
+				FinalSpawn(newRoom, lastRoom, door);
+				Debug.Log("Trying to spawn the final room at" + newRoom.transform.position);
 
-
-				//finalRoomList = GetAllRoomsWithOneDoor(finalRoomList); //5TH JUNE TEST
-				Debug.Log("ADDING END ROOMS TARGET REACHED!");
 
 			}
+
+
+
+
+			//finalRoomList = GetAllRoomsWithOneDoor(finalRoomList); //5TH JUNE TEST
+			Debug.Log("ADDING END ROOMS TARGET REACHED!");
+
+		
 
 			#region Global Voxel Check
 			//room is now generated and in position... we need to test overlap now!
@@ -454,7 +477,6 @@ public class DungeonGenerator : MonoBehaviour
 			Debug.Log(lastRoom.gameObject.name + lastRoom.gameObject.transform.position + "Has been destroyed");
 			if (newRoom.GetComponent<Room>().hasOpenDoors()) openSet.Add(newRoom.GetComponent<Room>());
 			roomsCount++;
-			
 			//Debug.Log("Openset: " + openSet.Count);
 		}
 	}
@@ -550,7 +572,7 @@ public class DungeonGenerator : MonoBehaviour
 
 			newRoom = (GameObject)Instantiate(roomToTry);
 
-			Debug.Log("Room to try has spawned" + roomToTry.ToString());
+			Debug.Log("Room to try has spawned" + roomToTry.name + transform.position);
 			newRoom.transform.parent = this.gameObject.transform;
 			door = ConnectRooms(lastRoom, newRoom.GetComponent<Room>());
 
@@ -745,6 +767,8 @@ public class DungeonGenerator : MonoBehaviour
 			if (newRoom.GetComponent<Room>().hasOpenDoors()) openSet.Add(newRoom.GetComponent<Room>());
 			roomsCount++;
 			hasFinalRoomSpawned = true;
+			generationComplete = true;
+			Debug.Log("Success! Spawned" + newRoom.gameObject.name + "at" + newRoom.transform.position);
 
 			//Debug.Log("Openset: " + openSet.Count);
 		}
@@ -827,6 +851,8 @@ public class DungeonGenerator : MonoBehaviour
 				//Debug.Log("room : " + i);
 			}
 		}
+		hasAllTheEndRoomsSpawned = true;
+		amountEndRoomsSpawned++;
 		return roomsWithOneDoor;
 
 

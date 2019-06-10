@@ -45,7 +45,7 @@ namespace EL.Dungeon {
              for (int i = 0; i < doors.Count; i++) {
                  if (doors[i].open) return doors[i];
              }
-             Debug.LogError("Room::GetRandomDoor() - No open doors...");
+             Debug.LogError("Room::GetRandomDoor() - No open doors..." + transform.position);
              return null;
          }
 
