@@ -42,8 +42,8 @@ public class DungeonGenerator : MonoBehaviour
 	//public GameObject player;
 	public Transform spawnLocation;
 	GameObject player;
-
-
+	int maxEndRoomsSpawned = 1;
+	public int EndRoomsSpawned;
 	#region Start
 	void Start()
 	{
@@ -162,7 +162,7 @@ public class DungeonGenerator : MonoBehaviour
 		Room lastRoom = startRoom.GetComponent<Room>();
 		if (openSet.Count > 0) lastRoom = openSet[0];
 
-		//create a mutable list of all possible rooms
+		//create a mutable list of all possible rooms templates
 		List<Room> possibleRooms = new List<Room>();
 		for (int i = 0; i < data.sets[dungeonSet].roomTemplates.Count; i++)
 		{
@@ -187,18 +187,19 @@ public class DungeonGenerator : MonoBehaviour
 
 		do
 		{
+			//voxel test
 			for (int i = 0; i < doorVoxelsTest.Count; i++)
 			{
 				GameObject.DestroyImmediate(doorVoxelsTest[i]);
 			}
 			doorVoxelsTest.Clear();
 			//Testing, working with greater than
+			//if the amount of rooms that have spawned are greater than the targetrooms
 			if (roomsCount >= targetRooms)
 			{
 				//POSSIBLE ROOMS SHOULD GO UNDER HERE, AND ONLY POSSIBLE ROOMS.
-
+				//stop spawning rooms with multiple doors and only spawn rooms in with one door, to end hallways/doors
 				possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
-				//amountEndRoomsSpawned++;
 			}
 			
 
@@ -206,20 +207,21 @@ public class DungeonGenerator : MonoBehaviour
 			//If we picked a room with with one door, try again UNLESS we've have no other rooms to try
 			int doors = 0;
 			bool tryAgain = false;
+			//the room to try and spawn
 			GameObject roomToTry;
-			// endRoomToTry;
 			int r = random.range(0, possibleRooms.Count - 1);
 			//int p = random.range(0, finalRoomList.Count - 1); //// - ALIGNMENT TEST
 			////Debug.Log("r: " + r);
 			////Debug.Log(possibleRooms.Count);
 			roomToTry = possibleRooms[r].gameObject;
-			//roomToTry = finalRoomList[p].gameObject; ////- ALIGNMENT TEST
-			//endRoomToTry = endRoom;
 			doors = roomToTry.GetComponent<Room>().doors.Count;
 
+			//REMINDER, NEED TO GENERATE ALL THE ROOMS BELOW AND THEN ONLY ONE FINALROOM WITH 100% CHANCE IF LOW ROOM COUNT
+			//If we picked a room with with one door, try again UNLESS we've have no other rooms to try
 			if (doors == 1 && possibleRooms.Count > 1) //&& finalRoomList.Count == 1)
 			{
-				//Debug.Log("we're adding a room with one door when we have other's we could try first..");
+
+				Debug.Log("we're adding a room with one door when we have other's we could try first..");
 				float chance = 1f - Mathf.Sqrt(((float)roomsCount / (float)targetRooms)); //the closer we are to target the less of a chance of changing rooms
 				float randomValue = random.value();
 				//Debug.Log("Chance: " + chance + " | Random value: " + randomValue);
@@ -227,8 +229,8 @@ public class DungeonGenerator : MonoBehaviour
 				{
 					r = random.range(0, possibleRooms.Count - 1);
 					roomToTry = possibleRooms[r].gameObject;
-					//Debug.Log("trying a new room");
-					//Debug.Log("New room has doors: " + roomToTry.GetComponent<Room>().doors.Count);
+					Debug.Log("trying a new room");
+					Debug.Log("New room has doors: " + roomToTry.GetComponent<Room>().doors.Count);
 
 					doors = roomToTry.GetComponent<Room>().doors.Count;
 					if (doors == 1 && possibleRooms.Count > 1) // && finalRoomList.Count == 1)
@@ -239,14 +241,13 @@ public class DungeonGenerator : MonoBehaviour
 						{
 							r = random.range(0, possibleRooms.Count - 1);
 							roomToTry = possibleRooms[r].gameObject;
+
 						}
 						else
 						{
 							Debug.Log("Oh well again..");
-							//int finalRoom = random.range(0, data.sets[dungeonSet].finalRooms.Count - 1);
-							//endRoom = (GameObject)Instantiate(data.sets[dungeonSet].finalRooms[finalRoom].gameObject);
 
-							//endRoom = possibleRooms[r].gameObject;
+
 						}
 
 					}
@@ -254,15 +255,17 @@ public class DungeonGenerator : MonoBehaviour
 				else
 				{
 					Debug.Log("Oh well!");
-					Debug.Log("WHAT DO WE DO NOW BOSS???");
-					
+					//CAN GET MULTIPLE FINAL ROOMS TO SNAP HERE
+					//roomToTry = finalRoomList[0].gameObject;
 				}
 			}
 			possibleRooms.RemoveAt(r);
-
+			//spawn in the room to try
 			newRoom = (GameObject)Instantiate(roomToTry);
 			Debug.Log("Room to try has spawned" + roomToTry.gameObject.name + roomToTry.transform.position);
+			//get the transform of the empty gameObject containing dungeon test
 			newRoom.transform.parent = this.gameObject.transform;
+			//Connects the new Room to the last room in the set
 			door = ConnectRooms(lastRoom, newRoom.GetComponent<Room>());
 			//FINAL ROOM AND END ROOM SPAWNING, BUT STILL CHECKING. LEAVE HERE FOR TESTING
 			//if (roomsCount == targetRooms)
@@ -277,22 +280,14 @@ public class DungeonGenerator : MonoBehaviour
 			//		}
 			//	}
 
+			//THIS WORKS, BUT CAUSES CRASHES AND WONT GENERATE IF GREATER OR LESS THAN THE TARGETROOMS
+			//Seems to be also crashing when the roomsCount = targetRooms, so yay.......
 			//Testing, should be ==
-			if (roomsCount == targetRooms)
-			{
-				FinalSpawn(newRoom, lastRoom, door);
-				
+			//if (roomsCount == targetRooms)
+			//{
+			//	FinalSpawn(newRoom, lastRoom, door);
 
-
-			}
-
-
-
-
-			//finalRoomList = GetAllRoomsWithOneDoor(finalRoomList); //5TH JUNE TEST
-			Debug.Log("ADDING END ROOMS TARGET REACHED!");
-
-		
+			//}
 
 			#region Global Voxel Check
 			//room is now generated and in position... we need to test overlap now!
@@ -772,7 +767,7 @@ public class DungeonGenerator : MonoBehaviour
 			if (!lastRoom.hasOpenDoors()) openSet.Remove(lastRoom);
 			Debug.Log(lastRoom.gameObject.name + lastRoom.gameObject.transform.position + "Has been destroyed");
 			if (newRoom.GetComponent<Room>().hasOpenDoors()) openSet.Add(newRoom.GetComponent<Room>());
-			roomsCount++;
+			//roomsCount++;
 			hasFinalRoomSpawned = true;
 			generationComplete = true;
 			Debug.Log("Success! Spawned" + newRoom.gameObject.name + "at" + newRoom.transform.position);
@@ -858,6 +853,7 @@ public class DungeonGenerator : MonoBehaviour
 				//Debug.Log("room : " + i);
 			}
 		}
+
 		hasAllTheEndRoomsSpawned = true;
 		amountEndRoomsSpawned++;
 		return roomsWithOneDoor;
