@@ -102,6 +102,7 @@ public class DungeonGenerator : MonoBehaviour
 		while (openSet.Count > 0)
 		{
 			GenerateNextRoom();
+			return;
 		}
 
 		//process doors
@@ -894,7 +895,7 @@ public class DungeonGenerator : MonoBehaviour
 	{
 		if (openSet.Count > 0)
 		{
-			if (timer >= 0)
+			if (timer <= 0)
 			{
 				if (generateWithTimer) GenerateNextRoom();
 				timer = delayTime;

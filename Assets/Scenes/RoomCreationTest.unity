@@ -156,13 +156,14 @@ MonoBehaviour:
   doorVoxelsTest: []
   startRoom: {fileID: 0}
   endRoom: {fileID: 6216858457300623731, guid: ace6798ba30e3844795356d1acdae509, type: 3}
+  playerFirstInitialSpawn: 0
   generateWithTimer: 1
   hasFinalRoomSpawned: 0
   amountEndRoomsSpawned: 0
   hasAllTheEndRoomsSpawned: 0
   spawnLocation: {fileID: 0}
   timer: 0
-  delayTime: 0.1
+  delayTime: 0.5
 --- !u!4 &1442480481
 Transform:
   m_ObjectHideFlags: 0
