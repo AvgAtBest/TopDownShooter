@@ -12,6 +12,9 @@ public class Player_Movement : MonoBehaviour
 	private Vector3 motion;
 	private Camera cam;
 	public bool isTopDown;
+
+    public GunController theGun;
+
 	void Start()
 	{
 		rigid = GetComponent<Rigidbody>();
@@ -41,6 +44,12 @@ public class Player_Movement : MonoBehaviour
             Vector3 hitPoint = cameraRay.GetPoint(rayLength);
             transform.LookAt(new Vector3(hitPoint.x, transform.position.y, hitPoint.z));
         }
+
+        if (Input.GetMouseButton(0))
+            theGun.isFiring = true;
+
+        if (Input.GetMouseButtonUp(0))
+            theGun.isFiring = false;
 
     }
 	//void Move(float inputH, float inputZ)
