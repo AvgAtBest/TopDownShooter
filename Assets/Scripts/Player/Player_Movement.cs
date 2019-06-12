@@ -17,7 +17,7 @@ public class Player_Movement : MonoBehaviour
 		rigid = GetComponent<Rigidbody>();
 		cam = FindObjectOfType<Camera>().GetComponent<Camera>();
 		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-	}
+    }
 	void Update()
 	{
 		float inputH = Input.GetAxis("Horizontal") * speed;
