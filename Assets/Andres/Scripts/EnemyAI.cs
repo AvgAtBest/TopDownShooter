@@ -29,9 +29,13 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    void Death()
+    public GameObject Drop;
+
+
+    public void Death()
     {
         loot.CalculateLoot(this.transform);
         Destroy(this.gameObject);
+        Instantiate(Drop, transform.position, transform.rotation);
     }
 }
