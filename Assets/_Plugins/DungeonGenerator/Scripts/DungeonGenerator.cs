@@ -32,18 +32,20 @@ public class DungeonGenerator : MonoBehaviour
 	public List<GameObject> doorVoxelsTest = new List<GameObject>();
 
 	public GameObject startRoom;
-	public GameObject endRoom;
+	public GameObject finalRoom;
 	public static int roomsCalledStart = 0;
 	public bool playerFirstInitialSpawn = false;
 	public bool generateWithTimer = true;
 	public bool hasFinalRoomSpawned;
 	public int amountEndRoomsSpawned = 0;
 	public bool hasAllTheEndRoomsSpawned;
-	//public GameObject player;
+	public GameObject player;
 	public Transform spawnLocation;
-	GameObject player;
+	//GameObject player;
 	int maxEndRoomsSpawned = 1;
 	public int EndRoomsSpawned;
+	public int[] elementsToTry = { 1, 2, 3, };
+	public GameObject shop;
 	#region Start
 	void Start()
 	{
@@ -70,7 +72,7 @@ public class DungeonGenerator : MonoBehaviour
 		//Debug.Log("Using set: " + data.sets[dungeonSet].name);
 
 		StartGeneration();
-		//SpawnPlayer();
+
 
 	}
 	#endregion
@@ -116,7 +118,7 @@ public class DungeonGenerator : MonoBehaviour
 					doors.Add(d);
 					rooms[i].doors[j].door = d;
 					rooms[i].doors[j].sharedDoor.door = d;
-                    //
+					//
 					d.gameObject.transform.position = rooms[i].doors[j].transform.position;
 					d.gameObject.transform.rotation = rooms[i].doors[j].transform.rotation;
 					d.gameObject.transform.parent = this.gameObject.transform;
@@ -130,8 +132,11 @@ public class DungeonGenerator : MonoBehaviour
 
 	}
 	#endregion
+	#region Spawn The Player
 	void SpawnPlayer()
 	{
+		//DontDestroyOnLoad(player);
+
 		if (playerFirstInitialSpawn == false)
 		{
 
@@ -140,44 +145,52 @@ public class DungeonGenerator : MonoBehaviour
 			player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject, spawnLocation.position, Quaternion.identity);
 			player.name = "Player";
 
+
 			Debug.Log("Spawn" + player.name + player.transform.localPosition);
 		}
 		else
 		{
-			
+
 			player.transform.position = spawnLocation.transform.position;
 		}
-		//	//spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
-		//	//GameObject player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject);
-		//	//player.name = "Player";
-		//	//player.transform.position = spawnLocation.transform.position;
-		//	//Debug.Log("Spawn" + player.name + player.transform.localPosition);
-
-
-
 	}
+	#endregion
+
+	/*
+	 * 1. Go through this function and region sections of mechanics
+	 * 2. Collapse all of the regions
+	 * 3. Analyze the structure of the regions.
+	 * 4. Split out the code that dmvielle is using into functions
+	 * 5. Change code structure to this if you want to implement that mechanic
+	 *	-> Generate the Random Values into a list (randomIndices)
+	 *	-> Select a random index from 'randomIndices' and replace element with the 100% room index
+	 *	-> Plug the randomIndices into dmveille's spawner
+	 */
+
 	#region Generate the next rooms
 	private void GenerateNextRoom()
 	{
 		Room lastRoom = startRoom.GetComponent<Room>();
 		if (openSet.Count > 0) lastRoom = openSet[0];
 
-		//create a mutable list of all possible rooms templates
+		#region Collecting possible rooms to spawn from the data set
 		List<Room> possibleRooms = new List<Room>();
 		for (int i = 0; i < data.sets[dungeonSet].roomTemplates.Count; i++)
 		{
 			possibleRooms.Add(data.sets[dungeonSet].roomTemplates[i]);
 		}
 		possibleRooms.Shuffle(random.random);
-		//List<Room> endElevatorRoom = new List<Room>();
-		//for (int i = 0; i < data.sets[dungeonSet].finalRooms.Count; i++)
-		//{
-		//    endElevatorRoom.Add(data.sets[dungeonSet].finalRooms[i]);
-		//}
+		#endregion
+
 		List<Room> finalRoomList = new List<Room>();
 		for (int f = 0; f < data.sets[dungeonSet].finalRooms.Count; f++)
 		{
 			finalRoomList.Add(data.sets[dungeonSet].finalRooms[f]);
+		}
+		List<Room> shopList = new List<Room>();
+		for (int s = 0; s < data.sets[dungeonSet].shops.Count; s++)
+		{
+			shopList.Add(data.sets[dungeonSet].shops[s]);
 		}
 		GameObject newRoom;
 		GeneratorDoor door;
@@ -201,21 +214,21 @@ public class DungeonGenerator : MonoBehaviour
 				//stop spawning rooms with multiple doors and only spawn rooms in with one door, to end hallways/doors
 				possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
 			}
-			
+
 
 
 			//If we picked a room with with one door, try again UNLESS we've have no other rooms to try
 			int doors = 0;
-			bool tryAgain = false;
+			//bool tryAgain = false;
 			//the room to try and spawn
 			GameObject roomToTry;
 			int r = random.range(0, possibleRooms.Count - 1);
+		  //int t = elementsToTry[random.range(0, possibleRooms.Count - 1)];
 			//int p = random.range(0, finalRoomList.Count - 1); //// - ALIGNMENT TEST
 			////Debug.Log("r: " + r);
 			////Debug.Log(possibleRooms.Count);
 			roomToTry = possibleRooms[r].gameObject;
 			doors = roomToTry.GetComponent<Room>().doors.Count;
-
 			//REMINDER, NEED TO GENERATE ALL THE ROOMS BELOW AND THEN ONLY ONE FINALROOM WITH 100% CHANCE IF LOW ROOM COUNT
 			//If we picked a room with with one door, try again UNLESS we've have no other rooms to try
 			if (doors == 1 && possibleRooms.Count > 1) //&& finalRoomList.Count == 1)
@@ -231,7 +244,6 @@ public class DungeonGenerator : MonoBehaviour
 					roomToTry = possibleRooms[r].gameObject;
 					Debug.Log("trying a new room");
 					Debug.Log("New room has doors: " + roomToTry.GetComponent<Room>().doors.Count);
-
 					doors = roomToTry.GetComponent<Room>().doors.Count;
 					if (doors == 1 && possibleRooms.Count > 1) // && finalRoomList.Count == 1)
 					{
@@ -249,13 +261,13 @@ public class DungeonGenerator : MonoBehaviour
 
 
 						}
-                        /*
-                    make spawn point in topoffroom prefab
-                     for each topoffrooms in scene
-                     get spawnpoint and add to list or array
-                     Random.Range list index 
-                     spawn object to that index location
-                     */
+						/*
+				make spawn point in topoffroom prefab
+				 for each topoffrooms in scene
+				 get spawnpoint and add to list or array
+				 Random.Range list index 
+				 spawn object to that index location
+				 */
 
 					}
 				}
@@ -263,18 +275,20 @@ public class DungeonGenerator : MonoBehaviour
 				{
 					Debug.Log("Oh well!");
 					//CAN GET MULTIPLE FINAL ROOMS TO SNAP HERE
-                    if(hasFinalRoomSpawned == false)
-                    {
+					if (hasFinalRoomSpawned == false)
+					{
 
-                        
-                            roomToTry = finalRoomList[0].gameObject;
+						// INDEX '0' to 100% room
+						roomToTry = finalRoomList[0].gameObject;
 
-                            hasFinalRoomSpawned = true;
-                        
+						hasFinalRoomSpawned = true;
 
-                    }
+						
+
+					}
 				}
 			}
+
 			possibleRooms.RemoveAt(r);
 			//spawn in the room to try
 			newRoom = (GameObject)Instantiate(roomToTry);
@@ -283,32 +297,32 @@ public class DungeonGenerator : MonoBehaviour
 			newRoom.transform.parent = this.gameObject.transform;
 			//Connects the new Room to the last room in the set
 			door = ConnectRooms(lastRoom, newRoom.GetComponent<Room>());
-            //FINAL ROOM AND END ROOM SPAWNING, BUT STILL CHECKING. LEAVE HERE FOR TESTING
-            //if (roomsCount == targetRooms)
-            //{
-            //	if(hasFinalRoomSpawned == false)
-            //	{
-            //		if (amountEndRoomsSpawned < 1)
-            //		{
-            //			possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
-            //			amountEndRoomsSpawned++;
-            //			FinalSpawn(newRoom, lastRoom, door);
-            //		}
-            //	}
+			//FINAL ROOM AND END ROOM SPAWNING, BUT STILL CHECKING. LEAVE HERE FOR TESTING
+			//if (roomsCount == targetRooms)
+			//{
+			//	if(hasFinalRoomSpawned == false)
+			//	{
+			//		if (amountEndRoomsSpawned < 1)
+			//		{
+			//			possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
+			//			amountEndRoomsSpawned++;
+			//			FinalSpawn(newRoom, lastRoom, door);
+			//		}
+			//	}
 
-            //THIS WORKS, BUT CAUSES CRASHES AND WONT GENERATE IF GREATER OR LESS THAN THE TARGETROOMS
-            //Seems to be also crashing when the roomsCount = targetRooms, so yay.......
-            //Testing, should be ==
-            //if (roomsCount == targetRooms)
-            //{
-                
-            //    FinalSpawn(newRoom, lastRoom, door);
+			//THIS WORKS, BUT CAUSES CRASHES AND WONT GENERATE IF GREATER OR LESS THAN THE TARGETROOMS
+			//Seems to be also crashing when the roomsCount = targetRooms, so yay.......
+			//Testing, should be ==
+			//if (roomsCount == targetRooms)
+			//{
 
-            //}
+			//    FinalSpawn(newRoom, lastRoom, door);
 
-            #region Global Voxel Check
-            //room is now generated and in position... we need to test overlap now!
-            Volume v = newRoom.GetComponent<Volume>();
+			//}
+
+			#region Global Voxel Check
+			//room is now generated and in position... we need to test overlap now!
+			Volume v = newRoom.GetComponent<Volume>();
 			Room ro = newRoom.GetComponent<Room>();
 			bool overlap = false;
 			for (int i = 0; i < v.voxels.Count; i++)
@@ -536,7 +550,7 @@ public class DungeonGenerator : MonoBehaviour
 
 			//If we picked a room with with one door, try again UNLESS we've have no other rooms to try
 			int doors = 0;
-			bool tryAgain = false;
+			//bool tryAgain = false;
 			GameObject roomToTry;
 			// endRoomToTry;
 			int r = random.range(0, finalRoomList.Count - 1);
@@ -876,6 +890,8 @@ public class DungeonGenerator : MonoBehaviour
 		return roomsWithOneDoor;
 
 
+
+
 	}
 	#endregion
 	#region Connect the Rooms
@@ -918,15 +934,15 @@ public class DungeonGenerator : MonoBehaviour
 				timer -= Time.deltaTime;
 			}
 		}
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			if (!generateWithTimer) GenerateNextRoom();
-			//Debug.Log(roomsCount + " | " + roomsCalledStart);
-		}
-		if (Input.GetKeyDown(KeyCode.Return))
-		{
-			Application.LoadLevel(Application.loadedLevel);
-		}
+		//if (Input.GetKeyDown(KeyCode.Space))
+		//{
+		//	if (!generateWithTimer) GenerateNextRoom();
+		//	//Debug.Log(roomsCount + " | " + roomsCalledStart);
+		//}
+		//if (Input.GetKeyDown(KeyCode.Return))
+		//{
+		//	Application.LoadLevel(Application.loadedLevel);
+		//}
 
 	}
 

@@ -9,11 +9,16 @@ public class SceneChange : MonoBehaviour
 	// Start is called before the first frame update
 	private void OnTriggerEnter(Collider other)
 	{
-		Scene();
+		if(other.gameObject.name == "Player")
+		{
+			Scene();
+		}
+
 	}
 
 	public void Scene()
 	{
 		SceneManager.LoadScene("RoomCreationTest");
+		Debug.Log("Scene change");
 	}
 }

@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 2435864802916099695}
   - component: {fileID: 2435864802916099688}
   - component: {fileID: 2435864802916099689}
-  - component: {fileID: 5749928408560257476}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -44,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2435864802916099681}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 56c6293c86c0944498bd4300cd68d6b9, type: 3}
 --- !u!23 &2435864802916099692
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -62,7 +61,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 02ac84af52dd496459f1508534e36cf1, type: 2}
+  - {fileID: 2100000, guid: 5a7144841eb87b34fac732d3a930473a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,10 +92,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.4805263
+  m_Height: 2.819543
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.3825424, z: 0}
 --- !u!114 &2435864802916099695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,8 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c22e86f8ca0d0419ec439da01eb95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 20
   isTopDown: 0
+  spawnLocation: {fileID: 0}
 --- !u!54 &2435864802916099688
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -142,15 +143,3 @@ MonoBehaviour:
   force: 5
   isGrounded: 0
   rb: {fileID: 0}
---- !u!114 &5749928408560257476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2435864802916099681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d62d185b3c3089d4ca364c709b8f6177, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
