@@ -569,6 +569,7 @@ public class DungeonGenerator : MonoBehaviour
 			if (list[i].doors.Count == 1)
 			{
 				roomsWithOneDoor.Add(list[i]);
+				//CALL IN START AFTER GENERATION, CALL START FUNCTION IN AWAKE
 				//foreach(var roomWithOneDoor in roomsWithOneDoor)
 				//{
 
@@ -584,11 +585,7 @@ public class DungeonGenerator : MonoBehaviour
 				//		}
 				//	}
 				//}
-				for (int s = 0; s < i; s++)
-				{
-					int chance = Random.Range(0, i - 1);
-					Debug.Log(i + "");
-				}
+
 				//Debug.Log("room : " + i);
 			}
 		}
