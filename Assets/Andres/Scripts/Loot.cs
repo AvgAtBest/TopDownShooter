@@ -5,24 +5,33 @@ using UnityEngine;
 public class Loot : MonoBehaviour
 {
     [System.Serializable]
-    public class DropAmmo
+    public class DropLoot
     {
         public string name;
         public GameObject item;
         public int dropRarity;
     }
 
-    public List<DropAmmo> LootTable = new List<DropAmmo>();
+    public List<DropLoot> LootTable = new List<DropLoot>();
 
-    // Start is called before the first frame update
-    void Start()
+    public void CalculateLoot(Transform enemy)
     {
-        
-    }
+        int itemWeight = 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        for (int i = 0; i < LootTable.Count; i++)
+        {
+            itemWeight += LootTable[i].dropRarity;
+        }
+        int randomValue = Random.Range(0, itemWeight);//80
+
+        for (int i = 0; i <= LootTable.Count; i++)
+        {
+            if (randomValue <= LootTable[i].dropRarity)
+            {
+                Instantiate(LootTable[i].item, enemy.position, Quaternion.identity);
+                return;
+            }
+            randomValue -= LootTable[i].dropRarity;
+        }
     }
 }

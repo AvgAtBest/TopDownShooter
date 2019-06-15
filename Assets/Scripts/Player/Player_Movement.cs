@@ -15,6 +15,9 @@ public class Player_Movement : MonoBehaviour
 	public Transform spawnLocation;
 	public bool hasPlayerSpawnedIn = false;
 	Transform ddol;
+
+  public GunController theGun;
+
 	void Start()
 	{
 		rigid = GetComponent<Rigidbody>();
@@ -82,19 +85,16 @@ public class Player_Movement : MonoBehaviour
 
 		//	transform.rotation = Quaternion.LookRotation(moveDir);
 		//}
+		if (Input.GetMouseButton(0))
+			theGun.isFiring = true;
+
+		if (Input.GetMouseButtonUp(0))
+			theGun.isFiring = false;
 	}
 	public void SetParent(Transform newParent)
 	{
 		this.transform.SetParent(newParent,false);
 		
-
 	}
-	//void Move(float inputH, float inputZ)
-	//{
-	//    Vector3 direction = new Vector3(inputH, 0f, inputZ);
 
-	//    motion.x = direction.x * speed;
-	//    motion.z = direction.z * speed;
-
-	//}
 }
