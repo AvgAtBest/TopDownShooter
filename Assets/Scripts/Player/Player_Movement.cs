@@ -15,6 +15,7 @@ public class Player_Movement : MonoBehaviour
 	public Transform spawnLocation;
 	public bool hasPlayerSpawnedIn = false;
 	Transform ddol;
+	public Transform spine;
 
   public GunController theGun;
 
@@ -50,6 +51,7 @@ public class Player_Movement : MonoBehaviour
 			{
 				Vector3 hitPoint = cameraRay.GetPoint(rayLength);
 				transform.LookAt(new Vector3(hitPoint.x, transform.position.y, hitPoint.z));
+				
 			}
 		}
 		if(isTopDown == false)
