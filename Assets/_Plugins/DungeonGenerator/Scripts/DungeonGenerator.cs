@@ -140,8 +140,11 @@ public class DungeonGenerator : MonoBehaviour
 		generationComplete = true;
 		Debug.Log("DungeonGenerator::Generation completed : " + DDebugTimer.Lap() + "ms");
 
+		if (generationComplete == true)
+		{
+			SpawnKey();
+		}
 
-		
 
 
 
@@ -313,6 +316,7 @@ public class DungeonGenerator : MonoBehaviour
 			newRoom.transform.parent = this.gameObject.transform;
 			//Connects the new Room to the last room in the set
 			door = ConnectRooms(lastRoom, newRoom.GetComponent<Room>());
+			#region Old crap
 			//FINAL ROOM AND END ROOM SPAWNING, BUT STILL CHECKING. LEAVE HERE FOR TESTING
 			//if (roomsCount == targetRooms)
 			//{
@@ -335,7 +339,7 @@ public class DungeonGenerator : MonoBehaviour
 			//    FinalSpawn(newRoom, lastRoom, door);
 
 			//}
-
+			#endregion
 			#region Global Voxel Check
 			//room is now generated and in position... we need to test overlap now!
 			Volume v = newRoom.GetComponent<Volume>();
@@ -587,7 +591,7 @@ public class DungeonGenerator : MonoBehaviour
 				foreach (var spawnyPoint in keySpawnPoints)
 				{
 					int chance = Random.Range(0, keySpawnPoints.Count - 1);
-					if(keySpawned== false)
+					if (keySpawned == false)
 					{
 						Instantiate(key, keySpawnPoints[chance].transform.position, keySpawnPoints[chance].transform.rotation);
 						keySpawned = true;
@@ -624,7 +628,7 @@ public class DungeonGenerator : MonoBehaviour
 		//	Instantiate(key, spawnPoint.transform.position, spawnPoint.transform.rotation);
 		//}
 
-		hasAllTheEndRoomsSpawned = true;
+		//hasAllTheEndRoomsSpawned = true;
 		amountEndRoomsSpawned++;
 		return roomsWithOneDoor;
 
@@ -684,35 +688,28 @@ public class DungeonGenerator : MonoBehaviour
 	}
 
 	#endregion
-	//void SpawnKeys(List<Room> list)
-	//{
+	void SpawnKey()
+	{
 
+		for (int c = 0; c < rooms.Count; c++)
+		{
+			for (int j = 0; j < rooms[c].doors.Count; j++)
+			{
+				if (rooms[c].doors.Count == 1)
+				{
+					keySpawnPoints = FindObjectsOfType<GameObject>().Where(obj => obj.name == "KeySpawn").ToList();
+					foreach (var spawnyPoint in keySpawnPoints)
+					{
+						int chance = Random.Range(0, keySpawnPoints.Count - 1);
+						if (keySpawned == false)
+						{
+							Instantiate(key, keySpawnPoints[chance].transform.position, keySpawnPoints[chance].transform.rotation);
+							keySpawned = true;
+						}
+					}
+				}
+			}
+		}
 
-	//	for (int i = 0; i > list.Count; i++)
-	//	{
-	//		if (list[i].doors.Count == 1)
-	//		{
-	//			foreach (var roomWithOneDoor in list)
-	//			{
-
-	//				Transform spawnPoint = GameObject.Find("KeySpawn").GetComponent<Transform>();
-	//				keySpawnPoints.Add(spawnPoint);
-	//				foreach (var keySpawnPoint in keySpawnPoints)
-	//				{
-	//					int chance = Random.Range(0, keySpawnPoints.Count - 1);
-	//					if (keySpawned == false)
-	//					{
-	//						Instantiate(key, keySpawnPoints[chance].position, keySpawnPoints[chance].rotation);
-	//						keySpawned = true;
-	//					}
-
-
-
-	//				}
-	//			}
-	//		}
-	//	}
-
-
-	//}
+	}
 }
