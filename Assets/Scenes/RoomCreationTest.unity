@@ -5086,6 +5086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa88fcaa71b5f1a40816eaa6570bd31c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPoint: {fileID: 0}
 --- !u!1 &452222130
 GameObject:
   m_ObjectHideFlags: 0
@@ -5700,7 +5701,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &833434750
 Transform:
   m_ObjectHideFlags: 0
@@ -6138,7 +6139,7 @@ MonoBehaviour:
   doorVoxelsTest: []
   startRoom: {fileID: 0}
   finalRoom: {fileID: 0}
-  playerFirstInitialSpawn: 0
+  playerFirstInitialSpawn: 1
   generateWithTimer: 0
   hasFinalRoomSpawned: 0
   amountEndRoomsSpawned: 0
@@ -6151,7 +6152,8 @@ MonoBehaviour:
   key: {fileID: 6019376047190863375, guid: 05df39d1f35efad4eb534d73fcedcf60, type: 3}
   keySpawned: 0
   keysToSpawn: 1
-  keySpawnPoints: []
+  keySpawnCount: 0
+  spawnyPoints: []
   timer: 0
   delayTime: 0.05
 --- !u!4 &1442480481

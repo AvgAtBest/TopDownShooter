@@ -5,11 +5,18 @@ using UnityEngine;
 public class DontDestroyOnLoad : MonoBehaviour
 {
     GameObject player;
-    // Start is called before the first frame update
-    void Start()
-    {
-        player = GameObject.Find("Player");
-        DontDestroyOnLoad(player);
-    }
+	bool hasPlayerSpawned = false;
+	// Start is called before the first frame update
+	void Awake()
+	{
+		
+		if (hasPlayerSpawned == false)
+		{
+			hasPlayerSpawned = true;
+			player = GameObject.Find("Player");
+			DontDestroyOnLoad(player);
+		}
+		
 
+	}
 }

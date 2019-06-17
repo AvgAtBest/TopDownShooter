@@ -34,7 +34,7 @@ public class DungeonGenerator : MonoBehaviour
 	public GameObject startRoom;
 	public GameObject finalRoom;
 	public static int roomsCalledStart = 0;
-	public bool playerFirstInitialSpawn = false;
+	public bool playerFirstInitialSpawn = true;
 	public bool generateWithTimer = true;
 	public bool hasFinalRoomSpawned;
 	public int amountEndRoomsSpawned = 0;
@@ -49,10 +49,12 @@ public class DungeonGenerator : MonoBehaviour
 	public GameObject key;
 	public bool keySpawned;
 	public int keysToSpawn = 1;
-	public List<Transform> keySpawnPoints = new List<Transform>();
-	
+	//public List<Transform> keySpawnPoints = new List<Transform>();
+	public int keySpawnCount;
+	public List<GameObject> keySpawnPoints = new List<GameObject>();
 	#region Start
-	void Start()
+	//change from start to awake
+	void Awake()
 	{
 
 		//instance = this;
@@ -76,13 +78,14 @@ public class DungeonGenerator : MonoBehaviour
 		//Debug.Log("Rooms count: " + targetRooms);
 		//Debug.Log("Using set: " + data.sets[dungeonSet].name);
 
-		StartGeneration();
-		
+		//StartGeneration();
+
 
 	}
 	#endregion
 	#region Start Generation
-	private void StartGeneration()
+	//StartGeneration
+	public void Start()
 	{
 		DDebugTimer.Start();
 
@@ -105,6 +108,8 @@ public class DungeonGenerator : MonoBehaviour
 
 
 		SpawnPlayer();
+
+
 
 		while (openSet.Count > 0)
 		{
@@ -135,6 +140,11 @@ public class DungeonGenerator : MonoBehaviour
 		generationComplete = true;
 		Debug.Log("DungeonGenerator::Generation completed : " + DDebugTimer.Lap() + "ms");
 
+
+		
+
+
+
 	}
 	#endregion
 	#region Spawn The Player
@@ -142,22 +152,24 @@ public class DungeonGenerator : MonoBehaviour
 	{
 		//DontDestroyOnLoad(player);
 
-		if (playerFirstInitialSpawn == false)
-		{
 
-			playerFirstInitialSpawn = true;
-			spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
-			player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject, spawnLocation.position, Quaternion.identity);
-			player.name = "Player";
+		spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
+		player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject, spawnLocation.position, Quaternion.identity);
+		player.name = "Player";
 
 
-			Debug.Log("Spawn" + player.name + player.transform.localPosition);
-		}
-		else
-		{
+		Debug.Log("Spawn" + player.name + player.transform.localPosition);
 
-			player.transform.position = spawnLocation.transform.position;
-		}
+
+
+
+
+
+
+
+
+
+
 	}
 	#endregion
 
@@ -228,7 +240,7 @@ public class DungeonGenerator : MonoBehaviour
 			//the room to try and spawn
 			GameObject roomToTry;
 			int r = random.range(0, possibleRooms.Count - 1);
-		  //int t = elementsToTry[random.range(0, possibleRooms.Count - 1)];
+			//int t = elementsToTry[random.range(0, possibleRooms.Count - 1)];
 			//int p = random.range(0, finalRoomList.Count - 1); //// - ALIGNMENT TEST
 			////Debug.Log("r: " + r);
 			////Debug.Log(possibleRooms.Count);
@@ -515,6 +527,7 @@ public class DungeonGenerator : MonoBehaviour
 			if (newRoom.GetComponent<Room>().hasOpenDoors()) openSet.Add(newRoom.GetComponent<Room>());
 			roomsCount++;
 			//Debug.Log("Openset: " + openSet.Count);
+
 		}
 	}
 	#endregion
@@ -569,8 +582,19 @@ public class DungeonGenerator : MonoBehaviour
 			if (list[i].doors.Count == 1)
 			{
 				roomsWithOneDoor.Add(list[i]);
+				//spawns the key
+				keySpawnPoints = FindObjectsOfType<GameObject>().Where(obj => obj.name == "KeySpawn").ToList();
+				foreach (var spawnyPoint in keySpawnPoints)
+				{
+					int chance = Random.Range(0, keySpawnPoints.Count - 1);
+					if(keySpawned== false)
+					{
+						Instantiate(key, keySpawnPoints[chance].transform.position, keySpawnPoints[chance].transform.rotation);
+						keySpawned = true;
+					}
+				}
 				//CALL IN START AFTER GENERATION, CALL START FUNCTION IN AWAKE
-				//foreach(var roomWithOneDoor in roomsWithOneDoor)
+				//foreach (var roomWithOneDoor in roomsWithOneDoor)
 				//{
 
 				//	Transform spawnPoint = GameObject.Find("KeySpawn").GetComponent<Transform>();
@@ -578,7 +602,7 @@ public class DungeonGenerator : MonoBehaviour
 				//	for (int s = 0; s < keySpawnPoints.Count; s++)
 				//	{
 				//		int chance = Random.Range(0, keySpawnPoints.Count - 1);
-				//		if(keySpawned == false)
+				//		if (keySpawned == false)
 				//		{
 				//			Instantiate(key, keySpawnPoints[chance].position, keySpawnPoints[chance].rotation);
 				//			keySpawned = true;
@@ -588,7 +612,9 @@ public class DungeonGenerator : MonoBehaviour
 
 				//Debug.Log("room : " + i);
 			}
+
 		}
+		//SpawnKeys(roomsWithOneDoor);
 		//foreach (var roomWithOneDoor in roomsWithOneDoor)
 		//{
 
@@ -623,6 +649,7 @@ public class DungeonGenerator : MonoBehaviour
 		//we don't want to set these until we actually commmit to placing this room (ie after volume checks)
 		//lastRoomDoor.open = false;
 		//newRoomDoor.open = false;
+
 		return lastRoomDoor;
 		//we return lastRoomDoor because we don't know what door it will grab, but we know newRoom will always grab firstOpenDoor()
 	}
@@ -657,5 +684,35 @@ public class DungeonGenerator : MonoBehaviour
 	}
 
 	#endregion
+	//void SpawnKeys(List<Room> list)
+	//{
 
+
+	//	for (int i = 0; i > list.Count; i++)
+	//	{
+	//		if (list[i].doors.Count == 1)
+	//		{
+	//			foreach (var roomWithOneDoor in list)
+	//			{
+
+	//				Transform spawnPoint = GameObject.Find("KeySpawn").GetComponent<Transform>();
+	//				keySpawnPoints.Add(spawnPoint);
+	//				foreach (var keySpawnPoint in keySpawnPoints)
+	//				{
+	//					int chance = Random.Range(0, keySpawnPoints.Count - 1);
+	//					if (keySpawned == false)
+	//					{
+	//						Instantiate(key, keySpawnPoints[chance].position, keySpawnPoints[chance].rotation);
+	//						keySpawned = true;
+	//					}
+
+
+
+	//				}
+	//			}
+	//		}
+	//	}
+
+
+	//}
 }

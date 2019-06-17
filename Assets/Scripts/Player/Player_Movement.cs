@@ -13,12 +13,15 @@ public class Player_Movement : MonoBehaviour
 	private Camera cam;
 	public bool isTopDown;
 	public Transform spawnLocation;
-	public bool hasPlayerSpawnedIn = false;
+	public bool hasPlayerSpawnedIn = true;
 	Transform ddol;
 	public Transform spine;
 
   public GunController theGun;
-
+	private void Awake()
+	{
+		
+	}
 	void Start()
 	{
 		rigid = GetComponent<Rigidbody>();
@@ -27,12 +30,14 @@ public class Player_Movement : MonoBehaviour
 		isTopDown = true;
 		if (hasPlayerSpawnedIn == false)
 		{
-			hasPlayerSpawnedIn = true;
+
 			spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
 			this.transform.position = spawnLocation.transform.position;
+			hasPlayerSpawnedIn = true;
 		}
-		ddol = GameObject.Find("DontDestroyOnLoad").GetComponent<Transform>();
-		SetParent(ddol);
+		//ddol = GameObject.Find("DontDestroyOnLoad").GetComponent<Transform>();
+		//SetParent(ddol);
+		DontDestroyOnLoad(this.gameObject);
 
 	}
 	void Update()
