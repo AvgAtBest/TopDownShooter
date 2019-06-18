@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Camera_Track_Player : MonoBehaviour
@@ -16,18 +17,21 @@ public class Camera_Track_Player : MonoBehaviour
 	public float xRot = 90f;
 	void Start()
 	{
+		//startPos = new Vector3(0, 20f, 0);
+		//this.transform.position = startPos;
+		//this.gameObject.transform.eulerAngles = new Vector3(xRot, 0, 0); 
+		target = GameObject.Find("Player").GetComponent<Transform>();
 
-			target = GameObject.Find("Player").GetComponent<Transform>();
-			//offset = transform.position - target.position;
+		//offset = transform.position - target.position;
 
 
-			trackingCamera = Camera.main.GetComponent<Camera>();
+		trackingCamera = Camera.main.GetComponent<Camera>();
 		if(target != null)
 		{
 			TopDownCamView();
 		}
 
-		
+
 		//target = GameObject.Find("Player").GetComponent<Transform>();
 		////offset = transform.position - target.position;
 
@@ -37,7 +41,7 @@ public class Camera_Track_Player : MonoBehaviour
 		//{
 		//	TopDownCamView();
 		//}
-
+		//DontDestroyOnLoad(this);
 	}
 
 

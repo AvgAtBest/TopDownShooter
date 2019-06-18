@@ -156,21 +156,22 @@ public class DungeonGenerator : MonoBehaviour
 	{
 		//DontDestroyOnLoad(player);
 
+		Player_Movement playerCheck = player.GetComponent<Player_Movement>();
+		if(playerCheck.hasPlayerSpawnedIn == false)
+		{
+			spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
+			player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject, spawnLocation.position, Quaternion.identity);
+			player.name = "Player";
+			playerCheck.hasPlayerSpawnedIn = true;
+		}
+		else
+		{
+			playerCheck.hasPlayerSpawnedIn = false;
+		}
 
-		spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
-		player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject, spawnLocation.position, Quaternion.identity);
-		player.name = "Player";
-
+		//playerCheck.hasPlayerSpawnedIn = true;
 
 		Debug.Log("Spawn" + player.name + player.transform.localPosition);
-
-
-
-
-
-
-
-
 
 
 

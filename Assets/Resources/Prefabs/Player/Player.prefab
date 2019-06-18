@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2435864802916099695}
   - component: {fileID: 2435864802916099688}
   - component: {fileID: 2435864802916099689}
+  - component: {fileID: 4028630478157377433}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -109,6 +110,19 @@ MonoBehaviour:
   force: 5
   isGrounded: 0
   rb: {fileID: 0}
+--- !u!114 &4028630478157377433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2435864802916099681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 011ae1b1cc8ec5746bec41524c4cb49a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasObtainedKey: 0
 --- !u!1001 &8813015507392846812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -116,11 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2435864802916099694}
     m_Modifications:
-    - target: {fileID: 3468665980873574713, guid: 8da3152a237df964786f72db02bfbc6d,
-        type: 3}
-      propertyPath: m_Name
-      value: Pistol
-      objectReference: {fileID: 0}
     - target: {fileID: 3468665980873610521, guid: 8da3152a237df964786f72db02bfbc6d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -175,6 +184,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468665980873574713, guid: 8da3152a237df964786f72db02bfbc6d,
+        type: 3}
+      propertyPath: m_Name
+      value: Pistol
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8da3152a237df964786f72db02bfbc6d, type: 3}
@@ -241,19 +255,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 6f9aa819bae94744d8d65a259eefd264, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 400066, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0017379591
+      value: -0.0017379592
       objectReference: {fileID: 0}
     - target: {fileID: 400066, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.0018038634
+      value: -0.0018038636
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -265,11 +279,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 02ac84af52dd496459f1508534e36cf1, type: 2}
     - target: {fileID: 400118, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.059803378
+      value: -0.05980338
       objectReference: {fileID: 0}
     - target: {fileID: 400118, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0055537005
+      value: 0.005553701
       objectReference: {fileID: 0}
     - target: {fileID: 400026, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_LocalRotation.x
@@ -281,11 +295,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400104, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000015890524
+      value: 0.000015890526
       objectReference: {fileID: 0}
     - target: {fileID: 400104, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.017029509
+      value: -0.01702951
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eceeb429ea7463c4b8c334bfba55e392, type: 3}

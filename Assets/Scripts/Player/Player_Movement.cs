@@ -13,9 +13,8 @@ public class Player_Movement : MonoBehaviour
 	private Camera cam;
 	public bool isTopDown;
 	public Transform spawnLocation;
-	public bool hasPlayerSpawnedIn = true;
+	public bool hasPlayerSpawnedIn;
 	Transform ddol;
-	public Transform spine;
 
   public GunController theGun;
 	private void Awake()
@@ -28,13 +27,13 @@ public class Player_Movement : MonoBehaviour
 		cam = FindObjectOfType<Camera>().GetComponent<Camera>();
 		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		isTopDown = true;
-		if (hasPlayerSpawnedIn == false)
-		{
+		//if (hasPlayerSpawnedIn == false)
+		//{
 
-			spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
-			this.transform.position = spawnLocation.transform.position;
-			hasPlayerSpawnedIn = true;
-		}
+		//	spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
+		//	this.transform.position = spawnLocation.transform.position;
+		//	hasPlayerSpawnedIn = true;
+		//}
 		//ddol = GameObject.Find("DontDestroyOnLoad").GetComponent<Transform>();
 		//SetParent(ddol);
 		DontDestroyOnLoad(this.gameObject);
@@ -49,7 +48,7 @@ public class Player_Movement : MonoBehaviour
 			Vector3 moveDir = new Vector3(inputH, 0f, inputZ);
 			Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
 			rigid.velocity = force;
-						Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
+			Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
 			Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
 			float rayLength = 1000f;
 			if (groundPlane.Raycast(cameraRay, out rayLength))
