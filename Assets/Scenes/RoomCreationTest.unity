@@ -6144,7 +6144,7 @@ MonoBehaviour:
   hasFinalRoomSpawned: 0
   amountEndRoomsSpawned: 0
   hasAllTheEndRoomsSpawned: 0
-  player: {fileID: 0}
+  player: {fileID: 2435864802916099681, guid: 21cc8eeb4e45a3e4fb53d17c35dff679, type: 3}
   spawnLocation: {fileID: 0}
   EndRoomsSpawned: 0
   elementsToTry: 0100000002000000

@@ -9,6 +9,7 @@ TagManager:
   - Ammo
   - Money
   - Loot
+  - Key
   layers:
   - Default
   - TransparentFX
