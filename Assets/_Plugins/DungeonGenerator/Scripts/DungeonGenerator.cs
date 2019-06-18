@@ -51,6 +51,7 @@ public class DungeonGenerator : MonoBehaviour
 	public int keysToSpawn = 1;
 	//public List<Transform> keySpawnPoints = new List<Transform>();
 	public int keySpawnCount;
+	Vector3 keyOffset = new Vector3(4f, 4f, 4f);
 	public List<GameObject> keySpawnPoints = new List<GameObject>();
 	#region Start
 	//change from start to awake
