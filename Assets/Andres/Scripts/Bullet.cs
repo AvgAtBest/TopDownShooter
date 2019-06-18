@@ -18,22 +18,22 @@ public class Bullet : MonoBehaviour
     void FixedUpdate ()
     {
         rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
-        DestroyBullet();
-    }
 
+    }
+   
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Enemy")
         {
-            Destroy(collision.gameObject);
+            
 
-            gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
-    private void DestroyBullet()
+    public void DestroyBullet()
     {
-        Destroy(gameObject, 100);
+        Destroy(gameObject, 0.5f);
     }
     
 }

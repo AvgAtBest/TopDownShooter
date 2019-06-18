@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class EnemyAI : MonoBehaviour
 {
     GameObject player;
     NavMeshAgent enemy;
-    Loot loot;
+    public Loot loot;
     public float curHealth;
-
+    public float maxHealth = 100f;
     // Use this for intialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         enemy = GetComponent<NavMeshAgent>();
-        loot = GameObject.FindGameObjectWithTag("Loot").GetComponent<Loot>();
+        //loot = GameObject.FindGameObjectWithTag("Loot").GetComponent<Loot>();
+        curHealth = maxHealth;
     }
 
     
@@ -26,6 +28,7 @@ public class EnemyAI : MonoBehaviour
         //RUN ON DEATH      curHealth is less than or equal too 0 then run death   Death();
         if(curHealth <= 0)
         {
+            DropLoot();
             Death();
         }
 
@@ -33,11 +36,16 @@ public class EnemyAI : MonoBehaviour
 
     public GameObject Drop;
 
-
+    public void DropLoot()
+    {
+        
+        loot.CalculateLoot(this.transform);
+        
+    }
     public void Death()
     {
-        loot.CalculateLoot(this.transform);
+
         Destroy(this.gameObject);
-        Instantiate(Drop, transform.position, transform.rotation);
+        //Instantiate(Drop, transform.position, transform.rotation);
     }
 }

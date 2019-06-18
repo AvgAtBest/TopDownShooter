@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Loot : MonoBehaviour
+[CreateAssetMenu]
+public class Loot : ScriptableObject
 {
     [System.Serializable]
     public class DropLoot
@@ -28,10 +28,11 @@ public class Loot : MonoBehaviour
         {
             if (randomValue <= LootTable[i].dropRarity)
             {
-                Instantiate(LootTable[i].item, enemy.position, Quaternion.identity);
+                Instantiate(LootTable[i].item, enemy.transform.position, Quaternion.identity);
                 return;
             }
             randomValue -= LootTable[i].dropRarity;
         }
     }
 }
+

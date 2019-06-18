@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6302d1c57fa6d5747b1fc41374a14b3b, type: 3}
+  m_Name: Loot
+  m_EditorClassIdentifier: 
+  LootTable:
+  - name: ammo
+    item: {fileID: 7491048283578475320, guid: af256e72440ade64c9e54dc1201b84c3, type: 3}
+    dropRarity: 50
+  - name: money
+    item: {fileID: 3924795180804317409, guid: 29e306505f3bf3848a3d64e824587cf4, type: 3}
+    dropRarity: 25
+  - name: health
+    item: {fileID: 7578099449899746537, guid: 3b4740691ae5f1f4ab6e4b224412da45, type: 3}
+    dropRarity: 25
