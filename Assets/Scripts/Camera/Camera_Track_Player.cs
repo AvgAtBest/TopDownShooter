@@ -20,7 +20,14 @@ public class Camera_Track_Player : MonoBehaviour
 		//startPos = new Vector3(0, 20f, 0);
 		//this.transform.position = startPos;
 		//this.gameObject.transform.eulerAngles = new Vector3(xRot, 0, 0); 
-		target = GameObject.Find("Player").GetComponent<Transform>();
+		target = GameObject.Find("Player")?.GetComponent<Transform>();
+		if (!target)
+		{
+			print("You look like you're trying to spawn a player. Would you like help with that?");
+			DungeonGenerator dunGen = GameObject.Find("DungeonTest").GetComponent<DungeonGenerator>();
+			dunGen.SpawnPlayer();
+			target = GameObject.Find("Player").GetComponent<Transform>();
+		}
 
 		//offset = transform.position - target.position;
 

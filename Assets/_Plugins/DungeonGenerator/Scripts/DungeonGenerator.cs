@@ -152,7 +152,7 @@ public class DungeonGenerator : MonoBehaviour
 	}
 	#endregion
 	#region Spawn The Player
-	void SpawnPlayer()
+	public void SpawnPlayer()
 	{
 		//DontDestroyOnLoad(player);
 

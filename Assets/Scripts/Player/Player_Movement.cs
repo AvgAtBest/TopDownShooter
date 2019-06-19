@@ -29,7 +29,7 @@ public class Player_Movement : MonoBehaviour
 	void Start()
 	{
 		rigid = GetComponent<Rigidbody>();
-		cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+		cam = GameObject.Find("Main Camera")?.GetComponent<Camera>();
 		anim = GetComponentInChildren<Animator>();
 		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		isTopDown = true;
@@ -44,8 +44,8 @@ public class Player_Movement : MonoBehaviour
 		//ddol = GameObject.Find("DontDestroyOnLoad").GetComponent<Transform>();
 		//SetParent(ddol);
 		DontDestroyOnLoad(this.gameObject);
-
 	}
+
 	void Update()
 	{
 
