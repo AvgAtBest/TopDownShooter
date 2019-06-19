@@ -6,13 +6,15 @@ public class GunController : MonoBehaviour
 {
     public bool isFiring;
 
-    public BulletController bullet;
+    public Bullet bullet;
     public float bulletSpeed;
 
     public float timeBetweenShots;
     private float shotCounter;
 
     public Transform firePoint;
+
+    public int damage;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +31,9 @@ public class GunController : MonoBehaviour
             if(shotCounter <= 0)
             {
                 shotCounter = timeBetweenShots;
-                BulletController newBullet = Instantiate(bullet, firePoint.position, firePoint.rotation) as BulletController;
-                newBullet.speed = bulletSpeed;
+                Bullet newBullet = Instantiate(bullet, firePoint.position, firePoint.rotation) as Bullet;
+                newBullet.bulletSpeed = bulletSpeed;
+                newBullet.damage = damage;
             }
         }
         else

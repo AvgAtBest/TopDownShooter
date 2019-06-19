@@ -13,4 +13,5 @@ public class Player_Interaction : MonoBehaviour
 			Destroy(collision.gameObject);
 		}
 	}
+
 }

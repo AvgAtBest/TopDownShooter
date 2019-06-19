@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
     public Rigidbody rb;
     public float bulletSpeed = 3f;
 
+    public float damage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,22 +20,26 @@ public class Bullet : MonoBehaviour
     void FixedUpdate ()
     {
         rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
-        DestroyBullet();
+
     }
+   
 
-
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision col)
     {
-        if (collision.transform.tag == "Enemy")
+        if (col.transform.tag == "Enemy")
         {
-            Destroy(collision.gameObject);
-
-            gameObject.SetActive(false);
+            Health health = col.transform.GetComponent<Health>();
+            if (health)
+            {
+                health.TakeDamage(damage);
+            }
+            Destroy(gameObject);
+            //Destroy(col.gameObject);
         }
     }
-    private void DestroyBullet()
+    public void DestroyBullet()
     {
-        Destroy(gameObject, 100);
+        Destroy(gameObject, 0.5f);
     }
     
 }

@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     public float curHealth;
     public float maxHealth = 100f;
     // Start is called before the first frame update
+    public Loot loot;
     void Start()
     {
         curHealth = maxHealth;
@@ -21,15 +22,23 @@ public class Health : MonoBehaviour
         }
         if (curHealth <= 0)
         {
+            loot.CalculateLoot(this.transform);
             Dead();
         }
     }
     public void TakeDamage(float damage)
     {
         curHealth -= damage;
+        print("HAHA YOU GOT HIT LOL");
+        if (curHealth <= 0)
+        {
+            Dead();
+            loot.CalculateLoot(this.transform);
+        }
     }
     void Dead()
     {
+        print("YOU DIED");
         Destroy(gameObject);
     }
 }

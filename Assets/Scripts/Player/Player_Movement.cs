@@ -33,6 +33,7 @@ public class Player_Movement : MonoBehaviour
 		anim = GetComponentInChildren<Animator>();
 		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		isTopDown = true;
+
 		//if (hasPlayerSpawnedIn == false)
 		//{
 
@@ -73,8 +74,8 @@ public class Player_Movement : MonoBehaviour
 
 				//...and their rotation is within these ranges...
 				//There's three this way because rotation does not care for negative values (they do not exist, refer to 360 minus the value for what you want)
-				if ((BaneMath.NumberWithinRange(transform.eulerAngles.y, 0, 45) || 
-						 BaneMath.NumberWithinRange(transform.eulerAngles.y, 315, 360)) || 
+				if ((BaneMath.NumberWithinRange(transform.eulerAngles.y, 0, 45) ||
+						 BaneMath.NumberWithinRange(transform.eulerAngles.y, 315, 360)) ||
 						 BaneMath.NumberWithinRange(transform.eulerAngles.y, 135, 225))
 				{
 					if (debugMode)
@@ -87,7 +88,7 @@ public class Player_Movement : MonoBehaviour
 					anim.SetFloat("Vertical", inputZ);
 				}
 				//If the rotation is within these ranges...
-				else if (BaneMath.NumberWithinRange(transform.eulerAngles.y, 45, 135) || 
+				else if (BaneMath.NumberWithinRange(transform.eulerAngles.y, 45, 135) ||
 						BaneMath.NumberWithinRange(transform.eulerAngles.y, 225, 315))
 				{
 					if (debugMode)
@@ -135,30 +136,8 @@ public class Player_Movement : MonoBehaviour
 			anim.SetFloat("Vertical", -inputZ);
 		}
 
-		//moveDir = transform.TransformDirection(moveDir);
 
-		//Vector3 camEuler = cam.transform.localEulerAngles;
-		//moveDir = Quaternion.AngleAxis(camEuler.y, Vector3.up) * moveDir;
 
-		//Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
-
-		////rigid.velocity = force;
-		//if(isTopDown == true)
-		//{
-		//	Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
-		//	Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-		//	float rayLength = 1000f;
-		//	if (groundPlane.Raycast(cameraRay, out rayLength))
-		//	{
-		//		Vector3 hitPoint = cameraRay.GetPoint(rayLength);
-		//		transform.LookAt(new Vector3(hitPoint.x, transform.position.y, hitPoint.z));
-		//	}
-		//}
-		//else if(isTopDown == false)
-		//{
-
-		//	transform.rotation = Quaternion.LookRotation(moveDir);
-		//}
 		if (theGun)
 		{
 			if (Input.GetMouseButton(0))
@@ -168,10 +147,16 @@ public class Player_Movement : MonoBehaviour
 				theGun.isFiring = false;
 		}
 	}
+
 	public void SetParent(Transform newParent)
 	{
 		this.transform.SetParent(newParent, false);
 
 	}
 
+	//public void SetParent(Transform newParent)
+	//{
+	//this.transform.SetParent(newParent, false);
+
+	//}
 }
