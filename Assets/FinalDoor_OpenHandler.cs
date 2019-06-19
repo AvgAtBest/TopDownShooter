@@ -7,7 +7,7 @@ public class FinalDoor_OpenHandler : MonoBehaviour
 	// Start is called before the first frame update
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.name.Contains("Player"))
+		if (other.gameObject.CompareTag("Player"))
 		{
 			Player_Interaction playerInteractionCheck = other.GetComponent<Player_Interaction>();
 			if(playerInteractionCheck.hasObtainedKey == true)

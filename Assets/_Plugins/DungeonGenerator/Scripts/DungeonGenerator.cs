@@ -164,14 +164,14 @@ public class DungeonGenerator : MonoBehaviour
 			player.name = "Player";
 			playerCheck.hasPlayerSpawnedIn = true;
 		}
-		else
-		{
-			playerCheck.hasPlayerSpawnedIn = false;
-		}
+        else
+        {
+            playerCheck.hasPlayerSpawnedIn = false;
+        }
 
-		//playerCheck.hasPlayerSpawnedIn = true;
+        //playerCheck.hasPlayerSpawnedIn = true;
 
-		Debug.Log("Spawn" + player.name + player.transform.localPosition);
+        Debug.Log("Spawn" + player.name + player.transform.localPosition);
 
 
 
