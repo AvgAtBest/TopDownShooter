@@ -20,7 +20,7 @@ public class Player_Movement : MonoBehaviour
 	private Animator anim;
 	private int AnimSpeed = 10;
 	public GunController theGun;
-
+	private float slideSpeed = 20f;
 	public bool debugMode;
 	private void Awake()
 	{
@@ -122,6 +122,28 @@ public class Player_Movement : MonoBehaviour
 				transform.LookAt(new Vector3(hitPoint.x, transform.position.y, hitPoint.z));
 
 			}
+			if (Input.GetKeyDown(KeyCode.C))
+			{
+
+				anim.SetBool("IsSliding", true);
+				speed = slideSpeed;
+				
+			}
+			else
+			{
+
+				anim.SetBool("IsSliding", false);
+				slideSpeed = speed;
+
+			}
+			//else
+			//{
+			//	anim.SetBool("IsSliding", false);
+			//}
+			//if (Input.GetKeyUp(KeyCode.C))
+			//{
+			//	anim.SetBool("IsSliding", false);
+			//}
 		}
 		if (isTopDown == false)
 		{
