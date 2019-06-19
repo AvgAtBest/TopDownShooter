@@ -13,6 +13,7 @@ public class FinalDoor_OpenHandler : MonoBehaviour
 			if(playerInteractionCheck.hasObtainedKey == true)
 			{
 				gameObject.SetActive(false);
+				playerInteractionCheck.hasObtainedKey = false;
 				//playerInteractionCheck.hasObtainedKey = false;
 			}
 		}
