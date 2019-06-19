@@ -42,8 +42,8 @@ public class Player_Movement : MonoBehaviour
         if (isTopDown == true)
         {
             Vector3 moveDir = new Vector3(inputH, 0f, inputZ);
-            //Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
-            //rigid.velocity = force;
+            Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
+            rigid.velocity = force;
             Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
             Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
             float rayLength = 1000f;
@@ -71,17 +71,17 @@ public class Player_Movement : MonoBehaviour
         //Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
 
         //rigid.velocity = force;
-        if (isTopDown == true)
-        {
-            Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
-            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-            float rayLength = 1000f;
-            if (groundPlane.Raycast(cameraRay, out rayLength))
-            {
-                Vector3 hitPoint = cameraRay.GetPoint(rayLength);
-                transform.LookAt(new Vector3(hitPoint.x, transform.position.y, hitPoint.z));
-            }
-        }
+        //if (isTopDown == true)
+        //{
+            //Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
+           //Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+            //float rayLength = 1000f;
+            //if (groundPlane.Raycast(cameraRay, out rayLength))
+            //{
+                //Vector3 hitPoint = cameraRay.GetPoint(rayLength);
+                //transform.LookAt(new Vector3(hitPoint.x, transform.position.y, hitPoint.z));
+            //}
+        //}
         else if (isTopDown == false)
         {
 	        //transform.rotation = Quaternion.LookRotation(moveDir);

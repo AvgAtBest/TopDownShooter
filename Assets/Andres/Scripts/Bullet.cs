@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
     public Rigidbody rb;
     public float bulletSpeed = 3f;
 
+    public float damage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,13 +24,17 @@ public class Bullet : MonoBehaviour
     }
    
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision col)
     {
-        if (collision.transform.tag == "Enemy")
+        if (col.transform.tag == "Enemy")
         {
-            
-
-            Destroy(this.gameObject);
+            Health health = col.transform.GetComponent<Health>();
+            if (health)
+            {
+                health.TakeDamage(damage);
+            }
+            Destroy(gameObject);
+            //Destroy(col.gameObject);
         }
     }
     public void DestroyBullet()

@@ -17,7 +17,7 @@ public class Player_Interaction : MonoBehaviour
 
     void Update()
     {
-        //Look at wherre mouse is
+        //Look at where mouse is
         Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayLength = 100f;
