@@ -10,7 +10,7 @@ using UnityEditor;
 #endif
 public class DungeonGenerator : MonoBehaviour
 {
-
+	public NavMeshSurface navMeshSurface;
 	public EL.Dungeon.DungeonData data;
 	public int dungeonSet = 0;
 
@@ -145,13 +145,8 @@ public class DungeonGenerator : MonoBehaviour
 			SpawnKey();
 		}
 		//Gets the navmesh links that get generated
-		NavMeshLink[] links = GameObject.FindObjectsOfType<NavMeshLink>();
-		foreach (var link in links)
-		{
-			//start coroutine to turn them off and on (for glitch reasons)
-			StartCoroutine(StartLinksUp(link, 1.25f));
-		}
 
+		navMeshSurface.BuildNavMesh();
 
 	}
 	#endregion
@@ -697,14 +692,6 @@ public class DungeonGenerator : MonoBehaviour
 			}
 		}
 
-	}
-	//turn off and on the navmesh links to refresh them due to bugs
-	public IEnumerator StartLinksUp(NavMeshLink link, float waitSecs)
-	{
-		link.gameObject.SetActive(false);
-		Debug.Log(link.name + link.transform.position);
-		yield return new WaitForSeconds(waitSecs);
-		link.gameObject.SetActive(true);
 	}
 
 }

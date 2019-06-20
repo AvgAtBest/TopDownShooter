@@ -327,22 +327,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistol
       objectReference: {fileID: 0}
-    - target: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
-        type: 3}
-      propertyPath: bullet
-      value: 
-      objectReference: {fileID: 5527080300924211511, guid: 2d4b1e52d9548ed4c91d166bf2ced65d,
-        type: 3}
-    - target: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
-        type: 3}
-      propertyPath: bulletSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
-        type: 3}
-      propertyPath: damage
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 3468665980873610521, guid: 8da3152a237df964786f72db02bfbc6d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -397,6 +381,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
+        type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 5527080300924211511, guid: 2d4b1e52d9548ed4c91d166bf2ced65d,
+        type: 3}
+    - target: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
+        type: 3}
+      propertyPath: bulletSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
+        type: 3}
+      propertyPath: damage
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8da3152a237df964786f72db02bfbc6d, type: 3}

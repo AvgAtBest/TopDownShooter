@@ -134,7 +134,7 @@ public class Player_Movement : MonoBehaviour
 		if (isTopDown == false)
 		{
 			//move direction is now reversed
-			Vector3 moveDir = new Vector3(-inputH, 0f, -inputZ);
+			Vector3 moveDir = new Vector3(-inputH, 0f, 0f);
 			//apply force to rigidbody
 			Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
 			rigid.velocity = force;
@@ -142,8 +142,8 @@ public class Player_Movement : MonoBehaviour
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), 1.25f);
 			transform.Translate(moveDir * Time.deltaTime, Space.World);
 
-			anim.SetFloat("Horizontal", -inputH);
-			anim.SetFloat("Vertical", -inputZ);
+			anim.SetFloat("Horizontal", 0);
+			anim.SetFloat("Vertical", -inputH);
 		}
 
 
@@ -178,6 +178,7 @@ public class Player_Movement : MonoBehaviour
 
 	private IEnumerator Slide(float waitTime)
 	{
+
 		//adjust the speed of the player to the slide speed
 		speed = slideSpeed;
 		//play animation
@@ -187,5 +188,6 @@ public class Player_Movement : MonoBehaviour
 		//revert back to original
 		anim.SetBool("IsSliding", false);
 		speed = 10f;
+
 	}
 }

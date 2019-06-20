@@ -105,7 +105,7 @@ namespace TopDownShooter
             {
                 if(ammoBox.typesOfAmmunition[i].ammoName == ammoName)
                 {
-                    gun_Master.CallEventAmmoChanged
+                    //gun_Master.CallEventAmmoChanged
                 }
             }
         }

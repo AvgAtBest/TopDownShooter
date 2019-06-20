@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3924795180804619457}
   - component: {fileID: 3924795180807519457}
   - component: {fileID: 3924795180806520353}
+  - component: {fileID: 3671055115421087005}
   m_Layer: 0
   m_Name: cash
   m_TagString: Untagged
@@ -57,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e5e8a3931afffff4e91183d2a7ded99f, type: 3}
+  - {fileID: 2100000, guid: b0c36147f1a07fb499f6fa289a767a27, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,3 +78,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3671055115421087005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3924795180804317409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26ff745cea95014b86be77f9a5ce057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 40
+  axis: {x: 0, y: 1, z: 0}
