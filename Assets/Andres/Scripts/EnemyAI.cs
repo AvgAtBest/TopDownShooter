@@ -17,8 +17,6 @@ public class EnemyAI : MonoBehaviour
         //loot = GameObject.FindGameObjectWithTag("Loot").GetComponent<Loot>();
     }
 
-
-
     void Update()
     {
         enemy.destination = player.transform.position;
