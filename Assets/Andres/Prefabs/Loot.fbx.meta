@@ -23,7 +23,22 @@ ModelImporter:
     4300000: cash
     4300002: syringe
     4300004: ammo
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cash
+    second: {fileID: 2100000, guid: b0c36147f1a07fb499f6fa289a767a27, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ammo2
+    second: {fileID: 2100000, guid: 762e687187bb6bd429fb340c2eb4d3db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: syringe1
+    second: {fileID: 2100000, guid: 1f290bd59124d7441b751fdb4c028a7b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
