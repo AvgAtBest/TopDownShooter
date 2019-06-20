@@ -34,7 +34,6 @@ public class DungeonGenerator : MonoBehaviour
 	public GameObject startRoom;
 	public GameObject finalRoom;
 	public static int roomsCalledStart = 0;
-	public bool playerFirstInitialSpawn = true;
 	public bool generateWithTimer = true;
 	public bool hasFinalRoomSpawned;
 	public int amountEndRoomsSpawned = 0;
@@ -51,7 +50,7 @@ public class DungeonGenerator : MonoBehaviour
 	public int keysToSpawn = 1;
 	//public List<Transform> keySpawnPoints = new List<Transform>();
 	public int keySpawnCount;
-	Vector3 keyOffset = new Vector3(4f, 4f, 4f);
+	Vector3 keyOffset = new Vector3(0, 1.5f, 0);
 	public List<GameObject> keySpawnPoints = new List<GameObject>();
 	#region Start
 	//change from start to awake
@@ -108,7 +107,7 @@ public class DungeonGenerator : MonoBehaviour
 		roomsCount++;
 
 
-		SpawnPlayer();
+		//SpawnPlayer();
 
 
 
@@ -140,7 +139,7 @@ public class DungeonGenerator : MonoBehaviour
 
 		generationComplete = true;
 		Debug.Log("DungeonGenerator::Generation completed : " + DDebugTimer.Lap() + "ms");
-
+		spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
 		if (generationComplete == true)
 		{
 			SpawnKey();
@@ -156,22 +155,23 @@ public class DungeonGenerator : MonoBehaviour
 	{
 		//DontDestroyOnLoad(player);
 
-		Player_Movement playerCheck = player.GetComponent<Player_Movement>();
-		if (playerCheck.hasPlayerSpawnedIn == false)
-		{
-			spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
-			player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject, spawnLocation.position, Quaternion.identity);
-			player.name = "Player";
-			playerCheck.hasPlayerSpawnedIn = true;
-		}
-		else
-		{
-			playerCheck.hasPlayerSpawnedIn = false;
-			Debug.Log("Nothing, nudda");
-		}
+		//Player_Movement playerCheck = player.GetComponent<Player_Movement>();
+		//if (playerCheck.hasPlayerSpawnedIn)
+		//{
+		//	spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
+		//	player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject, spawnLocation.position, Quaternion.identity);
+		//	player.name = "Player";
+		//	print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		//	playerCheck.SetSpawned();
+		//}
+		//else
+		//{
+		//	//playerCheck.hasPlayerSpawnedIn = false;
+		//	//Debug.Log("Nothing, nudda");
+		//}
 
 		//playerCheck.hasPlayerSpawnedIn = true;
-
+		
 		Debug.Log("Spawn" + player.name + player.transform.localPosition);
 
 
@@ -596,7 +596,7 @@ public class DungeonGenerator : MonoBehaviour
 					int chance = Random.Range(0, keySpawnPoints.Count - 1);
 					if (keySpawned == false)
 					{
-						Instantiate(key, keySpawnPoints[chance].transform.position, keySpawnPoints[chance].transform.rotation);
+						Instantiate(key, keySpawnPoints[chance].transform.position + keyOffset, keySpawnPoints[chance].transform.rotation);
 						keySpawned = true;
 					}
 				}
@@ -706,7 +706,13 @@ public class DungeonGenerator : MonoBehaviour
 						int chance = Random.Range(0, keySpawnPoints.Count - 1);
 						if (keySpawned == false)
 						{
-							Instantiate(key, keySpawnPoints[chance].transform.position, keySpawnPoints[chance].transform.rotation);
+							//Vector3 tempPos = transform.position + new Vector3(0, 3, 0);
+							//GameObject newKey = Instantiate(key, keySpawnPoints[chance].transform.position, keySpawnPoints[chance].transform.rotation);
+							Instantiate(key, keySpawnPoints[chance].transform.position + keyOffset, keySpawnPoints[chance].transform.rotation);
+							//print(newKey.transform.position);
+							//print("then");
+							//newKey.transform.position += keyOffset;
+							//print(newKey.transform.position);
 							keySpawned = true;
 						}
 					}

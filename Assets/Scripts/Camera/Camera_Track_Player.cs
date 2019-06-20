@@ -15,6 +15,7 @@ public class Camera_Track_Player : MonoBehaviour
 	public float turnSpeed = 2f;
 	public Vector3 startPos;
 	public float xRot = 90f;
+	//Transform ddol;
 	void Start()
 	{
 		//startPos = new Vector3(0, 20f, 0);
@@ -25,8 +26,12 @@ public class Camera_Track_Player : MonoBehaviour
 		{
 			print("You look like you're trying to spawn a player. Would you like help with that?");
 			DungeonGenerator dunGen = GameObject.Find("DungeonTest").GetComponent<DungeonGenerator>();
-			dunGen.SpawnPlayer();
+			//dunGen.SpawnPlayer();
 			target = GameObject.Find("Player").GetComponent<Transform>();
+		}
+		else
+		{
+			print("You already have a player you greedy shit");
 		}
 
 		//offset = transform.position - target.position;

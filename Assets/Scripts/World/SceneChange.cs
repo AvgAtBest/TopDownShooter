@@ -24,6 +24,8 @@ public class SceneChange : MonoBehaviour
 
 	public void Scene()
 	{
+		Player_Movement topDownCheck = GameObject.Find("Player").GetComponent<Player_Movement>();
+		topDownCheck.isTopDown = true;
 		SceneManager.LoadScene("RoomCreationTest");
 		Debug.Log("Scene change");
 	}

@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2435864802916099681}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 11, y: 2, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3942130463546634683}
@@ -58,11 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c22e86f8ca0d0419ec439da01eb95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 13
   isTopDown: 0
   spawnLocation: {fileID: 0}
-  hasPlayerSpawnedIn: 0
-  theGun: {fileID: 0}
+  hasPlayerSpawnedIn: 1
+  theGun: {fileID: 5362999620667766239}
   debugMode: 0
 --- !u!54 &2435864802916099688
 Rigidbody:
@@ -327,6 +327,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistol
       objectReference: {fileID: 0}
+    - target: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
+        type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 5527080300924211511, guid: 2d4b1e52d9548ed4c91d166bf2ced65d,
+        type: 3}
+    - target: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
+        type: 3}
+      propertyPath: bulletSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
+        type: 3}
+      propertyPath: damage
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3468665980873610521, guid: 8da3152a237df964786f72db02bfbc6d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -384,3 +400,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8da3152a237df964786f72db02bfbc6d, type: 3}
+--- !u!114 &5362999620667766239 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3468665979060104707, guid: 8da3152a237df964786f72db02bfbc6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 8813015507392846812}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e9e37c96c31ee438597a82a04da043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

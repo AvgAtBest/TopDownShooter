@@ -4,16 +4,18 @@ using UnityEngine.SceneManagement;
 [AddComponentMenu("Useful As Heck/Object Permanence")]
 public class PermanentObject : MonoBehaviour
 {
-	public Transform spawnLocation;
-	public GameObject player;
 	void Start()
 	{
-	
+
 		Keep(); //Keeps on startup
+
+
+		
 	}
 
 	public void Keep()
 	{
+		
 		DontDestroyOnLoad(this); //Don't destroy this object on loading new scenes
 
 		//If there's already one though...

@@ -106,7 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3872893342226698134}
-  bulletSpeed: 3
+  bulletSpeed: 5
+  damage: 15
 --- !u!54 &3872893342226698134
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -121,5 +122,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0

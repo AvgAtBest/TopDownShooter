@@ -22,39 +22,51 @@ public class Player_Movement : MonoBehaviour
 	public GunController theGun;
 	private float slideSpeed = 20f;
 	public bool debugMode;
-	private void Awake()
-	{
 
-	}
 	void Start()
 	{
+		//getting the component boys
 		rigid = GetComponent<Rigidbody>();
 		cam = GameObject.Find("Main Camera")?.GetComponent<Camera>();
 		anim = GetComponentInChildren<Animator>();
 		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		isTopDown = true;
 
-		//if (hasPlayerSpawnedIn == false)
-		//{
 
-		//	spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
-		//	this.transform.position = spawnLocation.transform.position;
-		//	hasPlayerSpawnedIn = true;
-		//}
-		//ddol = GameObject.Find("DontDestroyOnLoad").GetComponent<Transform>();
-		//SetParent(ddol);
+		//spawnLocation = GameObject.Find("SpawnNode").GetComponentInChildren<Transform>();
+		//this.transform.position = spawnLocation.transform.position;
+		hasPlayerSpawnedIn = true;
+		ddol = GameObject.Find("DontDestroyOnLoad").GetComponent<Transform>();
+		SetParent(ddol);
+		//spawnLocation = GameObject.Find("SpawnNode").GetComponent<GameObject>();
+		//DungeonGenerator dunGen = GameObject.Find("DungeonTest").GetComponent<DungeonGenerator>();
+		//dunGen.SpawnPlayer(this.gameObject);
+		//dont destroy the player
 		DontDestroyOnLoad(this.gameObject);
+		//SpawnPlayer();
 	}
-
+	//public void SpawnPlayer()
+	//{
+	//	Transform spawnLocation = GameObject.Find("DungeonTest").GetComponent<Transform>();
+	//	transform.position = spawnLocation.transform.position;
+	//	//transform.position = spawnLocation.transform.position;
+	//}
 	void Update()
 	{
-
+		if (!spawnLocation)
+		{
+			spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
+			SpawnPlayer();
+		}
+		//gets the input
 		float inputH = Input.GetAxis("Horizontal") * speed;
 		float inputZ = Input.GetAxis("Vertical") * speed;
+		//if the player is in ttop down view
 		if (isTopDown == true)
 		{
+			//moves the player via input (inputH is horizontal movement, inputZ is up and down)
 			Vector3 moveDir = new Vector3(inputH, 0f, inputZ);
-
+			//apply force to rigidbody
 			Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
 
 			//switch (transform.rotation.y)
@@ -108,49 +120,36 @@ public class Player_Movement : MonoBehaviour
 				anim.SetFloat("Vertical", 0);
 			}
 
-			//anim.SetFloat("Horizontal", inputH);
-			//anim.SetFloat("Vertical", inputZ);
-
 			rigid.velocity = force;
-
+			//shoots a ray from the camera to where the mouse pos is to a plane
 			Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
 			Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
 			float rayLength = 1000f;
+			//if the ray hits a plane
 			if (groundPlane.Raycast(cameraRay, out rayLength))
 			{
+				//rotate the player to where the ray hits via mouse position
 				Vector3 hitPoint = cameraRay.GetPoint(rayLength);
 				transform.LookAt(new Vector3(hitPoint.x, transform.position.y, hitPoint.z));
 
 			}
 			if (Input.GetKeyDown(KeyCode.C))
 			{
-
-				anim.SetBool("IsSliding", true);
-				speed = slideSpeed;
-				
-			}
-			else
-			{
-
-				anim.SetBool("IsSliding", false);
-				slideSpeed = speed;
+				//SLIDEY TIME
+				StartCoroutine(Slide(1f));
 
 			}
-			//else
-			//{
-			//	anim.SetBool("IsSliding", false);
-			//}
-			//if (Input.GetKeyUp(KeyCode.C))
-			//{
-			//	anim.SetBool("IsSliding", false);
-			//}
+
 		}
+		//if the player is in the side mode view
 		if (isTopDown == false)
 		{
+			//move direction is now reversed
 			Vector3 moveDir = new Vector3(-inputH, 0f, -inputZ);
+			//apply force to rigidbody
 			Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
 			rigid.velocity = force;
-
+			//player rotates to the direction of player input
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), 1.25f);
 			transform.Translate(moveDir * Time.deltaTime, Space.World);
 
@@ -169,11 +168,22 @@ public class Player_Movement : MonoBehaviour
 				theGun.isFiring = false;
 		}
 	}
+	public void SpawnPlayer()
+	{
 
+		transform.position = spawnLocation.transform.position;
+		//transform.position = spawnLocation.transform.position;
+	}
 	public void SetParent(Transform newParent)
 	{
 		this.transform.SetParent(newParent, false);
 
+	}
+
+	public void SetSpawned()
+	{
+		print("HAA GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY");
+		hasPlayerSpawnedIn = true;
 	}
 
 	//public void SetParent(Transform newParent)
@@ -181,4 +191,16 @@ public class Player_Movement : MonoBehaviour
 	//this.transform.SetParent(newParent, false);
 
 	//}
+	private IEnumerator Slide(float waitTime)
+	{
+		//adjust the speed of the player to the slide speed
+		speed = slideSpeed;
+		//play animation
+		anim.SetBool("IsSliding", true);
+		//wait for the amount of time (1f sec)
+		yield return new WaitForSeconds(waitTime);
+		//revert back to original
+		anim.SetBool("IsSliding", false);
+		speed = 10f;
+	}
 }
