@@ -8,12 +8,15 @@ namespace TopDownShooter
     {
         private Player_Master player_Master;
 
-        public delegate void PickupEventHandler(Transform item);
-        public event PickupEventHandler EventPickUpAction;
+        public delegate void GeneralEventHandler();
+        public event GeneralEventHandler EventObjectPickup;
+
+        public delegate void PickupActionEventHandler(Transform item);
+        public event PickupActionEventHandler EventPickupAction;
 
         void OnEnable()
         {
-
+            SetInitialReferences();
         }
 
         void OnDisable()
@@ -26,9 +29,28 @@ namespace TopDownShooter
             
         }
 
+        public void CallEventObjectPickup()
+        {
+            if(EventObjectPickup !=null)
+            {
+                EventObjectPickup();
+            }
+        }
+
+        public void CallEventPickupAction(Transform item)
+        {
+            if(EventPickupAction !=null)
+            {
+                EventPickupAction(item);
+            }
+        }
+
         void SetInitialReferences()
         {
-            //if (GameManager_References)
+            if (GameManager_References._player!=null)
+            {
+                player_Master = GameManager_References._player.GetComponent<Player_Master>();
+            }
         }
     } 
 }

@@ -479,7 +479,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100
+  m_Text: 300
 --- !u!222 &350943550
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 690979785}
   - component: {fileID: 690979784}
   m_Layer: 5
-  m_Name: AmmoCounterBackground
+  m_Name: AmmoUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1387,6 +1387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 834155945}
   - component: {fileID: 834155944}
+  - component: {fileID: 834155946}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1422,6 +1423,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &834155946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834155943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c406469a461d32b4aafdb66af0d41ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: 
+  enemyTag: 
 --- !u!1 &848593879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,6 +2027,7 @@ GameObject:
   - component: {fileID: 1100707075}
   - component: {fileID: 1100707070}
   - component: {fileID: 1100707076}
+  - component: {fileID: 1100707077}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2183,6 +2199,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d905f58389fbe1447ae0c804d60358b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1100707077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100707066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8d322ab0ecef3e4cbeb83616dc8b4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typesOfAmmunition:
+  - ammoName: SMG
+    ammoCurrentClip: 30
+    ammoMaxReserve: 300
 --- !u!1 &1362977347
 GameObject:
   m_ObjectHideFlags: 0
@@ -3427,7 +3459,7 @@ GameObject:
   - component: {fileID: 1897188138}
   - component: {fileID: 1897188139}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: HealthUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

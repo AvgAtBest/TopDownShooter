@@ -7,7 +7,7 @@ namespace TopDownShooter
     public class Player_Master : MonoBehaviour
     {
         public delegate void GeneralEventHandler();
-        public event GeneralEventHandler EventAmmoChnaged;
+        public event GeneralEventHandler EventAmmoChanged;
 
         public delegate void AmmoPickupEventHandler(string ammoName, int quantity);
         public AmmoPickupEventHandler EventPickedUpAmmo;
@@ -15,6 +15,14 @@ namespace TopDownShooter
         public delegate void PlayerHealthEventHandler(float healthChange);
         public event PlayerHealthEventHandler EventPlayerHealthDeduction;
         public PlayerHealthEventHandler EventPlayerHealthIncrease;
+
+        public void CallEventAmmoChanged()
+        {
+            if(EventAmmoChanged !=null)
+            {
+                EventAmmoChanged();
+            }
+        }
 
         public void CallEventPickedUpAmmo(string ammoName, int quantity)
         {
