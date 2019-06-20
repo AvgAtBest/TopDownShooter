@@ -16,7 +16,7 @@ public class Player_Movement : MonoBehaviour
 	public bool isTopDown;
 	public Transform spawnLocation;
 	public bool hasPlayerSpawnedIn;
-	Transform ddol;
+	//Transform ddol;
 	private Animator anim;
 	private int AnimSpeed = 10;
 	public GunController theGun;
@@ -31,26 +31,15 @@ public class Player_Movement : MonoBehaviour
 		anim = GetComponentInChildren<Animator>();
 		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		isTopDown = true;
-
-
-		//spawnLocation = GameObject.Find("SpawnNode").GetComponentInChildren<Transform>();
-		//this.transform.position = spawnLocation.transform.position;
 		hasPlayerSpawnedIn = true;
-		ddol = GameObject.Find("DontDestroyOnLoad").GetComponent<Transform>();
-		SetParent(ddol);
-		//spawnLocation = GameObject.Find("SpawnNode").GetComponent<GameObject>();
-		//DungeonGenerator dunGen = GameObject.Find("DungeonTest").GetComponent<DungeonGenerator>();
-		//dunGen.SpawnPlayer(this.gameObject);
+		//ddol = GameObject.Find("DontDestroyOnLoad").GetComponent<Transform>();
+		//SetParent(ddol);
+
+
 		//dont destroy the player
-		DontDestroyOnLoad(this.gameObject);
-		//SpawnPlayer();
+		//DontDestroyOnLoad(this.gameObject);
+
 	}
-	//public void SpawnPlayer()
-	//{
-	//	Transform spawnLocation = GameObject.Find("DungeonTest").GetComponent<Transform>();
-	//	transform.position = spawnLocation.transform.position;
-	//	//transform.position = spawnLocation.transform.position;
-	//}
 	void Update()
 	{
 		if (!spawnLocation)
@@ -61,7 +50,7 @@ public class Player_Movement : MonoBehaviour
 		//gets the input
 		float inputH = Input.GetAxis("Horizontal") * speed;
 		float inputZ = Input.GetAxis("Vertical") * speed;
-		//if the player is in ttop down view
+		//if the player is in top down view
 		if (isTopDown == true)
 		{
 			//moves the player via input (inputH is horizontal movement, inputZ is up and down)
@@ -173,6 +162,7 @@ public class Player_Movement : MonoBehaviour
 
 		transform.position = spawnLocation.transform.position;
 		//transform.position = spawnLocation.transform.position;
+		
 	}
 	public void SetParent(Transform newParent)
 	{
@@ -186,11 +176,6 @@ public class Player_Movement : MonoBehaviour
 		hasPlayerSpawnedIn = true;
 	}
 
-	//public void SetParent(Transform newParent)
-	//{
-	//this.transform.SetParent(newParent, false);
-
-	//}
 	private IEnumerator Slide(float waitTime)
 	{
 		//adjust the speed of the player to the slide speed

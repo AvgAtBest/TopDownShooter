@@ -17,6 +17,7 @@ public class SceneChange : MonoBehaviour
 		{
 			startPoint = GameObject.Find("SpawnNode").GetComponent<Transform>();
 			other.gameObject.transform.position = startPoint.transform.position;
+			
 			Scene();
 		}
 
@@ -26,6 +27,8 @@ public class SceneChange : MonoBehaviour
 	{
 		Player_Movement topDownCheck = GameObject.Find("Player").GetComponent<Player_Movement>();
 		topDownCheck.isTopDown = true;
+		Camera_Manager camMan = GameObject.Find("CameraManager").GetComponent<Camera_Manager>();
+		camMan.SendMessage("MainCamSwitchTo");
 		SceneManager.LoadScene("RoomCreationTest");
 		Debug.Log("Scene change");
 	}

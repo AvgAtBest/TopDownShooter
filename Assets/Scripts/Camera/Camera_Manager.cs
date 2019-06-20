@@ -30,7 +30,7 @@ public class Camera_Manager : MonoBehaviour
         cameras[0].gameObject.SetActive(true);
         cameras[1].gameObject.SetActive(false);
     }
-    private void MainCamSwitchTo()
+    public void MainCamSwitchTo()
     {
         cameras[0].gameObject.SetActive(false);
         cameras[1].gameObject.SetActive(true);

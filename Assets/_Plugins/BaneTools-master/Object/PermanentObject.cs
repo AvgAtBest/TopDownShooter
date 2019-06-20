@@ -21,6 +21,7 @@ public class PermanentObject : MonoBehaviour
 		//If there's already one though...
 		if (FindObjectsOfType(GetType()).Length > 1)
 		{
+			print("I found another me. Kill it");
 			Destroy(gameObject); //...Destroy it. We don't need more of them.
 		}
 	}

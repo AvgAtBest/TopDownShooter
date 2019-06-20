@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using EL.Dungeon;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 #if Unity_Editor
 using UnityEditor;
 #endif
@@ -56,7 +57,6 @@ public class DungeonGenerator : MonoBehaviour
 	//change from start to awake
 	void Awake()
 	{
-
 		//instance = this;
 		if (randomizeSeedOnStart)
 		{
@@ -107,7 +107,7 @@ public class DungeonGenerator : MonoBehaviour
 		roomsCount++;
 
 
-		//SpawnPlayer();
+
 
 
 
@@ -144,36 +144,13 @@ public class DungeonGenerator : MonoBehaviour
 		{
 			SpawnKey();
 		}
-
-
-
-
-	}
-	#endregion
-	#region Spawn The Player
-	public void SpawnPlayer()
-	{
-		//DontDestroyOnLoad(player);
-
-		//Player_Movement playerCheck = player.GetComponent<Player_Movement>();
-		//if (playerCheck.hasPlayerSpawnedIn)
-		//{
-		//	spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
-		//	player = Instantiate(Resources.Load("Prefabs/Player/Player") as GameObject, spawnLocation.position, Quaternion.identity);
-		//	player.name = "Player";
-		//	print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		//	playerCheck.SetSpawned();
-		//}
-		//else
-		//{
-		//	//playerCheck.hasPlayerSpawnedIn = false;
-		//	//Debug.Log("Nothing, nudda");
-		//}
-
-		//playerCheck.hasPlayerSpawnedIn = true;
-		
-		Debug.Log("Spawn" + player.name + player.transform.localPosition);
-
+		//Gets the navmesh links that get generated
+		NavMeshLink[] links = GameObject.FindObjectsOfType<NavMeshLink>();
+		foreach (var link in links)
+		{
+			//start coroutine to turn them off and on (for glitch reasons)
+			StartCoroutine(StartLinksUp(link, 1.25f));
+		}
 
 
 	}
@@ -721,4 +698,13 @@ public class DungeonGenerator : MonoBehaviour
 		}
 
 	}
+	//turn off and on the navmesh links to refresh them due to bugs
+	public IEnumerator StartLinksUp(NavMeshLink link, float waitSecs)
+	{
+		link.gameObject.SetActive(false);
+		Debug.Log(link.name + link.transform.position);
+		yield return new WaitForSeconds(waitSecs);
+		link.gameObject.SetActive(true);
+	}
+
 }
