@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TopDownShooter
 {
-    public class Item_MasterV2 : MonoBehaviour
+    public class Item_Master : MonoBehaviour
     {
         private Player_Master player_Master;
 

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace TopDownShooter
+{ 
 public class Item_Ammo : MonoBehaviour
 {
-
+    private Item_Master
     private string ammoName;
     public int quantity;
     public bool isTriggerPickup;
