@@ -26,7 +26,7 @@ namespace TopDownShooter
 
         void Start()
         {
-            
+			player_Master = GameObject.Find("Player").GetComponent<Player_Master>();
         }
 
         public void CallEventObjectPickup()

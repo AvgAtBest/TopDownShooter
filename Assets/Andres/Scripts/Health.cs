@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(float damage)
     {
         curHealth -= damage;
-        print("HAHA YOU GOT HIT LOL");
+        print("HAHA " + transform.name + " GOT HIT LOL");
         if (curHealth <= 0)
         {
             Dead();

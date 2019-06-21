@@ -26,12 +26,15 @@ namespace TopDownShooter
 
         void Start()
         {
-            SetInitialReferences();
+			item_Master = GameObject.Find("Player").GetComponent<Item_Master>();
+			//player_Movement = GameObject.Find("Player").GetComponent<GameManager_References>();
+			SetInitialReferences();
+
         }
 
         void OnTriggerEnter(Collider other)
         {
-            if(other.CompareTag(GameManager_References._playerTag)&&isTriggerPickup)
+            if(other.CompareTag("Player")&&isTriggerPickup)
             {
                 TakeAmmo();
             }
@@ -39,8 +42,8 @@ namespace TopDownShooter
 
         void SetInitialReferences()
         {
-            item_Master = GetComponent<Item_Master>();
-            player_Movement = GameManager_References._player;
+            item_Master = GameObject.Find("Player").GetComponent<Item_Master>();
+            //player_Movement = GameManager_References._player;
 
             if (isTriggerPickup)
             {

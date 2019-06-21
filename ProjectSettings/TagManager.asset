@@ -10,6 +10,7 @@ TagManager:
   - Money
   - Loot
   - Key
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Item
   - Enemy
   - Player
-  - 
+  - Bullet
   - 
   - 
   - 

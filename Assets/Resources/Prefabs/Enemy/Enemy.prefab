@@ -75,6 +75,7 @@ MonoBehaviour:
   maxVelocity: 120
   maxDistance: 2
   behaviours:
+  - {fileID: 11400000, guid: c125e6227e3af1c4e95e4c1d257d9c67, type: 2}
   - {fileID: 11400000, guid: cc6a29d7cfd40ad4fadc47cfaf772001, type: 2}
   agent: {fileID: 0}
 --- !u!136 &2900121042796459804

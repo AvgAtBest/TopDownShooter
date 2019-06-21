@@ -43,9 +43,5 @@ public class Bullet : MonoBehaviour
 		}
 
 	}
-	public void DestroyBullet()
-	{
-		Destroy(gameObject, 0.5f);
-	}
 
 }
