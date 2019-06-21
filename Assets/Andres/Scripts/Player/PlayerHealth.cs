@@ -1,39 +1,64 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+namespace TopDownShooter
 {
-    public int maxHealth = 100;
-    public int curHealth;
-    public bool isDead;
-
-    void Start()
+    public class PlayerHealth : MonoBehaviour
     {
-        isDead = false;
-        curHealth = maxHealth;
-    }
+        private GameManager_Master gameManager_Master;
+        private Player_Master player_Master;
 
-    void Update()
-    {
-        if(curHealth >= maxHealth)
+        public int maxHealth = 100;
+        public Text healthText;
+        public int curHealth;
+        public bool isDead;
+        public int playerHealth;
+
+        void OnEnable()
         {
+            
+        }
+
+        void Start()
+        {
+            isDead = false;
             curHealth = maxHealth;
         }
-    }
-    public void TakeDamage(int damage)
-    {
-        curHealth -= damage;
 
-        if(curHealth <= 0)
+        void Update()
         {
-            curHealth = 0;
-            Dead();
+            if (curHealth >= maxHealth)
+            {
+                curHealth = maxHealth;
+            }
         }
-    }
-    public void Dead()
-    {
-        isDead = true;
-        Destroy(gameObject);
+        public void TakeDamage(int damage)
+        {
+            curHealth -= damage;
+
+            if (curHealth <= 0)
+            {
+                curHealth = 0;
+                Dead();
+            }
+
+            SetUI();
+        }
+
+        void SetUI()
+        {
+            if(healthText !=null)
+            {
+                healthText.text = playerHealth.ToString();
+            }
+        }
+
+        public void Dead()
+        {
+            isDead = true;
+            Destroy(gameObject);
+        }
     }
 }

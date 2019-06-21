@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Ammo itself
 namespace TopDownShooter
 {
     public class Item_Ammo : MonoBehaviour

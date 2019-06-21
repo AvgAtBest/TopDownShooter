@@ -16,20 +16,20 @@ namespace TopDownShooter
 
         void OnEnable()
         {
-            if(playerTag =="")
-            {
+            //if(playerTag =="")
+            //{
 
-            }
+            //}
 
-            if(enemyTag == "")
-            {
+            //if(enemyTag == "")
+            //{
 
-            }
+            //}
 
             _playerTag = playerTag;
             _enemyTag = enemyTag;
 
-            _player = GameObject.FindGameObjectWithTag(_playerTag);
+            _player = GameObject.FindGameObjectWithTag("Player");
         }
     }
 }

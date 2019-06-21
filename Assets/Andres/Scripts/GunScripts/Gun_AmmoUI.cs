@@ -3,25 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Updates Ammo Count
 namespace TopDownShooter
 {
 
     public class Gun_AmmoUI : MonoBehaviour
     {
-        public InputField currentAmmoField;
-        public InputField carriedAmmoField;
-        private 
-
-        // Start is called before the first frame update
-        void Start()
+        public Text currentAmmoField;
+        public Text MaxReserveAmmoField;
+        public Gun_Master gun_Master;
+        void OnEnable()
         {
-
+            SetInitialReferences();
+            gun_Master.EventAmmoChanged += UpdateAmmoUI;
         }
 
-        // Update is called once per frame
-        void Update()
+        void OnDisable()
         {
-
+            gun_Master.EventAmmoChanged -= UpdateAmmoUI;
         }
+
+        void SetInitialReferences()
+        {
+            gun_Master = GetComponent<Gun_Master>();
+        }
+       public void UpdateAmmoUI(int currentAmmo, int ammoInReserve)
+        {
+            if(currentAmmoField !=null)
+            {
+                currentAmmoField.text = currentAmmo.ToString();
+            }
+            if(MaxReserveAmmoField !=null)
+            {
+                MaxReserveAmmoField.text = ammoInReserve.ToString();
+            }
+            
+        }
+      
     }
 }

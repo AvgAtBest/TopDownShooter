@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Can carry ammo and pickup Ammo
 namespace TopDownShooter
 {
+    
     public class AmmoBox : MonoBehaviour
     {
         private Player_Master player_Master;
@@ -12,14 +14,14 @@ namespace TopDownShooter
         public class AmmoTypes
         {
             public string ammoName;
-            public int ammoCurrentClip;
-            public int ammoMaxReserve;
+            public int ammoClipSize = 10;
+            public int ammoMaxReserve = 300;
 
-            public AmmoTypes(string aName, int aMaxReserve, int aCurrentClip)
+            public AmmoTypes(string aName, int aMaxReserve, int aClipSize)
             {
                 ammoName = aName;
                 ammoMaxReserve = aMaxReserve;
-                ammoCurrentClip = aCurrentClip;
+                ammoClipSize = aClipSize;
             }
         }
 
@@ -47,11 +49,11 @@ namespace TopDownShooter
             {
                 if(typesOfAmmunition[i].ammoName == ammoName)
                 {
-                    typesOfAmmunition[i].ammoCurrentClip += quantity;
+                    typesOfAmmunition[i].ammoClipSize += quantity;
 
-                    if(typesOfAmmunition[i].ammoCurrentClip>typesOfAmmunition[i].ammoMaxReserve)
+                    if(typesOfAmmunition[i].ammoClipSize>typesOfAmmunition[i].ammoMaxReserve)
                     {
-                        typesOfAmmunition[i].ammoCurrentClip = typesOfAmmunition[i].ammoMaxReserve;
+                        typesOfAmmunition[i].ammoClipSize = typesOfAmmunition[i].ammoMaxReserve;
                     }
 
                     player_Master.CallEventAmmoChanged();
