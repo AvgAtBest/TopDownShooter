@@ -151,10 +151,12 @@ using BT;
             if (theGun)
             {
                 if (Input.GetMouseButton(0))
-                    theGun.isFiring = true;
+                    theGun.Fire();
+                else if (Input.GetKeyDown(KeyCode.R))
+                    theGun.Reload();
 
-                if (Input.GetMouseButtonUp(0))
-                    theGun.isFiring = false;
+                //if (Input.GetMouseButtonUp(0))
+                //    theGun.StopFiring();
             }
         }
         public void SpawnPlayer()

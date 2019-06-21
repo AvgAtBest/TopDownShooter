@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//Can carry ammo and ammo as a pickup
+//Can carry ammo and pickup Ammo
 namespace TopDownShooter
 {
     

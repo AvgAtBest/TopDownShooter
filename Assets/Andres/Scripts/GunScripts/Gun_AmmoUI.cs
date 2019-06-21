@@ -27,7 +27,7 @@ namespace TopDownShooter
         {
             gun_Master = GetComponent<Gun_Master>();
         }
-       public void UpdateAmmoUI(int currentAmmo, int carriedAmmo)
+       public void UpdateAmmoUI(int currentAmmo, int ammoInReserve)
         {
             if(currentAmmoField !=null)
             {
@@ -35,7 +35,7 @@ namespace TopDownShooter
             }
             if(MaxReserveAmmoField !=null)
             {
-                MaxReserveAmmoField.text = carriedAmmo.ToString();
+                MaxReserveAmmoField.text = ammoInReserve.ToString();
             }
             
         }
