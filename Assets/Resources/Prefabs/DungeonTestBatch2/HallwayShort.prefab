@@ -424,7 +424,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3478380567397663969}
   m_Layer: 0
-  m_Name: AISpawnNode
+  m_Name: AiSpawnNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

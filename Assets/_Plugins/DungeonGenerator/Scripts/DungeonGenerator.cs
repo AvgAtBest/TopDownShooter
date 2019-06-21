@@ -53,6 +53,10 @@ public class DungeonGenerator : MonoBehaviour
 	public int keySpawnCount;
 	Vector3 keyOffset = new Vector3(0, 1.5f, 0);
 	public List<GameObject> keySpawnPoints = new List<GameObject>();
+	public List<GameObject> enemySpawnPoints = new List<GameObject>();
+	float maxEnemySpawns = 8;
+	float minEnemySpawns = 1;
+	public GameObject enemy;
 	#region Start
 	//change from start to awake
 	void Awake()
@@ -147,7 +151,7 @@ public class DungeonGenerator : MonoBehaviour
 		//Gets the navmesh links that get generated
 
 		navMeshSurface.BuildNavMesh();
-
+		SpawnEnemies();
 	}
 	#endregion
 
@@ -693,5 +697,25 @@ public class DungeonGenerator : MonoBehaviour
 		}
 
 	}
+	void SpawnEnemies()
+	{
+		for (int c = 0; c < rooms.Count; c++)
+		{
+			bool isEnemySpawned = false;
+			enemySpawnPoints = FindObjectsOfType<GameObject>().Where(obj => obj.name == "AiSpawnNode").ToList();
+			foreach(var enemySpawnPoint in enemySpawnPoints)
+			{
+				if(isEnemySpawned == false)
+				{
+					int chance = Random.Range(0, enemySpawnPoints.Count);
+					int index = 8;
+					//GameObject[] enemy = GameObject.FindObjectsOfType<GameObject>();
+					Instantiate(enemy, enemySpawnPoints[chance].transform.position, enemySpawnPoints[chance].transform.rotation);
+					isEnemySpawned = true;
+				}
+				
 
+			}
+		}
+	}
 }
