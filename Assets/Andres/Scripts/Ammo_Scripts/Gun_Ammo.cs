@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//Reloads Gun
 namespace TopDownShooter
 {
     public class Gun_Ammo : MonoBehaviour
     {
-        private Player_Master player_Master;
-        private Gun_Master gun_Master;
-        private AmmoBox ammoBox;
+        public Player_Master player_Master;
+        public Gun_Master gun_Master;
+        public AmmoBox ammoBox;
 
-        public int clipSize;
-        public int CurrentAmmo;
+        public int clipSize = 10;
+        public int maxAmmoReserve = 300;
+        public int currentAmmo;
         public string ammoName;
         public float reloadTime;
 
@@ -49,6 +52,8 @@ namespace TopDownShooter
         // Start is called before the first frame update
         void Start()
         {
+            GunController theGun = GetComponent<GunController>();
+            currentAmmo = theGun.curAmmo;
             SetInitialReferences();
             StartCoroutine(UpdateAmmoUIWhenEnabling());
 
@@ -69,7 +74,7 @@ namespace TopDownShooter
         }
         void DeductAmmo()
         {
-            CurrentAmmo--;
+            currentAmmo--;
             UIAmmoUpdateRequest();
         }
 
@@ -80,7 +85,7 @@ namespace TopDownShooter
                 if(ammoBox.typesOfAmmunition[i].ammoName == ammoName)
                 {
                     if(ammoBox.typesOfAmmunition[i].ammoMaxReserve > 0&&
-                        CurrentAmmo != clipSize&&
+                        currentAmmo != clipSize&&
                         gun_Master.isReloading)
                     {
                         gun_Master.isReloading = true;
@@ -93,9 +98,9 @@ namespace TopDownShooter
 
         void StartingSanityCheck()
         {
-            if(CurrentAmmo > clipSize)
+            if(currentAmmo > clipSize)
             {
-                CurrentAmmo = clipSize;
+                currentAmmo = clipSize;
             }
         }
 
@@ -105,14 +110,36 @@ namespace TopDownShooter
             {
                 if(ammoBox.typesOfAmmunition[i].ammoName == ammoName)
                 {
-                    gun_Master.CallEventAmmoChanged
+                    gun_Master.CallEventAmmoChanged(currentAmmo, ammoBox.typesOfAmmunition[i].ammoMaxReserve);
+                    break;
                 }
             }
         }
+
         public void OnReloadComplete()
         {
+            for(int i=0; i<ammoBox.typesOfAmmunition.Count;i++)
+            {
+                if(ammoBox.typesOfAmmunition[i].ammoName==ammoName)
+                {
+                    int ammoTopUP = clipSize = currentAmmo;
 
+                    if(ammoBox.typesOfAmmunition[i].ammoMaxReserve>=ammoTopUP)
+                    {
+                        currentAmmo += ammoTopUP;
+                        ammoBox.typesOfAmmunition[i].ammoMaxReserve = ammoTopUP;
+                    }
+                        else if(ammoBox.typesOfAmmunition[i].ammoMaxReserve<ammoTopUP&&
+                        ammoBox.typesOfAmmunition[i].ammoMaxReserve!=0)
+                             {
+                                currentAmmo += ammoBox.typesOfAmmunition[i].ammoMaxReserve;
+                                ammoBox.typesOfAmmunition[i].ammoMaxReserve = 0;
+                             }
+                    break;
+                }       
+            }
         }
+
         IEnumerator ReloadWithoutAnimation()
         {
             yield return new WaitForSeconds(reloadTime);
