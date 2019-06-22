@@ -59,8 +59,6 @@ public class AI : MonoBehaviour
 		{
 			agent.SetDestination(hit.position);
 		}
-		
 	}
-
 }
 

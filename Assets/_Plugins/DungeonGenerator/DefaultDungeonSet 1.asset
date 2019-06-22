@@ -17,7 +17,7 @@ MonoBehaviour:
   - {fileID: 1705584254026091410, guid: e8acf623843906346af352f9c952d504, type: 3}
   bosses: []
   doors:
-  - {fileID: 11476880, guid: 2e19caa3de7304112952c9d091d67bc7, type: 3}
+  - {fileID: 1738408012496680040, guid: 59cf9dccabbde7441bd933ceed4dd3d1, type: 3}
   roomTemplates:
   - {fileID: 2879128265413778630, guid: 13a057efe2c13234689925b1d860b527, type: 3}
   - {fileID: 4567946685853112051, guid: 6897de59181b1fd44bb8045178b75e30, type: 3}

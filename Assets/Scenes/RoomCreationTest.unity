@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1762,6 +1762,11 @@ PrefabInstance:
       propertyPath: MaxReserveAmmoField
       value: 
       objectReference: {fileID: 157196014}
+    - target: {fileID: 3216160679922057870, guid: 21cc8eeb4e45a3e4fb53d17c35dff679,
+        type: 3}
+      propertyPath: healthSlider
+      value: 
+      objectReference: {fileID: 1366784814}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21cc8eeb4e45a3e4fb53d17c35dff679, type: 3}
 --- !u!1 &518905774
@@ -5163,6 +5168,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GUIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2126736045652049253, guid: 08bb6248d97c90c4592da760e3331253,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2126736045652049254, guid: 08bb6248d97c90c4592da760e3331253,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5963,6 +5973,18 @@ Transform:
   m_Father: {fileID: 710739569}
   m_RootOrder: 59
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1366784814 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2126736044550059651, guid: 08bb6248d97c90c4592da760e3331253,
+    type: 3}
+  m_PrefabInstance: {fileID: 1213473495}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1403582816
 GameObject:
   m_ObjectHideFlags: 0

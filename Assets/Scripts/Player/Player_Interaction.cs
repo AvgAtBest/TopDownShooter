@@ -9,11 +9,11 @@ public class Player_Interaction : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("Key"))
 		{
-            FadeyBoi fade = FindObjectOfType<FadeyBoi>();
-            if (fade)
-            {
-                fade.SetSpriteTransparency(1);
-            }
+			FadeyBoi fade = FindObjectOfType<FadeyBoi>();
+			if (fade)
+			{
+				fade.SetSpriteTransparency(1);
+			}
 			hasObtainedKey = true;
 			Destroy(collision.gameObject);
 		}
