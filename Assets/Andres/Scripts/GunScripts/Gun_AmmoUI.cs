@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 //Updates Ammo Count
 namespace TopDownShooter
@@ -9,10 +10,13 @@ namespace TopDownShooter
 
     public class Gun_AmmoUI : MonoBehaviour
     {
-        public Text currentAmmoField;
-        public Text MaxReserveAmmoField;
+        //public Text currentAmmoField;
+        //public Text MaxReserveAmmoField;
         public Gun_Master gun_Master;
-        void OnEnable()
+		public TextMeshProUGUI currentAmmoField;
+		public TextMeshProUGUI MaxReserveAmmoField;
+
+				void OnEnable()
         {
             SetInitialReferences();
             gun_Master.EventAmmoChanged += UpdateAmmoUI;

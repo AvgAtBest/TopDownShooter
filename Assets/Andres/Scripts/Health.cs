@@ -35,12 +35,17 @@ public class Health : MonoBehaviour
 	}
 	void Dead()
 	{
+		NPC_Enemy ai = this.GetComponent<NPC_Enemy>();
+		NPCSensor_Sight ai2 = this.GetComponent<NPCSensor_Sight>();
+		ai.enabled = false;
+		ai2.enabled = false;
+
 		if (isGeneratingLoot == false)
 		{
 			isGeneratingLoot = true;
 			loot.CalculateLoot(this.transform);
 		}
-
+		
 		print("YOU DIED");
 		anim.SetBool("IsDead", true);
 		Destroy(gameObject, 3);

@@ -12,4 +12,8 @@ public class Collectable : OnTriggerEvent
   {
     Destroy(this.gameObject);
   }
+	public void Update()
+	{
+		Destroy(gameObject, 10);
+	}
 }

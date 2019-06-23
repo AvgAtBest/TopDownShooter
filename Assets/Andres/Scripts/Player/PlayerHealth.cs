@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace TopDownShooter
 {
@@ -17,6 +18,7 @@ namespace TopDownShooter
 		public bool isDead;
 		public int playerHealth;
 		public Animator anim;
+		public TextMeshProUGUI textMesh;
 		void OnEnable()
 		{
 
@@ -61,6 +63,10 @@ namespace TopDownShooter
 			{
 				healthSlider.value = curHealth;
 			}
+			if(curHealth > 0)
+			{
+				textMesh.enabled = false;
+			}
 		}
 
 		public void Dead()
@@ -69,7 +75,7 @@ namespace TopDownShooter
 			Player_Movement disablePlayerMovement = GetComponent<Player_Movement>();
 			disablePlayerMovement.rigid.constraints = RigidbodyConstraints.FreezeRotation;
 			disablePlayerMovement.isDead = true;
-			
+			textMesh.enabled = true;
 			isDead = true;
 			anim.SetBool("IsDead", true);
 			//Destroy(gameObject);

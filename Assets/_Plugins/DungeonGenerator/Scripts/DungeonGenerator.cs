@@ -54,7 +54,8 @@ public class DungeonGenerator : MonoBehaviour
 	Vector3 keyOffset = new Vector3(0, 1.5f, 0);
 	public List<GameObject> keySpawnPoints = new List<GameObject>();
 	public List<GameObject> enemySpawnPoints = new List<GameObject>();
-	public List<Transform> wayPointTests = new List<Transform>();
+	//public List<Transform> wayPointTests = new List<Transform>();
+	public List<NPC_PatrolNode> wayPointTests = new List<NPC_PatrolNode>();
 	float maxEnemySpawns = 8;
 	float minEnemySpawns = 1;
 	public GameObject enemy;
@@ -713,12 +714,15 @@ public class DungeonGenerator : MonoBehaviour
 					//GameObject[] enemy = GameObject.FindObjectsOfType<GameObject>();
 					Instantiate(enemy, enemySpawnPoints[chance].transform.position, enemySpawnPoints[chance].transform.rotation);
 					isEnemySpawned = true;
-					wayPointTests = FindObjectsOfType<Transform>().Where(obj => obj.name == "WaypointTest").ToList();
+					wayPointTests = FindObjectsOfType<NPC_PatrolNode>().Where(obj => obj.name == "PatrolNode_0").ToList();
 					foreach (var waypointTest in wayPointTests)
 					{
+						NPC_Enemy npcEnemyState = enemy.GetComponent<NPC_Enemy>();
 						int chance2 = Random.Range(0, wayPointTests.Count);
-						EnemyAIStates states = enemy.GetComponent<EnemyAIStates>();
-						states.waypointParent = wayPointTests[chance2];
+						npcEnemyState.patrolNode = wayPointTests[chance2];
+						enemy.transform.position = wayPointTests[chance2].transform.position;
+						//NPC_PatrolNode patrolNode = GetComponent<NPC_PatrolNode>();
+						//states.waypointParent = wayPointTests[chance2];
 						//wayPointTests = GetComponent<Transform>();
 					}
 				}
