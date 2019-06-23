@@ -54,6 +54,7 @@ public class DungeonGenerator : MonoBehaviour
 	Vector3 keyOffset = new Vector3(0, 1.5f, 0);
 	public List<GameObject> keySpawnPoints = new List<GameObject>();
 	public List<GameObject> enemySpawnPoints = new List<GameObject>();
+	public List<Transform> wayPointTests = new List<Transform>();
 	float maxEnemySpawns = 8;
 	float minEnemySpawns = 1;
 	public GameObject enemy;
@@ -712,6 +713,14 @@ public class DungeonGenerator : MonoBehaviour
 					//GameObject[] enemy = GameObject.FindObjectsOfType<GameObject>();
 					Instantiate(enemy, enemySpawnPoints[chance].transform.position, enemySpawnPoints[chance].transform.rotation);
 					isEnemySpawned = true;
+					wayPointTests = FindObjectsOfType<Transform>().Where(obj => obj.name == "WaypointTest").ToList();
+					foreach (var waypointTest in wayPointTests)
+					{
+						int chance2 = Random.Range(0, wayPointTests.Count);
+						EnemyAIStates states = enemy.GetComponent<EnemyAIStates>();
+						states.waypointParent = wayPointTests[chance2];
+						//wayPointTests = GetComponent<Transform>();
+					}
 				}
 				
 

@@ -40,7 +40,7 @@ public class EnemyAIStates : MonoBehaviour
 	#endregion VARIABLES
 	public void Start()
 	{
-		waypointParent = GameObject.Find("WaypointTest").GetComponent<Transform>();
+		//waypointParent = GameObject.Find("WaypointTest").GetComponent<Transform>();
 		waypoints = waypointParent.GetComponentsInChildren<Transform>();
 		agent = this.GetComponentInChildren<NavMeshAgent>();
 		enemyHealth = this.GetComponent<Health>();
