@@ -18,7 +18,8 @@ namespace TopDownShooter
 		public bool isDead;
 		public int playerHealth;
 		public Animator anim;
-		public TextMeshProUGUI textMesh;
+		public TextMeshProUGUI youareDeadText;
+		public TextMeshProUGUI highScoreIndicator;
 		void OnEnable()
 		{
 
@@ -42,7 +43,7 @@ namespace TopDownShooter
 			//set the ui
 			SetUI();
 			//if the curhealth is less than 0
-			if(curHealth <= 0)
+			if (curHealth <= 0)
 			{
 				//we are dead
 				Dead();
@@ -72,23 +73,28 @@ namespace TopDownShooter
 				healthSlider.value = curHealth;
 			}
 			//if curhealth is greater than 0
-			if(curHealth > 0)
+			if (curHealth > 0)
 			{
-				//disbale the "You are dead" text
-				textMesh.enabled = false;
+				//disable the "You are dead" text
+				youareDeadText.enabled = false;
+				//disable the high score text
+				highScoreIndicator.enabled = false;
 			}
 		}
 
 		public void Dead()
 		{
-			
+			Player_Interaction updateHighScore = GetComponent<Player_Interaction>();
 			Player_Movement disablePlayerMovement = GetComponent<Player_Movement>();
 			//freeze the rigidbody rotation
 			disablePlayerMovement.rigid.constraints = RigidbodyConstraints.FreezeRotation;
 			//the player is marked as dead
 			disablePlayerMovement.isDead = true;
 			//enable the "You are dead" text
-			textMesh.enabled = true;
+			youareDeadText.enabled = true;
+			//enable the high score text
+			highScoreIndicator.enabled = true;
+			highScoreIndicator.text = "You cleared " + updateHighScore.floorsCleared.ToString() + " floors and grabbed " + updateHighScore.cashAmount.ToString() + " cash. Try again?";
 			//the player is dead
 			isDead = true;
 			//play death animation

@@ -45,8 +45,8 @@ public class NPC_Enemy : MonoBehaviour {
 			break;
 			case NPC_WeaponType.RIFLE:
 				weaponRange=20.0f;
-				weaponActionTime=0.75f;
-				weaponTime = 1.25f;
+				weaponActionTime=0.35f;
+				weaponTime = 0.55f;
 			break;
 		case NPC_WeaponType.SHOTGUN:
 			weaponRange=20.0f;

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneChange : MonoBehaviour
 {
 	public Transform startPoint;
+	public int floorsCleared = 1;
 	private void Start()
 	{
 		//startPoint = GameObject.Find("SpawnNode").GetComponent<Transform>();
@@ -19,6 +20,8 @@ public class SceneChange : MonoBehaviour
 			//teleport the player back to the start
 			startPoint = GameObject.Find("SpawnNode").GetComponent<Transform>();
 			other.gameObject.transform.position = startPoint.transform.position;
+			Player_Interaction floorCheck = other.GetComponent<Player_Interaction>();
+			floorCheck.FloorsCleared(floorsCleared);
 			//reloads the scene
 			Scene();
 		}
