@@ -8,26 +8,35 @@ namespace TopDownShooter
     {
         public delegate void GameManagementEventHandler();
         public event GameManagementEventHandler MenuToggleEvent;
-        public event GameManagementEventHandler RestartLevelEvent;
+        public event GameManagementEventHandler TogglePauseEvent;
+        public event GameManagementEventHandler ResumeSceneEvent;
         public event GameManagementEventHandler GoToMenuSceneEvent;
         public event GameManagementEventHandler GameOverEvent;
 
         public bool isGameOver;
         public bool isMenuOn;
 
+        public void TogglePause()
+        {
+            if(TogglePauseEvent !=null)
+            {
+                TogglePauseEvent();
+            }
+        }
+
         public void CallEventMenuToggle()
         {
             if(MenuToggleEvent !=null)
             {
-
+                MenuToggleEvent();
             }
         }
 
-        public void CallEventRestartLevel()
+        public void CallEventResumeLevel()
         {
-            if(RestartLevelEvent !=null)
+            if(ResumeSceneEvent !=null)
             {
-                RestartLevelEvent();
+                ResumeSceneEvent();
             }
         }
 
