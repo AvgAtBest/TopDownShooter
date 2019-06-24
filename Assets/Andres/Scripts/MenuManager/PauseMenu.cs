@@ -1,15 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Pause : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuUI;
 
     [SerializeField] private bool isPaused;
-
-
+ 
     // Update is called once per frame
     private void Update()
     {
@@ -22,17 +20,23 @@ public class Pause : MonoBehaviour
         {
             ActivateMenu();
         }
+
         else
         {
             DeactivateMenu();
         }
     }
+
     void ActivateMenu()
     {
+        Time.timeScale = 0;
         pauseMenuUI.SetActive(true);
     }
-    void DeactivateMenu()
+
+    public void DeactivateMenu()
     {
+        Time.timeScale = 1;
         pauseMenuUI.SetActive(false);
+        isPaused = false;
     }
 }
