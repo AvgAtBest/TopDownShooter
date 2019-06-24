@@ -19,15 +19,20 @@ public class Health : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		//if the curhealth is greater than maxhealth
 		if (curHealth >= maxHealth)
 		{
+			//makes sure it doesnt overfill
 			curHealth = maxHealth;
 		}
+		//if curhealth is less than 0
 		if (curHealth <= 0)
 		{
+			//Call dead function
 			Dead();
 		}
 	}
+	//take damage function
 	public void TakeDamage(float damage)
 	{
 		curHealth -= damage;
@@ -35,6 +40,8 @@ public class Health : MonoBehaviour
 	}
 	void Dead()
 	{
+
+		//turns off the ai state
 		NPC_Enemy ai = this.GetComponent<NPC_Enemy>();
 		NPCSensor_Sight ai2 = this.GetComponent<NPCSensor_Sight>();
 		ai.enabled = false;
@@ -42,12 +49,15 @@ public class Health : MonoBehaviour
 
 		if (isGeneratingLoot == false)
 		{
+			//calculates the loot to drop
 			isGeneratingLoot = true;
 			loot.CalculateLoot(this.transform);
 		}
 		
 		print("YOU DIED");
+		//play death animation
 		anim.SetBool("IsDead", true);
+		//destroy the gameobject
 		Destroy(gameObject, 3);
 	}
 }

@@ -39,7 +39,7 @@ namespace EL.Dungeon {
                 Gizmos.DrawRay(new Ray(doors[i].transform.position, doors[i].transform.forward));
              }
         }
-
+		//get a random door to generate
          public GeneratorDoor GetRandomDoor(DRandom random) {
              doors.Shuffle(random.random);
              for (int i = 0; i < doors.Count; i++) {
@@ -48,14 +48,15 @@ namespace EL.Dungeon {
              Debug.LogError("Room::GetRandomDoor() - No open doors..." + transform.position);
              return null;
          }
-
+		//does the room have any open doors
          public bool hasOpenDoors() {
+			//loops through the door count
              for (int i = 0; i < doors.Count; i++) {
-                 if (doors[i].open) return true;
+                 if (doors[i].open) return true; //if there is a open door, return true
              }
-             return false;
+             return false;//else return false, no open doors
          }
-
+		//gets the first open door available
          public GeneratorDoor GetFirstOpenDoor() {
              for (int i = 0; i < doors.Count; i++) {
                  if (doors[i].open) return doors[i];

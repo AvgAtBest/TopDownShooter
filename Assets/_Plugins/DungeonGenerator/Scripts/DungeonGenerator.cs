@@ -10,6 +10,7 @@ using UnityEditor;
 #endif
 public class DungeonGenerator : MonoBehaviour
 {
+	#region Dungeon Crucial Components
 	public NavMeshSurface navMeshSurface;
 	public EL.Dungeon.DungeonData data;
 	public int dungeonSet = 0;
@@ -31,7 +32,8 @@ public class DungeonGenerator : MonoBehaviour
 	public List<EL.Dungeon.Room> openSet = new List<EL.Dungeon.Room>();
 	public Dictionary<Vector3, GameObject> globalVoxels = new Dictionary<Vector3, GameObject>();
 	public List<GameObject> doorVoxelsTest = new List<GameObject>();
-
+	#endregion
+	#region David's added variables
 	public GameObject startRoom;
 	public GameObject finalRoom;
 	public static int roomsCalledStart = 0;
@@ -49,40 +51,39 @@ public class DungeonGenerator : MonoBehaviour
 	public GameObject key;
 	public bool keySpawned;
 	public int keysToSpawn = 1;
-	//public List<Transform> keySpawnPoints = new List<Transform>();
+
 	public int keySpawnCount;
-	Vector3 keyOffset = new Vector3(0, 1.5f, 0);
+	Vector3 keyOffset = new Vector3(0, 1.5f, 0); //offseting the key position
 	public List<GameObject> keySpawnPoints = new List<GameObject>();
 	public List<GameObject> enemySpawnPoints = new List<GameObject>();
 	//public List<Transform> wayPointTests = new List<Transform>();
 	public List<NPC_PatrolNode> wayPointTests = new List<NPC_PatrolNode>();
-	float maxEnemySpawns = 8;
-	float minEnemySpawns = 1;
 	public GameObject enemy;
-	#region Start
+	#endregion
+	#region Awake
 	//change from start to awake
 	void Awake()
 	{
 		//instance = this;
 		if (randomizeSeedOnStart)
 		{
+			//randomises the seed
 			seed = Random.Range(0, int.MaxValue);
 		}
 
 		random = new DRandom();
+		//gets the random seed value
 		random.Init(seed);
-
+		//if the bool randomizeRoomSize is ticked, then it will generate a random amount of rooms, and be less likely to go above the target room limit
 		if (randomizeRoomSize)
 		{
 			targetRooms = 15 + (int)(random.value() * 50f);
 		}
-
+		//the amount of rooms spawned
 		roomsCount = 0;
 		globalVoxels = new Dictionary<Vector3, GameObject>();
 		dungeonSet = random.range(0, data.sets.Count - 1);
-		//Debug.Log("Generating dungeon with data:");
-		//Debug.Log("Rooms count: " + targetRooms);
-		//Debug.Log("Using set: " + data.sets[dungeonSet].name);
+
 
 		//StartGeneration();
 
@@ -94,31 +95,36 @@ public class DungeonGenerator : MonoBehaviour
 	public void Start()
 	{
 		DDebugTimer.Start();
-
+		//generation hasnt completed
 		generationComplete = false;
 		rooms = new List<Room>();
 		doors = new List<Door>();
-
+		//grabs the spawn room from the data set
 		int spawn = random.range(0, data.sets[dungeonSet].spawns.Count - 1);
-
+		//spawns the spawn room in
 		GameObject room = (GameObject)Instantiate(data.sets[dungeonSet].spawns[spawn].gameObject);
-
 		startRoom = room;
-
+		//gets the room component
 		rooms.Add(room.GetComponent<Room>());
+		//spawns it in at parent transform
 		room.transform.parent = this.gameObject.transform;
+		//adds to open set
 		openSet.Add(room.GetComponent<EL.Dungeon.Room>());
+		//gets the volume of the room and checks bounds
 		room.GetComponent<Volume>().RecalculateBounds();
+		//get the voxels of the room from the volume
 		AddGlobalVoxels(room.GetComponent<Volume>().voxels);
+		//adds to the room count
 		roomsCount++;
 
 
 
 
 
-
+		
 		while (openSet.Count > 0)
 		{
+			//generate the next rooms
 			GenerateNextRoom();
 			//return;
 		}
@@ -134,7 +140,7 @@ public class DungeonGenerator : MonoBehaviour
 					doors.Add(d);
 					rooms[i].doors[j].door = d;
 					rooms[i].doors[j].sharedDoor.door = d;
-					//
+					
 					d.gameObject.transform.position = rooms[i].doors[j].transform.position;
 					d.gameObject.transform.rotation = rooms[i].doors[j].transform.rotation;
 					d.gameObject.transform.parent = this.gameObject.transform;
@@ -148,52 +154,47 @@ public class DungeonGenerator : MonoBehaviour
 		spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
 		if (generationComplete == true)
 		{
+
+			//spawn the key, regardless of how many rooms have spawned in (failsafe if roomcount goes under the target amount)
 			SpawnKey();
 		}
-		//Gets the navmesh links that get generated
 
+		//builds the navmesh
 		navMeshSurface.BuildNavMesh();
+		//spawn the enemies after generation
 		SpawnEnemies();
 	}
 	#endregion
 
-	/*
-	 * 1. Go through this function and region sections of mechanics
-	 * 2. Collapse all of the regions
-	 * 3. Analyze the structure of the regions.
-	 * 4. Split out the code that dmvielle is using into functions
-	 * 5. Change code structure to this if you want to implement that mechanic
-	 *	-> Generate the Random Values into a list (randomIndices)
-	 *	-> Select a random index from 'randomIndices' and replace element with the 100% room index
-	 *	-> Plug the randomIndices into dmveille's spawner
-	 */
-
 	#region Generate the next rooms
 	private void GenerateNextRoom()
 	{
+		//gets the spawnRoom as a basis
 		Room lastRoom = startRoom.GetComponent<Room>();
+		
 		if (openSet.Count > 0) lastRoom = openSet[0];
 
 		#region Collecting possible rooms to spawn from the data set
+		//grabs the list of possible rooms to spawn from the data set
 		List<Room> possibleRooms = new List<Room>();
 		for (int i = 0; i < data.sets[dungeonSet].roomTemplates.Count; i++)
 		{
+			//adds it to the list to spawn
 			possibleRooms.Add(data.sets[dungeonSet].roomTemplates[i]);
 		}
+		//randomly shuffles the order
 		possibleRooms.Shuffle(random.random);
 		#endregion
-
+		//grabs the final room from the list to spawn from the data set
 		List<Room> finalRoomList = new List<Room>();
 		for (int f = 0; f < data.sets[dungeonSet].finalRooms.Count; f++)
 		{
+			//adds it to the list
 			finalRoomList.Add(data.sets[dungeonSet].finalRooms[f]);
 		}
-		List<Room> shopList = new List<Room>();
-		for (int s = 0; s < data.sets[dungeonSet].shops.Count; s++)
-		{
-			shopList.Add(data.sets[dungeonSet].shops[s]);
-		}
+		//the new room to try
 		GameObject newRoom;
+		//the door to generate
 		GeneratorDoor door;
 		bool roomIsGood = false;
 
@@ -211,7 +212,7 @@ public class DungeonGenerator : MonoBehaviour
 			//if the amount of rooms that have spawned are greater than the targetrooms
 			if (roomsCount >= targetRooms)
 			{
-				//POSSIBLE ROOMS SHOULD GO UNDER HERE, AND ONLY POSSIBLE ROOMS.
+
 				//stop spawning rooms with multiple doors and only spawn rooms in with one door, to end hallways/doors
 				possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
 			}
@@ -220,19 +221,17 @@ public class DungeonGenerator : MonoBehaviour
 
 			//If we picked a room with with one door, try again UNLESS we've have no other rooms to try
 			int doors = 0;
-			//bool tryAgain = false;
 			//the room to try and spawn
 			GameObject roomToTry;
 			int r = random.range(0, possibleRooms.Count - 1);
-			//int t = elementsToTry[random.range(0, possibleRooms.Count - 1)];
-			//int p = random.range(0, finalRoomList.Count - 1); //// - ALIGNMENT TEST
 			////Debug.Log("r: " + r);
 			////Debug.Log(possibleRooms.Count);
+			//the next room from the possibleRooms list is the room to try andd spawn
 			roomToTry = possibleRooms[r].gameObject;
+			//gets the door count of the chosen room
 			doors = roomToTry.GetComponent<Room>().doors.Count;
-			//REMINDER, NEED TO GENERATE ALL THE ROOMS BELOW AND THEN ONLY ONE FINALROOM WITH 100% CHANCE IF LOW ROOM COUNT
 			//If we picked a room with with one door, try again UNLESS we've have no other rooms to try
-			if (doors == 1 && possibleRooms.Count > 1) //&& finalRoomList.Count == 1)
+			if (doors == 1 && possibleRooms.Count > 1)
 			{
 
 				Debug.Log("we're adding a room with one door when we have other's we could try first..");
@@ -283,8 +282,9 @@ public class DungeonGenerator : MonoBehaviour
 			{
 
 				// INDEX '0' to 100% room
+				//overides the first room to spawn as the final room to spawn
 				roomToTry = finalRoomList[0].gameObject;
-
+				//the final room has now spawned in
 				hasFinalRoomSpawned = true;
 
 			}
@@ -297,33 +297,12 @@ public class DungeonGenerator : MonoBehaviour
 			newRoom.transform.parent = this.gameObject.transform;
 			//Connects the new Room to the last room in the set
 			door = ConnectRooms(lastRoom, newRoom.GetComponent<Room>());
-			#region Old crap
-			//FINAL ROOM AND END ROOM SPAWNING, BUT STILL CHECKING. LEAVE HERE FOR TESTING
-			//if (roomsCount == targetRooms)
-			//{
-			//	if(hasFinalRoomSpawned == false)
-			//	{
-			//		if (amountEndRoomsSpawned < 1)
-			//		{
-			//			possibleRooms = GetAllRoomsWithOneDoor(possibleRooms);
-			//			amountEndRoomsSpawned++;
-			//			FinalSpawn(newRoom, lastRoom, door);
-			//		}
-			//	}
 
-			//THIS WORKS, BUT CAUSES CRASHES AND WONT GENERATE IF GREATER OR LESS THAN THE TARGETROOMS
-			//Seems to be also crashing when the roomsCount = targetRooms, so yay.......
-			//Testing, should be ==
-			//if (roomsCount == targetRooms)
-			//{
-
-			//    FinalSpawn(newRoom, lastRoom, door);
-
-			//}
-			#endregion
 			#region Global Voxel Check
 			//room is now generated and in position... we need to test overlap now!
+			//gets the volume of the new room
 			Volume v = newRoom.GetComponent<Volume>();
+			//get the room component as well
 			Room ro = newRoom.GetComponent<Room>();
 			bool overlap = false;
 			for (int i = 0; i < v.voxels.Count; i++)
@@ -366,10 +345,12 @@ public class DungeonGenerator : MonoBehaviour
 							////Debug.Log("Door: " + i + " is facing: +Z");
 							direction = new Vector3(0f, 0f, 1f);
 						}
+						//spawns a sphere as a collision check
 						GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 						g.transform.position = openSet[j].doors[k].voxelOwner.transform.position + (direction * v.voxelScale);
 						g.GetComponent<Renderer>().material.color = Color.red;
 						doorVoxelsTest.Add(g);
+						//checks to see if there is a overlap in the voxels
 						if (RoundVec3ToInt(v.voxels[i].gameObject.transform.position) == RoundVec3ToInt(openSet[j].doors[k].voxelOwner.transform.position + (direction * v.voxelScale)))
 						{
 							overlap = true;
@@ -497,19 +478,24 @@ public class DungeonGenerator : MonoBehaviour
 		}
 		else
 		{
+			//grabs the first open door available
 			GeneratorDoor otherDoor = newRoom.GetComponent<Room>().GetFirstOpenDoor();
+			//the other door that is grabbed is now the shared door
 			door.sharedDoor = otherDoor;
 			otherDoor.sharedDoor = door;
-
+			//the door is not open, so connection may happen
 			door.open = false;
 			newRoom.GetComponent<Room>().GetFirstOpenDoor().open = false;
-
+			//adds the new room to try
 			rooms.Add(newRoom.GetComponent<Room>());
-
+			//gets the new rooms voxels
 			AddGlobalVoxels(newRoom.GetComponent<Volume>().voxels);
+			//i the last room doesnt have any open doors, the remove it from the open set
 			if (!lastRoom.hasOpenDoors()) openSet.Remove(lastRoom);
 			Debug.Log(lastRoom.gameObject.name + lastRoom.gameObject.transform.position + "Has been destroyed");
+			//if the new room has open doors, then add it to the open set
 			if (newRoom.GetComponent<Room>().hasOpenDoors()) openSet.Add(newRoom.GetComponent<Room>());
+			//adds the room to the room count
 			roomsCount++;
 			//Debug.Log("Openset: " + openSet.Count);
 
@@ -518,6 +504,7 @@ public class DungeonGenerator : MonoBehaviour
 	#endregion
 
 	#region Normalise Angle
+	//normalizes the room rotation and angle
 	private float NormalizeAngle(int rotation)
 	{
 		while (rotation < 0)
@@ -528,6 +515,7 @@ public class DungeonGenerator : MonoBehaviour
 		{
 			rotation -= 360;
 		}
+		//returns the rotation and angle
 		return rotation;
 	}
 	#endregion
@@ -538,8 +526,10 @@ public class DungeonGenerator : MonoBehaviour
 	}
 	#endregion
 	#region Add Global Voxels
+	//gets the voxels from the room thaat we are trying to spawn in
 	private void AddGlobalVoxels(List<GameObject> voxels)
 	{
+		//loop through the voxel count in the room
 		for (int i = 0; i < voxels.Count; i++)
 		{
 			////Debug.Log(string.Format("Trying to add voxel {0} with key {1}", i, voxels[i].gameObject.transform.position));
@@ -560,57 +550,35 @@ public class DungeonGenerator : MonoBehaviour
 	{
 		//this could be cached at startup, doesn't have to be calculated every iteration, right?
 		//Debug.Log("Rooms with one door only: ");
-
+		//gets each room from the list that has a room component
 		List<Room> roomsWithOneDoor = new List<Room>();
+		//for each of the rooms
 		for (int i = 0; i < list.Count; i++)
 		{
+			//if the rooms in the list have one door
 			if (list[i].doors.Count == 1)
 			{
+				//adds the rooms with one door to the list
 				roomsWithOneDoor.Add(list[i]);
-				//spawns the key
+				//SPAWNS THE KEY (FOR WHEN THE ROOMSCOUNT IS GREATER THAN TARGET ROOMS)
 				keySpawnPoints = FindObjectsOfType<GameObject>().Where(obj => obj.name == "KeySpawn").ToList();
 				foreach (var spawnyPoint in keySpawnPoints)
 				{
+					//chance of spawning a key at one of the locations
 					int chance = Random.Range(0, keySpawnPoints.Count - 1);
+					//if the key hasnt spawned
 					if (keySpawned == false)
 					{
+						//it has now spawned at the spawn point position
 						Instantiate(key, keySpawnPoints[chance].transform.position + keyOffset, keySpawnPoints[chance].transform.rotation);
 						keySpawned = true;
 					}
 				}
-				//CALL IN START AFTER GENERATION, CALL START FUNCTION IN AWAKE
-				//foreach (var roomWithOneDoor in roomsWithOneDoor)
-				//{
-
-				//	Transform spawnPoint = GameObject.Find("KeySpawn").GetComponent<Transform>();
-				//	keySpawnPoints.Add(spawnPoint);
-				//	for (int s = 0; s < keySpawnPoints.Count; s++)
-				//	{
-				//		int chance = Random.Range(0, keySpawnPoints.Count - 1);
-				//		if (keySpawned == false)
-				//		{
-				//			Instantiate(key, keySpawnPoints[chance].position, keySpawnPoints[chance].rotation);
-				//			keySpawned = true;
-				//		}
-				//	}
-				//}
-
-				//Debug.Log("room : " + i);
 			}
-
 		}
-		//SpawnKeys(roomsWithOneDoor);
-		//foreach (var roomWithOneDoor in roomsWithOneDoor)
-		//{
-
-		//	Transform spawnPoint = GameObject.Find("KeySpawn").GetComponent<Transform>();
-
-		//	int value = Random.Range(0, roomsWithOneDoor.Count);
-		//	Instantiate(key, spawnPoint.transform.position, spawnPoint.transform.rotation);
-		//}
-
-		//hasAllTheEndRoomsSpawned = true;
+		//adds the amount of end rooms spawned
 		amountEndRoomsSpawned++;
+		//returns the rooms with one door
 		return roomsWithOneDoor;
 
 	}
@@ -632,8 +600,6 @@ public class DungeonGenerator : MonoBehaviour
 		//they both share the same instance... we don't need TWO doors at every doorway
 		//we will remove one of the graphical door prefabs, but we should keep both Door gameobject/components
 		//we don't want to set these until we actually commmit to placing this room (ie after volume checks)
-		//lastRoomDoor.open = false;
-		//newRoomDoor.open = false;
 
 		return lastRoomDoor;
 		//we return lastRoomDoor because we don't know what door it will grab, but we know newRoom will always grab firstOpenDoor()
@@ -642,6 +608,7 @@ public class DungeonGenerator : MonoBehaviour
 	#region Generation Timer
 	public float timer = 0f;
 	public float delayTime = 0.01f;
+	//just a timer that allows the map to generate periodically, instead of all at once. Merely optional
 	public void Update()
 	{
 		if (openSet.Count > 0)
@@ -669,28 +636,31 @@ public class DungeonGenerator : MonoBehaviour
 	}
 
 	#endregion
+	#region Key Spawn
+	//SPAWNS THE KEY (FOR WHEN THE ROOMSCOUNT IS LESS THAN TARGET ROOMS)
 	void SpawnKey()
 	{
-
+		//loop through the rooms
 		for (int c = 0; c < rooms.Count; c++)
 		{
+			//loop through the doors
 			for (int j = 0; j < rooms[c].doors.Count; j++)
 			{
+				//loop through the rooms that have one door
 				if (rooms[c].doors.Count == 1)
 				{
+					//find all of the the key spawn point
 					keySpawnPoints = FindObjectsOfType<GameObject>().Where(obj => obj.name == "KeySpawn").ToList();
 					foreach (var spawnyPoint in keySpawnPoints)
 					{
+						//chance of choosing one of the spawn points
 						int chance = Random.Range(0, keySpawnPoints.Count - 1);
+						//if it hasnt spawned in
 						if (keySpawned == false)
 						{
-							//Vector3 tempPos = transform.position + new Vector3(0, 3, 0);
-							//GameObject newKey = Instantiate(key, keySpawnPoints[chance].transform.position, keySpawnPoints[chance].transform.rotation);
+							//spawn in the key at a random spawn point
 							Instantiate(key, keySpawnPoints[chance].transform.position + keyOffset, keySpawnPoints[chance].transform.rotation);
-							//print(newKey.transform.position);
-							//print("then");
-							//newKey.transform.position += keyOffset;
-							//print(newKey.transform.position);
+							//it has now spawned in
 							keySpawned = true;
 						}
 					}
@@ -698,32 +668,39 @@ public class DungeonGenerator : MonoBehaviour
 			}
 		}
 
+
 	}
+	#endregion
+	#region Spawn the enemies
 	void SpawnEnemies()
 	{
+		//loop through all the rooms
 		for (int c = 0; c < rooms.Count; c++)
 		{
 			bool isEnemySpawned = false;
+			//find the spawnpoints labelled AISpawnNode on the map
 			enemySpawnPoints = FindObjectsOfType<GameObject>().Where(obj => obj.name == "AiSpawnNode").ToList();
 			foreach(var enemySpawnPoint in enemySpawnPoints)
 			{
+				//if enemies havent spawned in
 				if(isEnemySpawned == false)
 				{
+					//random chance of spawnpoints to chose from
 					int chance = Random.Range(0, enemySpawnPoints.Count);
-					int index = 8;
-					//GameObject[] enemy = GameObject.FindObjectsOfType<GameObject>();
+					//spawn the enemies at each of the spawn points
 					Instantiate(enemy, enemySpawnPoints[chance].transform.position, enemySpawnPoints[chance].transform.rotation);
+					//enemies have spawned in
 					isEnemySpawned = true;
+					//get the patrol waypoints
 					wayPointTests = FindObjectsOfType<NPC_PatrolNode>().Where(obj => obj.name == "PatrolNode_0").ToList();
 					foreach (var waypointTest in wayPointTests)
 					{
+						//set each of the enemies a patrol node to patrol (they will chose the one that has been assigne to them and move to it)
 						NPC_Enemy npcEnemyState = enemy.GetComponent<NPC_Enemy>();
 						int chance2 = Random.Range(0, wayPointTests.Count);
 						npcEnemyState.patrolNode = wayPointTests[chance2];
 						enemy.transform.position = wayPointTests[chance2].transform.position;
-						//NPC_PatrolNode patrolNode = GetComponent<NPC_PatrolNode>();
-						//states.waypointParent = wayPointTests[chance2];
-						//wayPointTests = GetComponent<Transform>();
+
 					}
 				}
 				
@@ -731,4 +708,5 @@ public class DungeonGenerator : MonoBehaviour
 			}
 		}
 	}
+	#endregion
 }

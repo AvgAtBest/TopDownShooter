@@ -32,45 +32,37 @@ public class Player_Movement : MonoBehaviour
 		rigid = GetComponent<Rigidbody>();
 		cam = GameObject.Find("Main Camera")?.GetComponent<Camera>();
 		anim = GetComponentInChildren<Animator>();
+		//freezes the x and z rotation
 		rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		isTopDown = true;
 		hasPlayerSpawnedIn = true;
-		//ddol = GameObject.Find("DontDestroyOnLoad").GetComponent<Transform>();
-		//SetParent(ddol);
 
-
-		//dont destroy the player
-		//DontDestroyOnLoad(this.gameObject);
 
 	}
 	void Update()
 	{
+		//if the player isnt dead
 		if (isDead != true)
 		{
 
-
+			//if there isnt a spawn location
 			if (!spawnLocation)
 			{
+				//spawn the player at the spawn node
 				spawnLocation = GameObject.Find("SpawnNode").GetComponent<Transform>();
 				SpawnPlayer();
 			}
-			//gets the input
+			//gets the horizontal and vertical input
 			float inputH = Input.GetAxis("Horizontal") * speed;
 			float inputZ = Input.GetAxis("Vertical") * speed;
 			//if the player is in top down view
 			if (isTopDown == true)
 			{
-				//moves the player via input (inputH is horizontal movement, inputZ is up and down)
+				//moves the player via input (inputH is horizontal movement on X, inputZ is up and down on Z)
 				Vector3 moveDir = new Vector3(inputH, 0f, inputZ);
 				//apply force to rigidbody
 				Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
 
-				//switch (transform.rotation.y)
-				//{
-				//	case 
-				//	default:
-				//		break;
-				//}
 
 				//If the player is inputing movement...
 				if (moveDir != Vector3.zero)
@@ -115,7 +107,7 @@ public class Player_Movement : MonoBehaviour
 					anim.SetFloat("Horizontal", 0);
 					anim.SetFloat("Vertical", 0);
 				}
-
+				//the velocity of the rigid body is equal to the vector3 force
 				rigid.velocity = force;
 				//shoots a ray from the camera to where the mouse pos is to a plane
 				Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
@@ -129,8 +121,10 @@ public class Player_Movement : MonoBehaviour
 					transform.LookAt(new Vector3(hitPoint.x, transform.position.y, hitPoint.z));
 
 				}
+				//if the player pushes C
 				if (Input.GetKeyDown(KeyCode.C))
 				{
+					//Start Coroutine for Slide
 					//SLIDEY TIME
 					StartCoroutine(Slide(1f));
 
@@ -140,7 +134,9 @@ public class Player_Movement : MonoBehaviour
 			//if the player is in the side mode view
 			if (isTopDown == false)
 			{
+				//sets horizontal to 0 to make sure no strafing is played
 				anim.SetFloat("Horizontal", 0);
+				//sets rotation to 0
 				transform.Rotate(0, 0, 0);
 				//move direction is now reversed
 				Vector3 moveDir = new Vector3(-inputH, 0f, -inputZ);
@@ -152,47 +148,47 @@ public class Player_Movement : MonoBehaviour
 				transform.Translate(moveDir * Time.deltaTime, Space.World);
 
 
+				//if the player is looking between these angles
 				anim.SetFloat("Vertical", -inputH);
 				if ((BaneMath.NumberWithinRange(transform.eulerAngles.y, 0, 45) ||
 					 BaneMath.NumberWithinRange(transform.eulerAngles.y, 315, 360)) ||
 					 BaneMath.NumberWithinRange(transform.eulerAngles.y, 135, 225))
 				{
-
+					//make sure to play the run animation regardless of direction
 					anim.SetFloat("Vertical", -inputZ);
 				}
 
 			}
 
 
-
+			//if the gun is there
 			if (theGun)
 			{
+				//if the left mouse button is pressed
 				if (Input.GetMouseButton(0))
+					//Fire the gun
 					theGun.Fire();
+				//else if the R key is pressed
 				else if (Input.GetKeyDown(KeyCode.R))
+					//Reload
 					theGun.Reload();
 
-				//if (Input.GetMouseButtonUp(0))
-				//    theGun.StopFiring();
 			}
 		}
 	}
 	public void SpawnPlayer()
 	{
-
+		//current position is now equal to the spawn location position in the world
 		transform.position = spawnLocation.transform.position;
-		//transform.position = spawnLocation.transform.position;
+
 
 	}
-	public void SetParent(Transform newParent)
-	{
-		this.transform.SetParent(newParent, false);
 
-	}
 
 	public void SetSpawned()
 	{
-		print("HAA GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY");
+		print("Spawned in");
+		//the player has spawned in
 		hasPlayerSpawnedIn = true;
 	}
 
