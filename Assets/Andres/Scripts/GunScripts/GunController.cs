@@ -20,7 +20,8 @@ public class GunController : MonoBehaviour
     public int ammoInClip;
     public int damage;
     public int maxClipSize = 10;
-    public int ammoInReserve = 300;
+    public int ammoInReserve;
+    private int ammoMaxReserve = 300;
     public bool requiresReload = false;
     //public TopDownShooter.Gun_Ammo gunAmmo;
     public TopDownShooter.Gun_AmmoUI gunAmmoUI;
@@ -29,6 +30,7 @@ public class GunController : MonoBehaviour
     void Start()
     {
         ammoInClip = maxClipSize;
+        ammoInReserve = ammoMaxReserve;
     }
 
     // Update is called once per frame
@@ -119,6 +121,15 @@ public class GunController : MonoBehaviour
     {
 
 
+    }
+    public void ObtainAmmo(int ammoObtained)
+    {
+        ammoInReserve += ammoObtained;
+        if(ammoInReserve >= ammoMaxReserve)
+        {
+            ammoInReserve = ammoMaxReserve;
+        }
+        gunAmmoUI.UpdateAmmoUI(ammoInClip, ammoInReserve);
     }
 }
 

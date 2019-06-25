@@ -14,6 +14,6 @@ public class Collectable : OnTriggerEvent
   }
 	public void Update()
 	{
-		Destroy(gameObject, 10);
+		Destroy(gameObject, 30f);
 	}
 }
