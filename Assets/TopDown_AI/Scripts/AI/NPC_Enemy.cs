@@ -91,7 +91,7 @@ public class NPC_Enemy : MonoBehaviour {
 
 	void StateInit_IdleStatic(){	
 		navMeshAgent.SetDestination (startingPos);
-		navMeshAgent.Resume ();
+		navMeshAgent.isStopped = false;
 	}
 	void StateUpdate_IdleStatic(){	
 
@@ -152,7 +152,7 @@ public class NPC_Enemy : MonoBehaviour {
 		}
 		if (idleTimer.IsFinished ()) {
 			if(idleMoving){
-				navMeshAgent.Stop();
+				navMeshAgent.isStopped = true;
 				float waitTime=Random.Range (2.5f,6.5f);
 				float randomTurnTime=waitTime/2.0f;
 				idleRotateTimer.StartTimer (randomTurnTime);
@@ -198,7 +198,7 @@ public class NPC_Enemy : MonoBehaviour {
 			Physics.Raycast (transform.position,reflectedVector, out hit,50.0f,hitTestLayer);
 		}
 
-		navMeshAgent.Resume();
+		navMeshAgent.isStopped = false;
 		navMeshAgent.SetDestination (hit.point);
 
 	
@@ -209,7 +209,7 @@ public class NPC_Enemy : MonoBehaviour {
 	bool inspectWait;
 	void StateInit_Inspect(){	
 		navMeshAgent.speed = 9.5f;
-		navMeshAgent.Resume ();
+		navMeshAgent.isStopped = false;
 		inspectTimer.StopTimer ();
 		inspectWait = false;
 	}
@@ -245,8 +245,8 @@ public class NPC_Enemy : MonoBehaviour {
 	///////////////////////////////////////////////////////// STATE: ATTACK
 	Misc_Timer attackActionTimer=new Misc_Timer();
 	bool actionDone;
-	void StateInit_Attack(){	
-		navMeshAgent.Stop ();
+	void StateInit_Attack(){
+		navMeshAgent.isStopped = true;
 		navMeshAgent.velocity = Vector3.zero;
 		npcAnimator.SetBool ("Attack", true);		
 		CancelInvoke ("AttackAction");
