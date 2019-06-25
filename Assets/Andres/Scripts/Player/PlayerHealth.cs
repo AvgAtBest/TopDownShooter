@@ -20,6 +20,7 @@ namespace TopDownShooter
 		public Animator anim;
 		public TextMeshProUGUI youareDeadText;
 		public TextMeshProUGUI highScoreIndicator;
+        [SerializeField] public GameObject GameOverUI;
 		void OnEnable()
 		{
 
@@ -27,6 +28,7 @@ namespace TopDownShooter
 
 		void Start()
 		{
+            GameOverUI.SetActive(false);
 			isDead = false;
 			curHealth = maxHealth;
 			anim = this.GetComponentInChildren<Animator>();
@@ -79,6 +81,7 @@ namespace TopDownShooter
 				youareDeadText.enabled = false;
 				//disable the high score text
 				highScoreIndicator.enabled = false;
+                GameOverUI.SetActive (false);
 			}
 		}
 
@@ -90,8 +93,9 @@ namespace TopDownShooter
 			disablePlayerMovement.rigid.constraints = RigidbodyConstraints.FreezeRotation;
 			//the player is marked as dead
 			disablePlayerMovement.isDead = true;
-			//enable the "You are dead" text
-			youareDeadText.enabled = true;
+            GameOverUI.SetActive(true);
+            //enable the "You are dead" text
+            youareDeadText.enabled = true;
 			//enable the high score text
 			highScoreIndicator.enabled = true;
 			highScoreIndicator.text = "You cleared " + updateHighScore.floorsCleared.ToString() + " floors and grabbed " + updateHighScore.cashAmount.ToString() + " cash. Try again?";
@@ -99,7 +103,8 @@ namespace TopDownShooter
 			isDead = true;
 			//play death animation
 			anim.SetBool("IsDead", true);
-			//Destroy(gameObject);
+            //Destroy(gameObject);
+
 		}
 	}
 }
