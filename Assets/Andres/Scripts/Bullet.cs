@@ -36,6 +36,7 @@ public class Bullet : MonoBehaviour
 			{
 				//take health away equal to the damage dealt
 				health.TakeDamage(damage);
+				Debug.Log("Dealt");
 				//destroy the bullet
 				Destroy(gameObject);
 			}
@@ -47,6 +48,7 @@ public class Bullet : MonoBehaviour
 		{
 			//destroy the bullet
 			Destroy(gameObject);
+			Debug.Log(col.gameObject.name + "has been hit");
 		}
 
 	}

@@ -10,11 +10,15 @@ namespace TopDownShooter
         public override void Pickup()
         {
             PlayerHealth health = otherCollider.GetComponent<PlayerHealth>();
-			//adds the heal amount to the amount of health via takeDamage function (+)
-            health.TakeDamage(-healAmount);
-            print("YOU HAVE BEEN GRACED BY HIS NOODLEY APPENDAGES");
-			//calls pickup function from parent script
-            base.Pickup();
+			if(health.curHealth < health.maxHealth)
+			{
+				//adds the heal amount to the amount of health via takeDamage function (+)
+				health.TakeDamage(-healAmount);
+				print("YOU HAVE BEEN GRACED BY HIS NOODLEY APPENDAGES");
+				//calls pickup function from parent script
+				base.Pickup();
+			}
+
         }
     }
 }

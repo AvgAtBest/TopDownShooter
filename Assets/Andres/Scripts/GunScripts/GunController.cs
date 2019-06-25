@@ -21,7 +21,7 @@ public class GunController : MonoBehaviour
     public int damage;
     public int maxClipSize = 10;
     public int ammoInReserve;
-    private int ammoMaxReserve = 300;
+    public int ammoMaxReserve = 300;
     public bool requiresReload = false;
     //public TopDownShooter.Gun_Ammo gunAmmo;
     public TopDownShooter.Gun_AmmoUI gunAmmoUI;

@@ -9,8 +9,12 @@ public class Ammo_Pickup : Collectable
     public override void Pickup()
     {
         GunController ammoMaster = otherCollider.GetComponentInChildren<GunController>();
-        ammoMaster.ObtainAmmo(ammoQuantity);
-        base.Pickup();
+		if(ammoMaster.ammoInReserve != ammoMaster.ammoMaxReserve)
+		{
+			ammoMaster.ObtainAmmo(ammoQuantity);
+			base.Pickup();
+		}
+
     }
 
 }

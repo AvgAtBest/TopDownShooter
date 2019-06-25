@@ -54,7 +54,7 @@ public class Camera_Track_Player : MonoBehaviour
 	private void TopDownCamView()
 	{
 		//the start position of the camera is 20 on the y axis
-		startPos = new Vector3(0, 20f, 0);
+		startPos = new Vector3(0, 25f, 0);
 		//sets the start pos of the camera
 		trackingCamera.transform.position = startPos;
 		//sets rotation to be 90 down on the x axis

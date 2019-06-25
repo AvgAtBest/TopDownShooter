@@ -122,7 +122,7 @@ public class Player_Movement : MonoBehaviour
 
 				}
 				//if the player pushes C
-				if (Input.GetKeyDown(KeyCode.C))
+				if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl))
 				{
 					//Start Coroutine for Slide
 					//SLIDEY TIME
