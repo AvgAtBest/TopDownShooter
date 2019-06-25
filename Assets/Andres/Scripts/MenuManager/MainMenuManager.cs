@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class MainMenuManager : MonoBehaviour
 {
+
     public void LoadGame()
     {
+
         SceneManager.LoadScene(1);
     }
     public void ExitGame()
@@ -18,3 +21,4 @@ public class MainMenuManager : MonoBehaviour
         Application.Quit();
     }
 }
+
