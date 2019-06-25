@@ -35,8 +35,8 @@ public class NPC_Enemy : MonoBehaviour {
 		//GameManager.AddToEnemyCount ();
 	}
 	void SetWeapon(NPC_WeaponType newWeapon){
-        npcAnimator.SetTrigger("WeaponChange");
-		npcAnimator.SetInteger ("WeaponType", (int)weaponType);
+       // npcAnimator.SetTrigger("WeaponChange");
+		//npcAnimator.SetInteger ("WeaponType", (int)weaponType);
 		switch (weaponType) {
 			case NPC_WeaponType.KNIFE:
 				weaponRange=1.0f;
@@ -45,8 +45,8 @@ public class NPC_Enemy : MonoBehaviour {
 			break;
 			case NPC_WeaponType.RIFLE:
 				weaponRange=20.0f;
-				weaponActionTime=0.35f;
-				weaponTime = 0.55f;
+				weaponActionTime=0.25f;
+				weaponTime = 0.50f;
 			break;
 		case NPC_WeaponType.SHOTGUN:
 			weaponRange=20.0f;
@@ -104,7 +104,7 @@ public class NPC_Enemy : MonoBehaviour {
 	
 	void StateInit_IdlePatrol(){
 		
-		navMeshAgent.speed = 6.0f;
+		navMeshAgent.speed = 5.0f;
 		navMeshAgent.SetDestination (patrolNode.GetPosition ());
 	}
 	void StateUpdate_IdlePatrol(){	
@@ -124,7 +124,7 @@ public class NPC_Enemy : MonoBehaviour {
 	Misc_Timer idleRotateTimer=new Misc_Timer();
 	bool idleWaiting,idleMoving;
 	void StateInit_IdleRoamer(){	
-		navMeshAgent.speed = 7.0f;
+		navMeshAgent.speed = 8.0f;
 
 		idleTimer.StartTimer (Random.Range (2.0f, 4.0f));
 		RandomRotate ();
@@ -208,7 +208,7 @@ public class NPC_Enemy : MonoBehaviour {
 	Misc_Timer inspectTurnTimer = new Misc_Timer ();
 	bool inspectWait;
 	void StateInit_Inspect(){	
-		navMeshAgent.speed = 16.0f;
+		navMeshAgent.speed = 9.5f;
 		navMeshAgent.Resume ();
 		inspectTimer.StopTimer ();
 		inspectWait = false;
@@ -300,6 +300,7 @@ public class NPC_Enemy : MonoBehaviour {
 			randomAngle *= -1;
 
 		transform.Rotate (0, randomAngle, 0);
+
 	}
 	/*float randomMoveInnerRadius=0.5f, randomMoveOuterRadius=10.0f;
 	private Vector3 GetRandomPoint(){	

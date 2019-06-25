@@ -9,7 +9,7 @@ namespace TopDownShooter
 	public class PlayerHealth : MonoBehaviour
 	{
 		private GameManager_Master gameManager_Master;
-		private Player_Master player_Master;
+		//private Player_Master player_Master;
 		public Slider healthSlider;
 
 		public int maxHealth = 100;

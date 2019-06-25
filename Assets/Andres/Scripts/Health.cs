@@ -56,8 +56,11 @@ public class Health : MonoBehaviour
 		
 		print("YOU DIED");
 		//play death animation
+		anim.SetFloat("Speed", 0);
+		anim.SetBool("Attack", false);
 		anim.SetBool("IsDead", true);
+
 		//destroy the gameobject
-		Destroy(gameObject, 3);
+		Destroy(gameObject, 4);
 	}
 }

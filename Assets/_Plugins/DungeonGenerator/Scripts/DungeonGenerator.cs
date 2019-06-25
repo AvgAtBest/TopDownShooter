@@ -60,7 +60,7 @@ public class DungeonGenerator : MonoBehaviour
 	public List<NPC_PatrolNode> wayPointTests = new List<NPC_PatrolNode>();
 	public GameObject enemy;
 	#endregion
-	#region Awake
+	#region Awake/Start
 	//change from start to awake
 	void Awake()
 	{
@@ -127,6 +127,7 @@ public class DungeonGenerator : MonoBehaviour
 			//generate the next rooms
 			GenerateNextRoom();
 			//return;
+
 		}
 
 		//process doors
@@ -674,37 +675,71 @@ public class DungeonGenerator : MonoBehaviour
 	#region Spawn the enemies
 	void SpawnEnemies()
 	{
-		//loop through all the rooms
+		#region My Spawn Enemies Function (Depreciated)
+
+		//DAVID TEST
+		////loop through all the rooms
+		//for (int c = 0; c < rooms.Count; c++)
+		//{
+		//	bool isEnemySpawned = false;
+		//	//find the spawnpoints labelled AISpawnNode on the map
+		//	enemySpawnPoints = FindObjectsOfType<GameObject>().Where(obj => obj.name == "AiSpawnNode").ToList();
+		//	foreach(var enemySpawnPoint in enemySpawnPoints)
+		//	{
+		//		//if enemies havent spawned in
+		//		if(isEnemySpawned == false)
+		//		{
+		//			//random chance of spawnpoints to chose from
+		//			int chance = Random.Range(0, enemySpawnPoints.Count);
+		//			//spawn the enemies at each of the spawn points
+		//			Instantiate(enemy, enemySpawnPoints[chance].transform.position, enemySpawnPoints[chance].transform.rotation);
+		//			//enemies have spawned in
+		//			isEnemySpawned = true;
+		//			//get the patrol waypoints
+		//			wayPointTests = FindObjectsOfType<NPC_PatrolNode>().Where(obj => obj.name == "PatrolNode_0").ToList();
+		//			foreach (var waypointTest in wayPointTests)
+		//			{
+		//				//set each of the enemies a patrol node to patrol (they will chose the one that has been assigne to them and move to it)
+		//				NPC_Enemy npcEnemyState = enemy.GetComponent<NPC_Enemy>();
+		//				int chance2 = Random.Range(0, wayPointTests.Count);
+		//				npcEnemyState.patrolNode = wayPointTests[chance2];
+		//				enemy.transform.position = wayPointTests[chance2].transform.position;
+
+		//			}
+		//		}
+
+
+		//	}
+		//}
+		#endregion
+		#region Jordy Fix for AI Getting Nodes
 		for (int c = 0; c < rooms.Count; c++)
 		{
 			bool isEnemySpawned = false;
 			//find the spawnpoints labelled AISpawnNode on the map
 			enemySpawnPoints = FindObjectsOfType<GameObject>().Where(obj => obj.name == "AiSpawnNode").ToList();
-			foreach(var enemySpawnPoint in enemySpawnPoints)
+			foreach (var enemySpawnPoint in enemySpawnPoints)
 			{
 				//if enemies havent spawned in
-				if(isEnemySpawned == false)
+				if (isEnemySpawned == false)
 				{
 					//random chance of spawnpoints to chose from
 					int chance = Random.Range(0, enemySpawnPoints.Count);
-					//spawn the enemies at each of the spawn points
-					Instantiate(enemy, enemySpawnPoints[chance].transform.position, enemySpawnPoints[chance].transform.rotation);
+					NPC_Enemy npcEnemyState = enemy.GetComponent<NPC_Enemy>();
+					//Store the spawnpoint that was picked through chance
+					GameObject chosenSpawn = enemySpawnPoints[chance];
+					//gets the patrol node in the children of the chosen spawn
+					NPC_PatrolNode test = chosenSpawn.GetComponentInChildren<NPC_PatrolNode>();
+					//spawn the enemies at each of the spawn points and store a reference to the enemy for later
+					GameObject spawnedEnemy =Instantiate(enemy, chosenSpawn.transform.position, chosenSpawn.transform.rotation);
+
+					//Assignes the enemy's patrol path to the one that the spawnpoint already recognises (is set up elsewhere)
+					spawnedEnemy.GetComponent<NPC_Enemy>().patrolNode = test.nextNode;
+
 					//enemies have spawned in
 					isEnemySpawned = true;
-					//get the patrol waypoints
-					wayPointTests = FindObjectsOfType<NPC_PatrolNode>().Where(obj => obj.name == "PatrolNode_0").ToList();
-					foreach (var waypointTest in wayPointTests)
-					{
-						//set each of the enemies a patrol node to patrol (they will chose the one that has been assigne to them and move to it)
-						NPC_Enemy npcEnemyState = enemy.GetComponent<NPC_Enemy>();
-						int chance2 = Random.Range(0, wayPointTests.Count);
-						npcEnemyState.patrolNode = wayPointTests[chance2];
-						enemy.transform.position = wayPointTests[chance2].transform.position;
-
-					}
+					#endregion
 				}
-				
-
 			}
 		}
 	}
