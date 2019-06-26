@@ -6,9 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 	public Rigidbody rb;
-	public float bulletSpeed = 3f;
-
-	public float damage;
+	public float bulletSpeed = 12f;
 
 	// Start is called before the first frame update
 	void Start()
@@ -25,32 +23,24 @@ public class Bullet : MonoBehaviour
 
 	}
 
+	private void Update()
+	{
+		Destroy(gameObject, 3);
+	}
 
 	public void OnCollisionEnter(Collision col)
 	{
 		//if it hits a enemy
-		if (col.transform.tag == "Enemy")
 		{
-			Health health = col.transform.GetComponent<Health>();
-			if (health)
+			if (col.gameObject)
 			{
-				//take health away equal to the damage dealt
-				health.TakeDamage(damage);
-				Debug.Log("Dealt");
+
 				//destroy the bullet
 				Destroy(gameObject);
 			}
 
-			//Destroy(col.gameObject);
 		}
-		//if it didnt hit a enemy
-		if (col.gameObject.tag != "Enemy")
-		{
-			//destroy the bullet
-			Destroy(gameObject);
-			Debug.Log(col.gameObject.name + "has been hit");
-		}
+
 
 	}
-
 }

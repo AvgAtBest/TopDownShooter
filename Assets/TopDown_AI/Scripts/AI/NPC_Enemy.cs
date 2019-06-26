@@ -25,6 +25,9 @@ public class NPC_Enemy : MonoBehaviour {
 	float weaponActionTime,weaponTime;
 	int hashSpeed;
 	public NPC_PatrolNode patrolNode;
+	public int damage = 8;
+	public GameObject bloodParticles;
+	public GameObject impactParticle;
 	// Use this for initialization
 
 	void Start () {
@@ -280,8 +283,27 @@ public class NPC_Enemy : MonoBehaviour {
 			}
 			break;
 			case NPC_WeaponType.RIFLE:
-				GameObject bullet=GameObject.Instantiate(proyectilePrefab, weaponPivot.position,weaponPivot.rotation) as GameObject;
-				bullet.transform.Rotate(0,Random.Range(-7.5f,7.5f),0);
+				Vector3 rayOrigin = weaponPivot.transform.position;
+				RaycastHit hitLocation;
+				if(Physics.Raycast(rayOrigin, weaponPivot.forward, out hitLocation, weaponRange))
+				{
+					//GameObject bullet = GameObject.Instantiate(proyectilePrefab, weaponPivot.position, weaponPivot.rotation) as GameObject;
+					//bullet.transform.Rotate(0, Random.Range(-7.5f, 7.5f), 0);
+					if (hitLocation.collider.CompareTag("Player"))
+					{
+						Instantiate(bloodParticles, hitLocation.point, Quaternion.identity);
+						PlayerHealth phealth = hitLocation.collider.GetComponent<PlayerHealth>();
+						phealth.TakeDamage(damage);
+						//GameObject bullet = GameObject.Instantiate(proyectilePrefab, weaponPivot.position, weaponPivot.rotation) as GameObject;
+						//bullet.transform.Rotate(0, Random.Range(-7.5f, 7.5f), 0);
+					}
+					else if(hitLocation.collider.tag != "Player")
+					{
+						Instantiate(impactParticle, hitLocation.point, Quaternion.identity);
+					}
+
+				}
+
 			break;
 			case NPC_WeaponType.SHOTGUN:
 				for(int i=0;i<5;i++){

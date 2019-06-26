@@ -8,7 +8,7 @@ using BT;
 public class Player_Movement : MonoBehaviour
 {
 
-	public float speed = 10f;
+	public float speed = 13f;
 
 	//public float offset;
 
@@ -168,6 +168,8 @@ public class Player_Movement : MonoBehaviour
 				if (Input.GetMouseButton(0))
 					//Fire the gun
 					theGun.Fire();
+
+
 				//else if the R key is pressed
 				else if (Input.GetKeyDown(KeyCode.R))
 					//Reload
@@ -202,7 +204,7 @@ public class Player_Movement : MonoBehaviour
 		yield return new WaitForSeconds(waitTime);
 		//revert back to original
 		anim.SetBool("IsSliding", false);
-		speed = 10f;
+		speed = 13f;
 	}
 }
 

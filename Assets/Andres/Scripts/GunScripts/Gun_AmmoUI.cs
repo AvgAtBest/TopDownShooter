@@ -16,7 +16,7 @@ namespace TopDownShooter
 		public TextMeshProUGUI currentAmmoField;
 		public TextMeshProUGUI MaxReserveAmmoField;
 
-				void OnEnable()
+		void OnEnable()
         {
             SetInitialReferences();
             gun_Master.EventAmmoChanged += UpdateAmmoUI;

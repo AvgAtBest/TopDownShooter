@@ -15,6 +15,9 @@ public class Camera_Track_Player : MonoBehaviour
 	public float turnSpeed = 2f;
 	public Vector3 startPos;
 	public float xRot = 90f;
+	float minFov = 35f;
+	float maxFov = 110f;
+	float sensitivity = 15f;
 	//Transform ddol;
 	void Start()
 	{
@@ -33,7 +36,14 @@ public class Camera_Track_Player : MonoBehaviour
 		}
 
 	}
+	private void Update()
+	{
+		float fov = Camera.main.fieldOfView;
 
+		fov += Input.GetAxis("Mouse ScrollWheel") * sensitivity;
+		fov = Mathf.Clamp(fov, minFov, maxFov);
+		Camera.main.fieldOfView = fov;
+	}
 
 	private void FixedUpdate()
 	{
