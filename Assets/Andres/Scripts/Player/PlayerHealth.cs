@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
+
 	public class PlayerHealth : MonoBehaviour
 	{
 		private GameManager_Master gameManager_Master;
@@ -17,12 +19,12 @@ using TMPro;
 		public int playerHealth;
 		public Animator anim;
 		public TextMeshProUGUI youareDeadText;
-		public TextMeshProUGUI highScoreIndicator;
-		[SerializeField] public GameObject GameOverUI;
-		void OnEnable()
-		{
+    public TextMeshProUGUI highScoreIndicator;
 
-		}
+        [SerializeField] public GameObject GameOverUI;
+        public GameObject playerUIPanel;
+        public GameObject pauseMenuUI;
+
 
 		void Start()
 		{
@@ -91,9 +93,18 @@ using TMPro;
 			disablePlayerMovement.rigid.constraints = RigidbodyConstraints.FreezeRotation;
 			//the player is marked as dead
 			disablePlayerMovement.isDead = true;
+
 			GameOverUI.SetActive(true);
 			//enable the "You are dead" text
 			youareDeadText.enabled = true;
+
+            pauseMenuUI.SetActive(false);
+            playerUIPanel.SetActive(false);
+            GameOverUI.SetActive(true);
+
+            //enable the "You are dead" text
+            youareDeadText.enabled = true;
+
 			//enable the high score text
 			highScoreIndicator.enabled = true;
 			highScoreIndicator.text = "You cleared " + updateHighScore.floorsCleared.ToString() + " floors and grabbed " + updateHighScore.cashAmount.ToString() + " cash. Try again?";
