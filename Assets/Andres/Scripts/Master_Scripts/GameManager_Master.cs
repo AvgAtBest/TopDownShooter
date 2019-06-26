@@ -44,9 +44,23 @@ public class GameManager_Master : MonoBehaviour
     {
         if (GoToMenuSceneEvent != null)
         {
+
             GoToMenuSceneEvent();
+
         }
-    }
+		GameObject player = GameObject.Find("Player");
+		PlayerHealth pHealth = player.GetComponent<PlayerHealth>();
+		Player_Movement pMovement = player.GetComponent<Player_Movement>();
+		GunController gGun = player.GetComponentInChildren<GunController>();
+		gGun.ammoInClip = gGun.maxClipSize;
+		gGun.ammoInReserve = gGun.ammoMaxReserve;
+		pHealth.curHealth = pHealth.maxHealth;
+		pHealth.isDead = false;
+		Player_Interaction pinteraction = player.GetComponent<Player_Interaction>();
+		pinteraction.cashAmount = 0;
+		pinteraction.floorsCleared = 0;
+		pinteraction.hasObtainedKey = false;
+	}
 
     public void CallEventGameOver()
     {
