@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TopDownShooter
-{
+
     public class GameManager_Master : MonoBehaviour
     {
         public delegate void GameManagementEventHandler();
@@ -57,4 +56,4 @@ namespace TopDownShooter
             }
         }
     }
-}
+

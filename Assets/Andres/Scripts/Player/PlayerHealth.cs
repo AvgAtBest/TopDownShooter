@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace TopDownShooter
-{
+
 	public class PlayerHealth : MonoBehaviour
 	{
 		private GameManager_Master gameManager_Master;
@@ -21,7 +20,9 @@ namespace TopDownShooter
 		public TextMeshProUGUI youareDeadText;
 		public TextMeshProUGUI highScoreIndicator;
         [SerializeField] public GameObject GameOverUI;
-		void OnEnable()
+        public GameObject playerUIPanel;
+        public GameObject pauseMenuUI;
+        void OnEnable()
 		{
 
 		}
@@ -93,7 +94,10 @@ namespace TopDownShooter
 			disablePlayerMovement.rigid.constraints = RigidbodyConstraints.FreezeRotation;
 			//the player is marked as dead
 			disablePlayerMovement.isDead = true;
+            pauseMenuUI.SetActive(false);
+            playerUIPanel.SetActive(false);
             GameOverUI.SetActive(true);
+
             //enable the "You are dead" text
             youareDeadText.enabled = true;
 			//enable the high score text
@@ -107,4 +111,4 @@ namespace TopDownShooter
 
 		}
 	}
-}
+
